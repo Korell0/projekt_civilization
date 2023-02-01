@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="hu" ng-app="Civilization">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/Civilization.css">
+    <title>Project Civilization</title>
+</head>
+<body>
+    <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="#!/Description">Game description</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/Developers">Developers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/Stages">Stages and Eras</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/News">News</a>
+        </li>
+        <li class="LogReg">
+            <a class="nav-link LogRegBTN" href="#!/Login">Login</a>
+        </li>
+        <li class="LogReg">
+            <a class="nav-link LogRegBTN" href="#!/Signup">Sign Up</a>
+        </li>
+      </ul>
+      <section ng-view></section>
+</body>
+
+    <script src="JS/bootstrap.min.js"></script>
+    <script src="JS/angular.min.js"></script>
+    <script src="JS/angular-route.min.js"></script>
+    <script src="JS/Civilization.js"></script>
+</html>

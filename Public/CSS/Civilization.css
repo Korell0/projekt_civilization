@@ -1,0 +1,26 @@
+body{
+    background-color: #323232;
+}
+
+.nav{
+    background-color: #000000;
+    border-bottom: 1px solid #ffffff;
+}
+.nav-item{
+    padding-left: 5%;
+    padding-right: 5%;
+    border-right: 1px solid #ffffff;
+}
+.nav-link{
+    color: #ffffff;
+}
+.nav-link:hover{
+    color:blue;
+}
+.LogReg{
+    margin-left: 3%;
+}
+.LogRegBTN{
+    background-color: #4B4B5C;
+    border-radius: 25px;
+}
