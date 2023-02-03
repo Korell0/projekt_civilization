@@ -24,3 +24,36 @@ body{
     background-color: #4B4B5C;
     border-radius: 25px;
 }
+
+.card{
+    background-color: #252525;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    color: #ffffff;
+}
+h3{
+    text-align: center;
+}
+h1{
+    text-align: center;
+    color: #ffffff;
+}
+.Date{
+    font-size: 50%;
+    float: right;
+    font-weight:normal;
+    padding: 5px;
+    border-radius: 25px;
+    background-color: #4B4B5C;
+}
+.StagesEras{
+    float: left;
+    background-color: #8D8D8D;
+    color: #ffffff;
+}
+th{
+    text-align: center;
+}
+li{
+    list-style: none;
+}
