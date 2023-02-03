@@ -46,12 +46,12 @@ h1{
     border-radius: 25px;
     background-color: #4B4B5C;
 }
-.StagesEras{
-    float: left;
+.Stages{
     background-color: #8D8D8D;
     color: #ffffff;
 }
 th{
+    border-bottom: 1px solid gray;
     text-align: center;
 }
 li{
