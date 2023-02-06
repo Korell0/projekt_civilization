@@ -1,34 +1,26 @@
 <h1>Stages</h1>
-<div class="container-fluid">
+<div class="container">
     <div class="row" ng-repeat="item in Stages">
-        <table class="table table-bg-light col-md-4">
-            <tr>
-                <td>
-                    <h3>{{item.Title}}</h3>
-                    <ul>
-                        <li class="Row">{{item.Firstrow}}</li>
-                        <li class="Row">{{item.Secondrow}}</li>
-                        <li class="Row">{{item.Thirdrow}}</li>
-                    </ul>
-            </td>
-            </tr>
-        </table>
+        <div class="card col col-md-3">
+            <h3>{{item.Title}}</h3>
+            <hr>
+                <p>{{item.Firstrow}}</p>
+                <p>{{item.Secondrow}}</p>
+                <p>{{item.Thirdrow}}</p>
+        </div>
     </div>
 </div>
 <h1>Eras</h1>
-<div class="container-fluid" ng-repeat="item in Eras" >
-    <table class="grid-item">
-    <tr>
-        <th>{{item.Title}}</th>
-    </tr>
-    <tr>
-        <td>
+<div class="container">
+    <div class="row" ng-repeat="item in Eras" >
+        <div class="col col-md-2 card">
+            <h3>{{item.Title}}</h3>
+            <hr>
             <ul>
-                <li class="Row">{{item.Firstrow}}</li>
-                <li class="Row">{{item.Secondrow}}</li>
-                <li class="Row">{{item.Thirdrow}}</li>
+                <li>{{item.Firstrow}}</li>
+                <li>{{item.Secondrow}}</li>
+                <li>{{item.Thirdrow}}</li>
             </ul>
-    </td>
-    </tr>
-    </table>
+        </div>
+    </div>
 </div>
