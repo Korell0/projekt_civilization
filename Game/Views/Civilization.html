@@ -1,0 +1,13 @@
+<div class="container" ng-repeat="button in demobuttons">
+    <div class="card card-body">
+          <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" 
+          data-bs-placement="bottom" title="{{button.Cost}},{{button.Description}}">
+          {{button.Title}}
+          </button>
+    </div>
+
+</div>
+
+<button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on bottom">
+    Tooltip on bottom
+  </button>
