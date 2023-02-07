@@ -29,6 +29,7 @@ body{
     background-color: #252525;
     margin-top: 1%;
     margin-bottom: 1%;
+    border: 1px solid #ffffff;
     color: #ffffff;
 }
 h3{
@@ -56,9 +57,18 @@ th{
 }
 .left{
     float: left;
+    border: 1px solid #ffffff;
 }
 .right{
     float: right;
+    border: 1px solid #ffffff;
+}
+.User{
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 8%;
+    margin-bottom: 8%;
 }
 li{
     list-style: none;
