@@ -31,5 +31,10 @@ app.config(function($routeProvider){
             templateUrl: 'Views/Settings.html',
             controller: 'DescriptionCtrl'
         })
+        .when('/Resources',{
+            templateUrl: 'Views/Resources.html',
+            controller: 'ResourceController'
+        })
+
         .otherwise('/Civilization')
 });

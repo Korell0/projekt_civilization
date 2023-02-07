@@ -30,12 +30,10 @@
         </li>
       </ul>
 
-      <div class="container" ng-repeat="resource in demoresources">
-          
-            <p>{{resource.Name}} {{resource.Current}} {{resource.Max}}</p>
-        
-    </div>
-      <section ng-view></section>
+
+      <section ng-include="'/Game/Views/Resources.html'"></section>
+      <section ng-view>
+      </section>
 </body>
 
 <script src="JS/jquery.min.js"></script>
