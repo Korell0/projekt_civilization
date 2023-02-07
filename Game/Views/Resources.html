@@ -1,0 +1,14 @@
+
+<div class="container-fluid">
+    <div class="row" ng-controller="ResourceCtrl" ng-repeat="resource in demoresources">
+        <table class="table table-bg-light col-md-4">
+            <tr>
+                <td>
+                    <ul>
+                        <li> {{resource.Name}} : {{resource.Current}} / {{resource.Max}}</li>
+                    </ul>
+            </td>
+            </tr>
+        </table>
+    </div>
+</div>
