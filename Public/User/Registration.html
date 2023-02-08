@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="hu" ng-controller="UserCtrl">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,22 +13,22 @@
         <form action="">
             <div>
                 <p><label for="Username">Username</label></p>
-                <input type="text" placeholder="Username" name="Username" id="">
+                <input type="text" placeholder="Username" name="Username" id="" ng-modell="user.name">
             </div>
             <div>
                 <p><label for="Email"></label>Email address</p>
-                <input type="email" name="Email" placeholder="Email" id="">
+                <input type="email" name="Email" placeholder="Email" id="" ng-modell="user.email">
             </div>
             <div>
                 <p><label for="Password">Password</label></p>
-                <input type="password" placeholder="Password" name="Password" id="">
+                <input type="password" placeholder="Password" name="Password" id="" ng-modell="user.password">
             </div>            
             <div>
                 <p><label for="PasswordA">Password again</label></p>
-                <input type="password" placeholder="Password" name="PasswordA" id="">
+                <input type="password" placeholder="Password" name="PasswordA" id="" ng-modell="user.passwordA">
             </div>
             <div>
-                <a class="btn btn-secondary">Sign up</a>
+                <button class="btn btn-secondary" ng-click="registration()">Sign up</button>
             </div>
         </form>
 
