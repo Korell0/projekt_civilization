@@ -22,5 +22,13 @@ app.config(function($routeProvider){
             templateUrl: 'Views/Description.html',
             controller: 'DescriptionCtrl'
         })
+        .when('/reg',{
+            templateUrl: 'Views/Registration.html',
+            controller: 'UserCtrl'
+        })
+        .when('/log',{
+            templateUrl: 'Views/Login.html',
+            controller: 'UserCtrl'
+        })
         .otherwise('/News')
 });

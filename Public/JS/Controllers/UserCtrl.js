@@ -10,13 +10,13 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                 alert('A megadott jelszavak nem egyeznek!');
             } else {
                 var pwd_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-                if (!$scope.user.pass1.match(pwd_pattern)) {
+                if (!$scope.user.password.match(pwd_pattern)) {
                     alert('A megadott jelszó nem felel meg a minimális biztonsági követelményeknek!');
                 } else {
                     let data = {
-                        name: $scope.user.name,
-                        email: $scope.user.email,
-                        password: CryptoJS.SHA1($scope.user.password).toString(),
+                        Username: $scope.user.name,
+                        Password: CryptoJS.SHA1($scope.user.password).toString(),
+                        Email: $scope.user.email
                     }
 
                     DB.insert('users', data).then(function(res) {
@@ -33,13 +33,13 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
     };
 
     $scope.login = function() {
-        if ($scope.user.email == null || $scope.user.pass1 == null) {
+        if ($scope.user.Name == null || $scope.user.Password == null) {
             alert('Nem adtál meg minden kötelező adatot!');
         } else {
             let data = {
                 table: 'users',
-                email: $scope.user.email,
-                password: CryptoJS.SHA1($scope.user.pass1).toString()
+                Username: $scope.user.Name,
+                Password: CryptoJS.SHA1($scope.user.Password).toString()
             }
 
             DB.logincheck(data).then(function(res) {
