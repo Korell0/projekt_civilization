@@ -1,25 +1,9 @@
-<style>
 
-
-    </style>
-   
-    
-<div class="container" ng-repeat="button in demobuttons">
+<div class="container " ng-repeat="button in demobuttons">
     <div class="card card-body ">
-          <button type="button" >
+          <button type="button"class="toolTip" >
           {{button.Title}}
+          <span class="toolTiptext">{{button.Cost}} , {{button.Description}}</span>
           </button> 
     </div>
 </div>
-
-<div layout="row" layout-align="space-between">
-    <md-button class="md-fab">
-      <md-tooltip
-        md-direction="bottom">
-        Insert Drive
-      </md-tooltip>
-    </md-button>
-  </div>
-</div>
-
-

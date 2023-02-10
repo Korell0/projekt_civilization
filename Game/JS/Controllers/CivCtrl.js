@@ -7,7 +7,7 @@ app.controller('CivCtrl',function($scope){
         },
         {
             Title: "Second",
-            Date: "20 Weed",
+            Cost: "20 Weed",
             Description: "ez is egy tesz"
         }
     ]
