@@ -1,44 +1,9 @@
-app.controller('ResourceCtrl',function($scope){
-    $scope.demoresources = [
-        {
-            Name:"Wood",
-            Current:"5",
-            Max:"100"
-        },
-        {
-            Name:"Stone",
-            Current:"5",
-            Max:"100"
-        }, 
-        {
-            Name:"Weed",
-            Current:"5",
-            Max:"100"
-        },
-        {
-            Name:"Cocaine",
-            Current:"5",
-            Max:"100"
-        },
-        {
-            Name:"Metal",
-            Current:"5",
-            Max:"100"
-        },
-        {
-            Name:"Pigs",
-            Current:"5",
-            Max:"100"
-        },
-        {
-            Name:"asdasdasd",
-            Current:"5",
-            Max:"100"
-        },
-        {
-            Name:"fefefefefefefe",
-            Current:"5",
-            Max:"100"
-        },
-    ]
+app.controller('ResourceCtrl',function($scope, DB){
+    $scope.Resources = []
+
+    DB.selectAll("Resources").then(function(res){
+        res.data.forEach(resource => {
+            $scope.Resources.push(resource)
+        });
+    })
 });

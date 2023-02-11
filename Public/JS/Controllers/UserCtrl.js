@@ -46,24 +46,12 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                 console.log(res.data);
                 if (res.data.length == 0) {
                     alert('Hibás belépési adatok!');
-                } else {
-                    if (res.data[0].status == 0) {
-                        alert('Tiltott felhasználó!');
-                    } else {
-
-                        res.data[0].last = moment(new Date()).format('YYYY-MM-DD H:m:s');
-                        $rootScope.loggedUser = res.data[0];
-                        let data = {
-                            last: res.data[0].last
-                        }
-                        DB.update('users', res.data[0].ID, data).then(function(res) {
-                            sessionStorage.setItem('pizzeriaApp', angular.toJson($rootScope.loggedUser));
-                        });
-
-                        DB.select('carts', 'userID', $rootScope.loggedUser.ID).then(function(res) {
-                            $rootScope.itemsInCart = res.data.length;
-                        });
-                    }
+                }
+                 else 
+                {
+                    DB.update('users', res.data[0].ID, data).then(function(res) {
+                        sessionStorage.setItem('Civilization', angular.toJson($rootScope.loggedUser));
+                    });
                 }
             });
         }
@@ -71,7 +59,7 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
 
     $scope.logout = function() {
         $rootScope.loggedUser = null;
-        sessionStorage.removeItem('pizzeriaApp');
+        sessionStorage.removeItem('Civilization');
         $location.path('/');
     }
 });

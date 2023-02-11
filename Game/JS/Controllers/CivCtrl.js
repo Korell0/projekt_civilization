@@ -1,17 +1,20 @@
-app.controller('CivCtrl',function($scope){
-    $scope.demobuttons = [
-        {
-            Title: "First",
-            Cost:"400 wood",
-            Description:"ez egy teszt"
-        },
-        {
-            Title: "Second",
-            Cost: "20 Weed",
-            Description: "ez is egy tesz"
-        }
-    ]
+app.controller('CivCtrl',function($scope, DB){
+    $scope.buttons = []
+
+    DB.selectAll("Cell_evolution").then(function(res){
+        res.data.forEach(element => {
+            if(element.DNA === "-"){
+                element.DNA = null
+            }
+            if(element.RNA === "-"){
+                element.RNA = null
+            }
+            $scope.buttons.push(element)
+        });
+    
+    })
 });
+
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
