@@ -1,0 +1,8 @@
+<div class="container row"  ng-repeat="button in buttons">
+    <div class="card col card-body">
+          <button type="button"class="toolTip" >
+          {{button.Name}}
+          <span class="toolTiptext">{{button.Description}} <br> <p ng-if=" button.RNA != null " >{{button.RNA}}</p> <br> <p ng-if="button.DNA != null">{{button.DNA}}</p></span>
+          </button> 
+    </div>
+</div>

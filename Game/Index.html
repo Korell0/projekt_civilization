@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="hu" ng-app="Civilization">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/bootstrap.min.css">
+    <link rel="stylesheet" href="CSS/Civilization.css">
+    <title>Project Civilization</title>
+</head>
+<body>
+    <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active" href="#!/Civilization">Civilization</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#!/Society">Society</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="#!/Military">Military</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/Research">Research</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/Projects">Projects</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/Settings">Settings</a>
+        </li>
+      </ul>
+
+      <section ng-include="'Views/Resources.html'"></section>
+      <section ng-view>
+      </section>
+</body>
+
+<script src="JS/jquery.min.js"></script>
+<script src="JS/popper.min.js"></script>
+<script src="JS/bootstrap.min.js"></script>
+<script src="JS/angular.min.js"></script>
+<script src="JS/angular-route.min.js"></script>
+<script src="JS/aos.js"></script>
+<script src="JS/Civilization.js"></script>
+<script src="JS/dbFactory.js"></script>
+<!-- controllers -->
+<script src="JS/Controllers/ResourceController.js"></script>
+<script src="JS/Controllers/CivCtrl.js"></script>
+<script src="JS/Controllers/StagesCtrl.js"></script>
+<script src="JS/Controllers/DevelopersCtrl.js"></script>
+<script src="JS/Controllers/Description.js"></script>
+
+</html>

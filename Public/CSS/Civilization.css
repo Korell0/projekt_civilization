@@ -1,0 +1,75 @@
+body{
+    background-color: #323232;
+}
+
+.nav{
+    background-color: #000000;
+    border-bottom: 1px solid #ffffff;
+}
+.nav-item{
+    padding-left: 5%;
+    padding-right: 5%;
+    border-right: 1px solid #ffffff;
+}
+.nav-link{
+    color: #ffffff;
+}
+.nav-link:hover{
+    color:blue;
+}
+.LogReg{
+    margin-left: 3%;
+}
+.LogRegBTN{
+    background-color: #4B4B5C;
+    border-radius: 25px;
+}
+
+.card{
+    background-color: #252525;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+}
+h3{
+    text-align: center;
+}
+h1{
+    text-align: center;
+    color: #ffffff;
+}
+.Date{
+    font-size: 50%;
+    float: right;
+    font-weight:normal;
+    padding: 5px;
+    border-radius: 25px;
+    background-color: #4B4B5C;
+}
+.Stages{
+    background-color: #8D8D8D;
+    color: #ffffff;
+}
+th{
+    border-bottom: 1px solid gray;
+    text-align: center;
+}
+.left{
+    float: left;
+    border: 1px solid #ffffff;
+}
+.right{
+    float: right;
+    border: 1px solid #ffffff;
+}
+.User{
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+}
+li{
+    list-style: none;
+}
