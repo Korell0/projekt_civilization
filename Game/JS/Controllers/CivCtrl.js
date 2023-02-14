@@ -1,14 +1,9 @@
 app.controller('CivCtrl',function($scope, DB){
     $scope.buttons = []
 
+
     DB.selectAll("Cell_evolution").then(function(res){
         res.data.forEach(element => {
-            if(element.DNA === "-"){
-                element.DNA = null
-            }
-            if(element.RNA === "-"){
-                element.RNA = null
-            }
             $scope.buttons.push(element)
         });
     
