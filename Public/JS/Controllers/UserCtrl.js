@@ -49,9 +49,7 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                 }
                  else 
                 {
-                    DB.update('users', res.data[0].ID, data).then(function(res) {
-                        sessionStorage.setItem('Civilization', angular.toJson($rootScope.loggedUser));
-                    });
+                    sessionStorage.setItem('Civilization', angular.toJson($rootScope.loggedUser));
                 }
             });
         }
