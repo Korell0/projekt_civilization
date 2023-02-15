@@ -13,23 +13,23 @@ app.config(function($routeProvider){
         })
         .when('/Military',{
             templateUrl: 'Views/Military.html',
-            controller: 'StagesCtrl'
+            controller: 'MilitaryCtrl'
         })
         .when('/Projects',{
             templateUrl: 'Views/Projects.html',
-            controller: 'DevelopersCtrl'
+            controller: 'ProjectsCtrl'
         })
         .when('/Research',{
             templateUrl: 'Views/Research.html',
-            controller: 'DescriptionCtrl'
+            controller: 'ResearchCtrl'
         })
         .when('/Society',{
             templateUrl: 'Views/Society.html',
-            controller: 'DescriptionCtrl'
+            controller: 'SocietyCtrl'
         })
         .when('/Settings',{
             templateUrl: 'Views/Settings.html',
-            controller: 'DescriptionCtrl'
+            controller: 'SettingsCtrl'
         })
         .when('/Resources',{
             templateUrl: 'Views/Resources.html',

@@ -72,7 +72,6 @@ li{
 .toolTip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted rgb(202, 27, 27) !important;
     color: #ffffff !important;
   }
   
@@ -95,4 +94,10 @@ li{
   
   .toolTip:hover .toolTiptext {
     display: block;
+  }
+  .modal-header{
+      background-color: #323232;
+  }
+  .modal-body{
+      background-color: #000000;
   }
