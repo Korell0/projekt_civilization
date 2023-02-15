@@ -72,7 +72,6 @@ li{
 .toolTip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted rgb(202, 27, 27) !important;
     color: #ffffff !important;
   }
   
@@ -96,3 +95,14 @@ li{
   .toolTip:hover .toolTiptext {
     display: block;
   }
+  .toolTiptext:hover{
+      display: block;
+      visibility: hidden;
+  }
+
+.list-group-item{
+    margin: 0.5%;
+    background-color:#000000
+}
+
+button{width: 100%;}
