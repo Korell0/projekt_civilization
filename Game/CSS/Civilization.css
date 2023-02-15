@@ -95,14 +95,9 @@ li{
   .toolTip:hover .toolTiptext {
     display: block;
   }
-  .toolTiptext:hover{
-      display: block;
-      visibility: hidden;
+  .modal-header{
+      background-color: #323232;
   }
-
-.list-group-item{
-    margin: 0.5%;
-    background-color:#000000
-}
-
-button{width: 100%;}
+  .modal-body{
+      background-color: #000000;
+  }
