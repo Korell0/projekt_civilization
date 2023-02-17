@@ -1,9 +1,3 @@
-app.controller('ResourceCtrl',function($scope, DB){
-    $scope.Resources = []
-
-    DB.selectAll("Resources").then(function(res){
-        res.data.forEach(resource => {
-            $scope.Resources.push(resource)
-        });
-    })
+app.controller('ResourceCtrl',function($scope,$rootScope, DB){
+    $scope.Resources = $rootScope.Resources
 });

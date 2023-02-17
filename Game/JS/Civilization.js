@@ -1,7 +1,30 @@
 let app = new angular.module('Civilization',['ngRoute'])
 
-app.run(function($rootScope){
-
+app.run(function($rootScope, DB){
+    $rootScope.Resources = [];
+    $rootScope.govs = [];
+    $rootScope.buttons = [];
+    DB.selectAll("Resources").then(function(res){
+        res.data.forEach(resource => {
+            $rootScope.Resources.push(resource)
+        });
+    })
+    DB.selectAll("government").then(function(res){
+        res.data.forEach(gov => {
+            $rootScope.govs.push(gov)
+        });
+    })
+    DB.selectAll("Cell_evolution").then(function(res){
+        res.data.forEach(element => {
+            if(element.DNA === "-"){
+                element.DNA = null
+            }
+            if(element.RNA === "-"){
+                element.RNA = null
+            }
+            $rootScope.buttons.push(element)
+        });
+    })
 });
 
 app.config(function($routeProvider){
