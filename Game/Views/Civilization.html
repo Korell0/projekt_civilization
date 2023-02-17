@@ -1,7 +1,7 @@
 <div class="container">
 <ul class="list-group list-group-horizontal" >
     <li class="list-group-item list-group-item-dark" ng-repeat="button in buttons">
-    <button type="button"class="toolTip btn btn-dark" >
+    <button type="button"class="toolTip btn btn-dark" id="{{button.Name}}" ng-click="Click(id, $index)" >
         {{button.Name}}
         <span class="toolTiptext flex-container">{{button.Description}} <br>
           <p ng-if=" button.RNA != null " >{{button.RNA}} RNA</p> 

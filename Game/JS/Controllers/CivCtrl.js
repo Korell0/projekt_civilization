@@ -1,19 +1,14 @@
-app.controller('CivCtrl',function($scope, DB){
-    $scope.buttons = []
+app.controller('CivCtrl',function($scope,$rootScope, DB){
+    $scope.buttons = $rootScope.buttons
 
-    DB.selectAll("Cell_evolution").then(function(res){
-        res.data.forEach(element => {
-            if(element.DNA === "-"){
-                element.DNA = null
-            }
-            if(element.RNA === "-"){
-                element.RNA = null
-            }
-            $scope.buttons.push(element)
-        });
-    
-    })
+
+    $scope.Click = function(id,idx){
+        if($rootScope.buttons[idx].Name === "DNA"){
+            $rootScope.govs[1].Name = "ht";
+        }
+    }
 });
+
 
 
 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
