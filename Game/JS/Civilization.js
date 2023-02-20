@@ -1,6 +1,7 @@
 let app = new angular.module('Civilization',['ngRoute'])
 
 app.run(function($rootScope, DB){
+    $rootScope.User = JSON.parse(window.sessionStorage['civilization'])
     $rootScope.Resources = [];
     $rootScope.govs = [];
     $rootScope.buttons = [];

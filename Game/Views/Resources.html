@@ -1,12 +1,12 @@
 
 <div class="container-fluid Resources" ng-controller="ResourceCtrl">
     <h3>Resources</h3>
-    <div class="row"  ng-repeat="resource in Resources">
+    <div class="row"  ng-repeat="resource in resources">
         <table class="">
             <tr>
                 <td>
                     <ul>
-                        <li> {{resource.Name}} : {{resource.Description}}</li>
+                        <li> {{resource.name}} : {{resource.quantity}}</li>
                     </ul>
             </td>
             </tr>
