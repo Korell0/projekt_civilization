@@ -5,6 +5,7 @@ app.run(function($rootScope, DB){
     $rootScope.Resources = [];
     $rootScope.govs = [];
     $rootScope.buttons = [];
+    $rootScope.storage = 100;
     DB.selectAll("Resources").then(function(res){
         res.data.forEach(resource => {
             $rootScope.Resources.push(resource)

@@ -17,11 +17,13 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB){
                     let resource ={
                         name: $scope.all[i].Name,
                         description: $scope.all[i].Description,
-                        quantity: $scope.userall[i].Quantity
+                        quantity: $scope.userall[i].Quantity,
+                        storage: $rootScope.storage
                     }
                     $scope.resources.push(resource)
                 }
             }
+            $rootScope.resources = $scope.resources;
         });
 
     })
