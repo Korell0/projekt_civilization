@@ -1,9 +1,11 @@
 let app = new angular.module('Civilization',['ngRoute'])
 
 app.run(function($rootScope, DB){
+    $rootScope.User = JSON.parse(window.sessionStorage['civilization'])
     $rootScope.Resources = [];
     $rootScope.govs = [];
     $rootScope.buttons = [];
+    $rootScope.storage = 100;
     DB.selectAll("Resources").then(function(res){
         res.data.forEach(resource => {
             $rootScope.Resources.push(resource)
