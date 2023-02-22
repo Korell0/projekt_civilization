@@ -4,8 +4,8 @@
     <button type="button"class="toolTip btn btn-dark" id="{{button.Name}}" ng-click="Click(id, $index)" >
         {{button.Name}}
         <span class="toolTiptext flex-container">{{button.Description}} <br>
-          <p ng-if=" button.RNA != null " >{{button.RNA}} RNA</p> 
-          <p ng-if="button.DNA != null">{{button.DNA}} DNA</p>
+          <p ng-if=" button.RNA != 0 " >{{button.RNA}} RNA</p> 
+          <p ng-if="button.DNA != 0">{{button.DNA}} DNA</p>
         </span>
         </button> 
         </li>
