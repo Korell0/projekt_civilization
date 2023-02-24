@@ -6,7 +6,7 @@
             <tr>
                 <td>
                     <ul>
-                        <li> {{resource.name}} : {{resource.quantity}}/{{resource.storage}}</li>
+                        <li> {{resource.name}} : {{resource.quantity}}/{{resource.storage}} <span ng-if="resource.name == 'RNA'">{{RNAI}}/s</span><span ng-if="resource.name == 'DNA'">{{DNAI}}/s</span></li>
                     </ul>
             </td>
             </tr>
