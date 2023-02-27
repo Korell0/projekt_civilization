@@ -47,11 +47,11 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                 if (res.data.length == 0) {
                     alert('Hibás belépési adatok!');
                 }
-                 else 
+                else 
                 {
-                    DB.update('users', res.data[0].ID, data).then(function(res) {
-                        sessionStorage.setItem('Civilization', angular.toJson($rootScope.loggedUser));
-                    });
+                    $rootScope.loggedUser = res.data[0];
+                    sessionStorage.setItem('civilization', angular.toJson($rootScope.loggedUser));
+                    window.location.href = '../Game/index.html';
                 }
             });
         }

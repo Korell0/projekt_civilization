@@ -72,7 +72,6 @@ li{
 .toolTip {
     position: relative;
     display: inline-block;
-    border-bottom: 1px dotted rgb(202, 27, 27) !important;
     color: #ffffff !important;
   }
   
@@ -84,7 +83,7 @@ li{
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
-    
+    display: flexbox;
     /* Position the tooltip */
     position: absolute;
     z-index: 1;
@@ -95,4 +94,19 @@ li{
   
   .toolTip:hover .toolTiptext {
     display: block;
+  }
+  .modal-header{
+      background-color: #323232;
+  }
+  .modal-body{
+      background-color: #000000;
+  }
+  .list-group-item
+  {
+      background-color: #535353;
+  }
+  p
+  {
+      border-top: #ffffff;
+      border-bottom: #ffffff;
   }

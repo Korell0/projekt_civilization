@@ -1,7 +1,34 @@
 let app = new angular.module('Civilization',['ngRoute'])
 
-app.run(function($rootScope){
-
+app.run(function($rootScope, DB){
+    $rootScope.User = JSON.parse(window.sessionStorage['civilization'])
+    $rootScope.Resources = [];
+    $rootScope.govs = [];
+    $rootScope.RNAI = 0;
+    $rootScope.DNAI = 0;
+    $rootScope.buttons = [];
+    $rootScope.storage = 100;
+    DB.selectAll("Resources").then(function(res){
+        res.data.forEach(resource => {
+            $rootScope.Resources.push(resource)
+        });
+    })
+    DB.selectAll("government").then(function(res){
+        res.data.forEach(gov => {
+            $rootScope.govs.push(gov)
+        });
+    })
+    DB.selectAll("Cell_evolution").then(function(res){
+        res.data.forEach(element => {
+            if(element.DNA === "-"){
+                element.DNA = null
+            }
+            if(element.RNA === "-"){
+                element.RNA = null
+            }
+            $rootScope.buttons.push(element)
+        });
+    })
 });
 
 app.config(function($routeProvider){
@@ -13,23 +40,23 @@ app.config(function($routeProvider){
         })
         .when('/Military',{
             templateUrl: 'Views/Military.html',
-            controller: 'StagesCtrl'
+            controller: 'MilitaryCtrl'
         })
         .when('/Projects',{
             templateUrl: 'Views/Projects.html',
-            controller: 'DevelopersCtrl'
+            controller: 'ProjectsCtrl'
         })
         .when('/Research',{
             templateUrl: 'Views/Research.html',
-            controller: 'DescriptionCtrl'
+            controller: 'ResearchCtrl'
         })
         .when('/Society',{
             templateUrl: 'Views/Society.html',
-            controller: 'DescriptionCtrl'
+            controller: 'SocietyCtrl'
         })
         .when('/Settings',{
             templateUrl: 'Views/Settings.html',
-            controller: 'DescriptionCtrl'
+            controller: 'SettingsCtrl'
         })
         .when('/Resources',{
             templateUrl: 'Views/Resources.html',
