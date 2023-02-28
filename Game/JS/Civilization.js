@@ -20,23 +20,21 @@ app.run(function($rootScope, DB){
     })
     DB.selectAll("Cell_evolution").then(function(res){
         res.data.forEach(element => {
-            if(element.DNA === "-"){
-                element.DNA = null
-            }
-            if(element.RNA === "-"){
-                element.RNA = null
-            }
-
-            if(element.Evolution != 0){
+            if(element.Evolution != 0 || element.storage != 0 || element.producer != 0){
                 element.hidden = true;
             }
             else{
                 element.hidden = false;
             }
+            if(element.storage !=0 || element.producer){
+                element.quantity = 0;
+            }
 
             $rootScope.buttons.push(element)
         });
     })
+
+
 });
 
 app.config(function($routeProvider){

@@ -1,7 +1,21 @@
 app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
     $scope.buttons = $rootScope.buttons
 
-    $interval(function(){
+    $interval(function(){   
+        for(i = 0; i < $rootScope.buttons.length; i++){
+            if($rootScope.buttons[i].RNA != 0){
+                if($rootScope.buttons[i].DNA != 0){
+                    if(($rootScope.buttons[i].RNA / 2 < $rootScope.resources[0].quantity && $rootScope.buttons[i].DNA / 2 < $rootScope.resources[1].quantity)){
+                        $rootScope.buttons[i].hidden = false;
+                    }
+                }
+            }
+            else{
+                if($rootScope.buttons[i].DNA / 2 < $rootScope.resources[0].quantity){
+                    $rootScope.buttons[i].hidden = false;
+                }
+            }
+        }
         if($rootScope.resources[0].quantity + $rootScope.RNAI <= $rootScope.resources[0].storage){
             $rootScope.resources[0].quantity = $rootScope.resources[0].quantity + $rootScope.RNAI;
         }
@@ -38,6 +52,7 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                         $rootScope.resources[0].quantity = $rootScope.resources[0].quantity - parseInt($rootScope.buttons[idx].RNA)
                         $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
                         $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
+                        $rootScope.buttons[idx].quantity++;
                         if($rootScope.buttons[idx].storageRNAplus > 0){
                             $rootScope.resources[0].storage += $rootScope.buttons[idx].storageRNAplus;
                         }
@@ -54,6 +69,7 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                         $rootScope.resources[0].quantity = $rootScope.resources[0].quantity - parseInt($rootScope.buttons[idx].RNA)
                         $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
                         $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
+                        $rootScope.buttons[idx].quantity++;
                         if($rootScope.buttons[idx].RNA_Increament > 0){
                             $rootScope.RNAI = $rootScope.RNAI + $rootScope.buttons[idx].RNA_Increament;
                         }
