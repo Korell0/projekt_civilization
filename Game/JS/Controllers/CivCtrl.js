@@ -66,6 +66,9 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                     }
                 }
             }
+            if($rootScope.buttons[idx].Evolution === 1){
+                
+            }
         }
     }
 });

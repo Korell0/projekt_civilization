@@ -26,6 +26,14 @@ app.run(function($rootScope, DB){
             if(element.RNA === "-"){
                 element.RNA = null
             }
+
+            if(element.Evolution != 0){
+                element.hidden = true;
+            }
+            else{
+                element.hidden = false;
+            }
+
             $rootScope.buttons.push(element)
         });
     })
