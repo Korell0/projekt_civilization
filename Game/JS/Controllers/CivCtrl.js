@@ -3,8 +3,8 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
 
     $interval(function(){   
         for(i = 0; i < $rootScope.buttons.length; i++){
-            if($rootScope.buttons[i].RNA != 0){
-                if($rootScope.buttons[i].DNA != 0){
+            if($rootScope.buttons[i].RNA > 0){
+                if($rootScope.buttons[i].DNA > 0){
                     if(($rootScope.buttons[i].RNA / 2 < $rootScope.resources[0].quantity && $rootScope.buttons[i].DNA / 2 < $rootScope.resources[1].quantity)){
                         $rootScope.buttons[i].hidden = false;
                     }
@@ -83,9 +83,23 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                 }
             }
             if($rootScope.buttons[idx].Evolution === 1){
-                
+                $rootScope.storage = $rootScope.storage + 20;
+                $rootScope.RNAI = $rootScope.RNAI + 6;
+                $rootScope.DNAI = $rootScope.DNAI + 2;
+                if($rootScope.buttons[idx].Name === "Sentience"){
+                    ToCreature();
+                }
             }
         }
+    }
+    $scope.ToCreature = function(){
+        let data = {
+            Username: $rootScope.User.Username,
+            Password: $rootScope.User.Password,
+            Email: $rootScope.User.Email,
+            Specie: $rootScope.Specie
+        }
+        DB.update("users", $rootScope.User.ID, data)
     }
 });
 

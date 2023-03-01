@@ -6,6 +6,7 @@ app.run(function($rootScope, DB){
     $rootScope.govs = [];
     $rootScope.RNAI = 0;
     $rootScope.DNAI = 0;
+    $rootScope.Specie = 0;
     $rootScope.buttons = [];
     $rootScope.storage = 100;
     DB.selectAll("Resources").then(function(res){
