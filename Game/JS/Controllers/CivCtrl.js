@@ -7,12 +7,18 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                 if($rootScope.buttons[i].DNA > 0){
                     if(($rootScope.buttons[i].RNA / 2 < $rootScope.resources[0].quantity && $rootScope.buttons[i].DNA / 2 < $rootScope.resources[1].quantity)){
                         $rootScope.buttons[i].hidden = false;
+                        if($rootScope.buttons[i].clicked === true){
+                            $rootScope.buttons[i].hidden = true;
+                        }
                     }
                 }
             }
             else{
                 if($rootScope.buttons[i].DNA / 2 < $rootScope.resources[0].quantity){
                     $rootScope.buttons[i].hidden = false;
+                    if($rootScope.buttons[i].clicked === true){
+                        $rootScope.buttons[i].hidden = true;
+                    }
                 }
             }
         }
@@ -83,16 +89,21 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                 }
             }
             if($rootScope.buttons[idx].Evolution === 1){
-                $rootScope.storage = $rootScope.storage + 20;
-                $rootScope.RNAI = $rootScope.RNAI + 6;
-                $rootScope.DNAI = $rootScope.DNAI + 2;
-                if($rootScope.buttons[idx].Name === "Sentience"){
-                    ToCreature();
+                if($rootScope.resources[1].quantity >= $rootScope.buttons[idx].DNA){
+                    $rootScope.resources[0].storage += 20;
+                    $rootScope.resources[1].storage += 20;
+                    $rootScope.RNAI = $rootScope.RNAI + 6;
+                    $rootScope.DNAI = $rootScope.DNAI + 2;
+                    $rootScope.buttons[idx].clicked = true;
+                    //$rootScope.resources[1].quantity -= $rootScope.buttons[idx].DNA;
+                    if($rootScope.buttons[idx].Name === "Sentience"){
+                        ToCreature();
+                    }
                 }
             }
         }
     }
-    $scope.ToCreature = function(){
+    ToCreature = function(){
         let data = {
             Username: $rootScope.User.Username,
             Password: $rootScope.User.Password,
@@ -100,6 +111,13 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
             Specie: $rootScope.Specie
         }
         DB.update("users", $rootScope.User.ID, data)
+        DB.delete("resources_by_user","UserID", $rootScope.User.ID)
+        $rootScope.resources = [];
+        DB.selectAll("resources").then(function(res){
+            for(i = 3; i < 7; i++){
+                $rootScope.resources.push(res.data[i]);
+            }
+        })
     }
 });
 

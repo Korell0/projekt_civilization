@@ -21,6 +21,7 @@ app.run(function($rootScope, DB){
     })
     DB.selectAll("Cell_evolution").then(function(res){
         res.data.forEach(element => {
+            element.clicked = false;
             if(element.Evolution != 0 || element.storage != 0 || element.producer != 0){
                 element.hidden = true;
             }
