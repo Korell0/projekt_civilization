@@ -18,7 +18,6 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                         Password: CryptoJS.SHA1($scope.user.password).toString(),
                         Email: $scope.user.email
                     }
-
                     DB.insert('users', data).then(function(res) {
                         if (res.data.affectedRows != 0) {
                             alert('A regisztráció sikeres! Beléphetsz az oldalra!');
