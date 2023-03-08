@@ -3,12 +3,12 @@ let app = new angular.module('Civilization',['ngRoute'])
 app.run(function($rootScope, DB){
     $rootScope.User = JSON.parse(window.sessionStorage['civilization'])
     $rootScope.Specie = "";
-    if(parseInt($rootScope.User.Specie) === 0){
+    if($rootScope.User.Specie === "0"){
         $rootScope.Resources = [];
         $rootScope.govs = [];
         $rootScope.RNAI = 0;
         $rootScope.DNAI = 0;
-        $rootScope.Specie = 0;
+        $rootScope.Specie = "0";
         $rootScope.buttons = [];
         $rootScope.storage = 100;
         DB.selectAll("Resources").then(function(res){
@@ -39,24 +39,15 @@ app.run(function($rootScope, DB){
         })
     }
     else{
-        switch($rootScope.User.Specie){
-            case 2:
-                $rootScope.Specie = "Avian";
-            case 3:
-                $rootScope.Specie = "Mammal";
-            case 4:
-                $rootScope.Specie = "Reptilian";
-            case 5:
-                $rootScope.Specie = "Arachnid";
-            case 6:
-                $rootScope.Specie = "Aquatic";
-            case 7:
-                $rootScope.Specie = "Plantoid";
-            case 8:
-                $rootScope.Specie = "Fungoid";
-            case 9:
-                $rootScope.Specie = "Lithoid";
-        }
+            if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
+            if(  $rootScope.User.Specie === "3") $rootScope.Specie = "Mammal";
+            if(  $rootScope.User.Specie === "4") $rootScope.Specie = "Reptilian";
+            if(  $rootScope.User.Specie === "5") $rootScope.Specie = "Arachnid";
+            if(  $rootScope.User.Specie === "6") $rootScope.Specie = "Aquatic";
+            if(  $rootScope.User.Specie === "7") $rootScope.Specie = "Plantoid";
+            if(  $rootScope.User.Specie === "8") $rootScope.Specie = "Fungoid";
+            if(  $rootScope.User.Specie === "9") $rootScope.Specie = "Lithoid";
+            if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
     }
     $rootScope.Logout = function(){
         $rootScope.User = null;

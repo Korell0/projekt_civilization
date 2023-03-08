@@ -96,8 +96,10 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                     $rootScope.RNAI = $rootScope.RNAI + 6;
                     $rootScope.DNAI = $rootScope.DNAI + 2;
                     $rootScope.buttons[idx].clicked = true;
+                    if($rootScope.buttons[idx].Specie != 0) $rootScope.Specie = ""+$rootScope.buttons[idx].Specie+""; 
                     //$rootScope.resources[1].quantity -= $rootScope.buttons[idx].DNA;
                     if($rootScope.buttons[idx].Name === "Sentience"){
+                        DB.insert()
                         ToCreature();
                     }
                 }
