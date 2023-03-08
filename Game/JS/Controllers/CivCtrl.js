@@ -109,11 +109,12 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
             Username: $rootScope.User.Username,
             Password: $rootScope.User.Password,
             Email: $rootScope.User.Email,
-            Specie: parseInt($rootScope.Specie)
+            Specie: $rootScope.Specie
         }
+        
         DB.selectAll('resources_by_user').then(function(res){
             res.data.forEach(element => {
-                if(element.UserID == $rootScope.User.ID){
+                if(element.UserID === $rootScope.User.ID){
                     $scope.deletes.push(element.ID);
                 }
             });

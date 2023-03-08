@@ -3,7 +3,7 @@ let app = new angular.module('Civilization',['ngRoute'])
 app.run(function($rootScope, DB){
     $rootScope.User = JSON.parse(window.sessionStorage['civilization'])
     $rootScope.Specie = "";
-    if($rootScope.User.Specie === 0){
+    if(parseInt($rootScope.User.Specie) === 0){
         $rootScope.Resources = [];
         $rootScope.govs = [];
         $rootScope.RNAI = 0;
