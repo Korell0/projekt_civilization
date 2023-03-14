@@ -9,13 +9,13 @@ app.controller('StagesCtrl',function($scope){
             Title: "Creature Stage",
             Firstrow: "Basic management",
             Secondrow: "Skills to unlock",
-            Thirdrow: "Small herd of specie"
+            Thirdrow: "Small herd of species"
         },
         {
             Title: "Tribal Stage",
             Firstrow: "Small settlement",
             Secondrow: "Job management",
-            Thirdrow: "Researching"
+            Thirdrow: "Research"
         }
     ]
 
@@ -24,7 +24,7 @@ app.controller('StagesCtrl',function($scope){
             Title: "Classical Era",
             Firstrow: "Money and agriculture",
             Secondrow: "Hostile cities",
-            Thirdrow: "Special project"
+            Thirdrow: "Wonders"
         },
         {
             Title: "Medieval Era",
@@ -35,12 +35,13 @@ app.controller('StagesCtrl',function($scope){
             Title: "Industrial Era",
             Firstrow: "Coal mining",
             Secondrow: "Railway",
-            Thirdrow: "Coal industry pollution"
+            Thirdrow: "Coal industry/pollution"
         },
         {
             Title: "Modern Era",
-            Firstrow: "Buy cities, country",
-            Secondrow: "Electronics"
+            Firstrow: "Buy cities",
+            Secondrow: "Country system",
+            Thirdrow: "Electronics"
         },
         {
             Title: "Space Era",
