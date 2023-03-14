@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Már 14. 08:26
+-- Létrehozás ideje: 2023. Már 14. 08:41
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -357,7 +357,8 @@ INSERT INTO `researchs` (`ID`, `Name`, `Description`, `First Resources`, `Second
 (62, 'Industrial zones', 'Group your industry for easier management', '10000 knowledge', '20000 gold', '2000 steel', '1000 concrete', 0, '', 'Coal powerplants'),
 (63, 'Boilers', 'Heat up water with electricity', '5500 knowledge', '1000 steel', '3000 gold', '', 1, '+5 productivity', 'Steam machines'),
 (64, 'Steam machinery', 'Make more machines in this factory', '7000 knowledge', '8000 gold', '2000 steel', '2500 coal', 0, '', 'Factories'),
-(65, 'Science labors', 'Resarch new thechnologies here', '15000 knowledge', '25000 gold', '1500 concrete', '', 0, '', 'Industrial zones/Steam machinery');
+(65, 'Science labors', 'Resarch new thechnologies here', '15000 knowledge', '25000 gold', '1500 concrete', '', 0, '', 'Industrial zones/Steam machinery'),
+(66, 'Electronics', 'Force a crystal to do math for you', '25000 knowledge', '10000 copper', '30000 gold', '', 0, '', 'Police offices/Diplomacy/Warehouses/Science labors');
 
 -- --------------------------------------------------------
 
@@ -604,7 +605,7 @@ ALTER TABLE `opponents`
 -- AUTO_INCREMENT a táblához `researchs`
 --
 ALTER TABLE `researchs`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT a táblához `resources`
