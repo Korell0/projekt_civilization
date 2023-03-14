@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Már 14. 08:41
+-- Létrehozás ideje: 2023. Már 14. 09:28
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -358,7 +358,17 @@ INSERT INTO `researchs` (`ID`, `Name`, `Description`, `First Resources`, `Second
 (63, 'Boilers', 'Heat up water with electricity', '5500 knowledge', '1000 steel', '3000 gold', '', 1, '+5 productivity', 'Steam machines'),
 (64, 'Steam machinery', 'Make more machines in this factory', '7000 knowledge', '8000 gold', '2000 steel', '2500 coal', 0, '', 'Factories'),
 (65, 'Science labors', 'Resarch new thechnologies here', '15000 knowledge', '25000 gold', '1500 concrete', '', 0, '', 'Industrial zones/Steam machinery'),
-(66, 'Electronics', 'Force a crystal to do math for you', '25000 knowledge', '10000 copper', '30000 gold', '', 0, '', 'Police offices/Diplomacy/Warehouses/Science labors');
+(66, 'Electronics', 'Force a crystal to do math for you', '25000 knowledge', '10000 copper', '30000 gold', '', 0, '', 'Police offices/Diplomacy/Warehouses/Science labors'),
+(67, 'Electric machines', 'Switch from steam operated machines to electricity', '28000 knowledge', '10000 copper', '30000 gold', '', 0, '', 'Electronics'),
+(68, 'Heat generator', 'Make more heat with electricity', '30000 knowledge', '8000 copper', '25000 gold', '800 coal', 1, '+5 MV', 'Electric machines'),
+(69, 'Windmmills', 'Make clean renuvable electricity', '33000 knowledge', '5500 steel', '', '', 0, '', 'Electric machines'),
+(70, 'Vacuum pacs', 'Seal food more securely', '35000 knowledge', '35000 gold', '', '', 1, '+20 food', 'Windmills'),
+(71, 'Computers', 'The best invention since sliced bread', '30000 knowledge', '10000 copper', '', '', 0, '', 'Electronics'),
+(72, 'Country', 'Unite the cities around you to form a country', '40000 knowledge', '', '', '', 0, '', 'Computers'),
+(73, 'Arpanet', 'The forerunner of the internet', '50000 knowledge', '40000 gold', '', '', 0, '', 'Country'),
+(74, 'Serial production', 'You can make products faster now', '28000 knowledge', '5000 steel', '30000 gold', '', 0, '', 'Electronics'),
+(75, 'Conveyor systems', 'Make moving products way faster and easier', '30000 knowledge', '15000 copper', '40000 gold', '', 0, '', 'Serial production'),
+(76, 'CNC machines', 'Controll your machines with a computer', '35000 knowledge', '10000 steel', '', '', 0, '', 'Serial production');
 
 -- --------------------------------------------------------
 
@@ -605,7 +615,7 @@ ALTER TABLE `opponents`
 -- AUTO_INCREMENT a táblához `researchs`
 --
 ALTER TABLE `researchs`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT a táblához `resources`
