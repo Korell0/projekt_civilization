@@ -1,5 +1,18 @@
 app.controller('ResourceCtrl',function($scope,$rootScope, DB){
     $scope.resources = [];
+    
+    DB.select('resources_by_user', 'UserID', $rootScope.User.ID).then(function(res){
+        if(res.data.length === 0){
+            for(i = 0; i < 2; i++){
+                let data ={
+                    ResourceID: i,
+                    UserID: $rootScope.User.ID,
+                    Quantity: 0                
+                }
+                DB.insert('resources_by_user', data)
+            }
+        }
+    })
 
     DB.selectAll('resources').then(function(res){
         $scope.all = [];

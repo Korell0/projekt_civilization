@@ -1,5 +1,6 @@
 app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
     $scope.buttons = $rootScope.buttons
+    $scope.deletes = [];
 
     $interval(function(){   
         for(i = 0; i < $rootScope.buttons.length; i++){
@@ -95,8 +96,10 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                     $rootScope.RNAI = $rootScope.RNAI + 6;
                     $rootScope.DNAI = $rootScope.DNAI + 2;
                     $rootScope.buttons[idx].clicked = true;
+                    if($rootScope.buttons[idx].Specie != 0) $rootScope.Specie = ""+$rootScope.buttons[idx].Specie+""; 
                     //$rootScope.resources[1].quantity -= $rootScope.buttons[idx].DNA;
                     if($rootScope.buttons[idx].Name === "Sentience"){
+                        DB.insert()
                         ToCreature();
                     }
                 }
@@ -110,13 +113,23 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
             Email: $rootScope.User.Email,
             Specie: $rootScope.Specie
         }
-        DB.update("users", $rootScope.User.ID, data)
-        DB.delete("resources_by_user","UserID", $rootScope.User.ID)
+        
+        DB.selectAll('resources_by_user').then(function(res){
+            res.data.forEach(element => {
+                if(element.UserID === $rootScope.User.ID){
+                    $scope.deletes.push(element.ID);
+                }
+            });
+        })
         $rootScope.resources = [];
-        DB.selectAll("resources").then(function(res){
+        DB.update('users', $rootScope.User.ID, data)
+        DB.selectAll('resources').then(function(res){
             for(i = 3; i < 7; i++){
                 $rootScope.resources.push(res.data[i]);
             }
+        })
+        $scope.deletes.forEach(element => {
+            DB.delete('resources_by_user', element)
         })
     }
 });
