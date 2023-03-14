@@ -2,24 +2,21 @@ let app = new angular.module('Civilization',['ngRoute'])
 
 app.run(function($rootScope, DB){
     $rootScope.User = JSON.parse(window.sessionStorage['civilization'])
-    $rootScope.Specie = "";
+    $rootScope.govs = [];
+    $rootScope.buttons = [];
     if($rootScope.User.Specie === "0"){
         $rootScope.Resources = [];
         $rootScope.govs = [];
         $rootScope.RNAI = 0;
         $rootScope.DNAI = 0;
         $rootScope.Specie = "0";
-        $rootScope.buttons = [];
         $rootScope.storage = 100;
-        DB.selectAll("Resources").then(function(res){
-            res.data.forEach(resource => {
-                $rootScope.Resources.push(resource)
-            });
-        })
-        DB.selectAll("government").then(function(res){
-            res.data.forEach(gov => {
-                $rootScope.govs.push(gov)
-            });
+        DB.selectAll("resources").then(function(res){
+            for(i = 0; i < 2; i++){
+                    $rootScope.resource = res.data[i];
+                    $rootScope.resource.quantity = 0;
+                    $rootScope.Resources.push($rootScope.resource)
+            }
         })
         DB.selectAll("Cell_evolution").then(function(res){
             res.data.forEach(element => {
@@ -39,15 +36,20 @@ app.run(function($rootScope, DB){
         })
     }
     else{
-            if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
-            if(  $rootScope.User.Specie === "3") $rootScope.Specie = "Mammal";
-            if(  $rootScope.User.Specie === "4") $rootScope.Specie = "Reptilian";
-            if(  $rootScope.User.Specie === "5") $rootScope.Specie = "Arachnid";
-            if(  $rootScope.User.Specie === "6") $rootScope.Specie = "Aquatic";
-            if(  $rootScope.User.Specie === "7") $rootScope.Specie = "Plantoid";
-            if(  $rootScope.User.Specie === "8") $rootScope.Specie = "Fungoid";
-            if(  $rootScope.User.Specie === "9") $rootScope.Specie = "Lithoid";
-            if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
+        if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
+        if(  $rootScope.User.Specie === "3") $rootScope.Specie = "Mammal";
+        if(  $rootScope.User.Specie === "4") $rootScope.Specie = "Reptilian";
+        if(  $rootScope.User.Specie === "5") $rootScope.Specie = "Arachnid";
+        if(  $rootScope.User.Specie === "6") $rootScope.Specie = "Aquatic";
+        if(  $rootScope.User.Specie === "7") $rootScope.Specie = "Plantoid";
+        if(  $rootScope.User.Specie === "8") $rootScope.Specie = "Fungoid";
+        if(  $rootScope.User.Specie === "9") $rootScope.Specie = "Lithoid";
+        if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
+        DB.selectAll("government").then(function(res){
+            res.data.forEach(gov => {
+                $rootScope.govs.push(gov)
+            });
+        })
     }
     $rootScope.Logout = function(){
         $rootScope.User = null;

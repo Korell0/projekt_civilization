@@ -16,7 +16,8 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                     let data = {
                         Username: $scope.user.name,
                         Password: CryptoJS.SHA1($scope.user.password).toString(),
-                        Email: $scope.user.email
+                        Email: $scope.user.email,
+                        Specie: "0"
                     }
                     DB.insert('users', data).then(function(res) {
                         if (res.data.affectedRows != 0) {

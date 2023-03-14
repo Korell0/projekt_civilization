@@ -1,6 +1,6 @@
 <div class="container">
 <ul class="row" >
-    <li class="col-lg-2 ms-5" ng-repeat="button in buttons" ng-if="!button.hidden">
+    <li class="col-lg-2 ms-5" ng-repeat="button in buttons" ng-if="!button.hidden && !button.evolved">
     <button type="button"class="toolTip btn btn-dark" id="{{button.Name}}" ng-click="Click(id, $index)" >
         {{button.Name}}
         <span class="toolTiptext flex-container">{{button.Description}} <br>

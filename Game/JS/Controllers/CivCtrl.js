@@ -1,5 +1,6 @@
 app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
     $scope.buttons = $rootScope.buttons
+    $scope.evolved = [];
     $scope.deletes = [];
 
     $interval(function(){   
@@ -7,9 +8,9 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
             if($rootScope.buttons[i].RNA > 0){
                 if($rootScope.buttons[i].DNA > 0){
                     if(($rootScope.buttons[i].RNA / 2 < $rootScope.resources[0].quantity && $rootScope.buttons[i].DNA / 2 < $rootScope.resources[1].quantity)){
-                        $rootScope.buttons[i].hidden = false;
                         if($rootScope.buttons[i].clicked === true){
-                            $rootScope.buttons[i].hidden = true;
+                            $rootScope.buttons[i].evolved = true;
+                            $scope.evolved.push[buttons[i]];
                         }
                     }
                 }
@@ -18,9 +19,38 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                 if($rootScope.buttons[i].DNA / 2 < $rootScope.resources[0].quantity){
                     $rootScope.buttons[i].hidden = false;
                     if($rootScope.buttons[i].clicked === true){
+                        $rootScope.buttons[i].evolved = true;
+                    }
+                }
+            }
+            for(j = 0; j < $scope.evolved.length; j++){
+                if($scope.evolved[j].Name != $rootScope.buttons[i].Name){
+                    $rootScope.buttons[i].hidden = true;
+                }
+                else{
+                    $rootScope.buttons[i].hidden = false;
+                    break;
+                }
+            }
+        }
+        if($scope.evolved.length != 0){
+            for(i = 0; i < $rootScope.buttons.length; i++){
+                for(j = 0; j < $scope.evolved.length; j++){
+                    if($rootScope.buttons[i].Evolution_req === $scope.evolved[j].Name && !$rootScope.buttons[i].evolved){
+                        $rootScope.buttons[i].hidden = false;                    
+                    }
+                    else{
                         $rootScope.buttons[i].hidden = true;
                     }
                 }
+            }
+        }
+        else{
+            for(i = 0; i < $rootScope.buttons.length; i++){
+                if($rootScope.buttons[i].Evolution_req != 0){
+                    $rootScope.buttons[i].hidden = false;
+                }
+                $rootScope.buttons[i].hidden = true;
             }
         }
         if($rootScope.resources[0].quantity + $rootScope.RNAI <= $rootScope.resources[0].storage){
