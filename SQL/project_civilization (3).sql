@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Már 14. 08:20
+-- Létrehozás ideje: 2023. Már 14. 08:26
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -354,7 +354,10 @@ INSERT INTO `researchs` (`ID`, `Name`, `Description`, `First Resources`, `Second
 (59, 'Coal powerplant', 'Make electricity with burning coal', '7000 knowledge', '8000 gold', '2500 copper', '', 0, '', 'Factories'),
 (60, 'Public lighting', 'Illuminate the streets using the power of electricity', '9000 knowledge', '15000 gold', '2000 steel', '', 1, '+3000 storage', 'Coal powerplants'),
 (61, 'Warehouses', 'A bigger safet storage for your resources', '12000 knowledge', '20000 steel', '1250 concrete', '', 0, '', 'Public lighting'),
-(62, 'Industrial zones', 'Group your industry for easier management', '10000 knowledge', '20000 gold', '2000 steel', '1000 concrete', 0, '', 'Coal powerplants');
+(62, 'Industrial zones', 'Group your industry for easier management', '10000 knowledge', '20000 gold', '2000 steel', '1000 concrete', 0, '', 'Coal powerplants'),
+(63, 'Boilers', 'Heat up water with electricity', '5500 knowledge', '1000 steel', '3000 gold', '', 1, '+5 productivity', 'Steam machines'),
+(64, 'Steam machinery', 'Make more machines in this factory', '7000 knowledge', '8000 gold', '2000 steel', '2500 coal', 0, '', 'Factories'),
+(65, 'Science labors', 'Resarch new thechnologies here', '15000 knowledge', '25000 gold', '1500 concrete', '', 0, '', 'Industrial zones/Steam machinery');
 
 -- --------------------------------------------------------
 
@@ -601,7 +604,7 @@ ALTER TABLE `opponents`
 -- AUTO_INCREMENT a táblához `researchs`
 --
 ALTER TABLE `researchs`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT a táblához `resources`
