@@ -1,42 +1,14 @@
 app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
-    $scope.buttons = $rootScope.buttons
     $scope.evolved = [];
+    $scope.visibled = [];
     $scope.deletes = [];
 
     $interval(function(){   
-        for(i = 0; i < $rootScope.buttons.length; i++){
-            if($rootScope.buttons[i].RNA > 0){
-                if($rootScope.buttons[i].DNA > 0){
-                    if(($rootScope.buttons[i].RNA / 2 < $rootScope.resources[0].quantity && $rootScope.buttons[i].DNA / 2 < $rootScope.resources[1].quantity)){
-                        if($rootScope.buttons[i].clicked === true){
-                            $rootScope.buttons[i].evolved = true;
-                            $scope.evolved.push[buttons[i]];
-                        }
-                    }
-                }
-            }
-            else{
-                if($rootScope.buttons[i].DNA / 2 < $rootScope.resources[0].quantity){
-                    $rootScope.buttons[i].hidden = false;
-                    if($rootScope.buttons[i].clicked === true){
-                        $rootScope.buttons[i].evolved = true;
-                    }
-                }
-            }
-            for(j = 0; j < $scope.evolved.length; j++){
-                if($scope.evolved[j].Name != $rootScope.buttons[i].Name){
-                    $rootScope.buttons[i].hidden = true;
-                }
-                else{
-                    $rootScope.buttons[i].hidden = false;
-                    break;
-                }
-            }
-        }
         if($scope.evolved.length != 0){
             for(i = 0; i < $rootScope.buttons.length; i++){
                 for(j = 0; j < $scope.evolved.length; j++){
                     if($rootScope.buttons[i].Evolution_req === $scope.evolved[j].Name && !$rootScope.buttons[i].evolved){
+                        $scope.visibled.push($rootScope.buttons[i]);
                         $rootScope.buttons[i].hidden = false;                    
                     }
                     else{
@@ -47,10 +19,12 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
         }
         else{
             for(i = 0; i < $rootScope.buttons.length; i++){
-                if($rootScope.buttons[i].Evolution_req != 0){
+                if($rootScope.buttons[i].Evolution_req == "0"){
                     $rootScope.buttons[i].hidden = false;
                 }
-                $rootScope.buttons[i].hidden = true;
+                else{
+                    $rootScope.buttons[i].hidden = true;
+                }
             }
         }
         if($rootScope.resources[0].quantity + $rootScope.RNAI <= $rootScope.resources[0].storage){
@@ -76,8 +50,10 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
             }
             if($rootScope.buttons[idx].Name === "DNA"){
                 if($rootScope.resources[0].quantity >= 2){
-                    $rootScope.resources[0].quantity = $rootScope.resources[0].quantity - 2;
-                    $rootScope.resources[1].quantity++;
+                    if($rootScope.resources[1].quantity < $rootScope.resources[1].storage){
+                        $rootScope.resources[0].quantity = $rootScope.resources[0].quantity - 2;
+                        $rootScope.resources[1].quantity++;
+                    }
                 }
             }
         }
@@ -126,10 +102,17 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                     $rootScope.RNAI = $rootScope.RNAI + 6;
                     $rootScope.DNAI = $rootScope.DNAI + 2;
                     $rootScope.buttons[idx].clicked = true;
+                    for(i = 0; i < $scope.visibled.length; i++){
+                        for(j = 0; j< $rootScope.buttons.length; j++){
+                            if($scope.visibled[i].Name === $rootScope.buttons[j].Name){
+                                $rootScope.buttons[j].hidden = true;
+                            }
+                        }
+                    }
+                    $scope.evolved.push(buttons[idx]);
                     if($rootScope.buttons[idx].Specie != 0) $rootScope.Specie = ""+$rootScope.buttons[idx].Specie+""; 
                     //$rootScope.resources[1].quantity -= $rootScope.buttons[idx].DNA;
                     if($rootScope.buttons[idx].Name === "Sentience"){
-                        DB.insert()
                         ToCreature();
                     }
                 }
@@ -143,23 +126,12 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
             Email: $rootScope.User.Email,
             Specie: $rootScope.Specie
         }
-        
-        DB.selectAll('resources_by_user').then(function(res){
-            res.data.forEach(element => {
-                if(element.UserID === $rootScope.User.ID){
-                    $scope.deletes.push(element.ID);
-                }
-            });
-        })
         $rootScope.resources = [];
         DB.update('users', $rootScope.User.ID, data)
         DB.selectAll('resources').then(function(res){
             for(i = 3; i < 7; i++){
                 $rootScope.resources.push(res.data[i]);
             }
-        })
-        $scope.deletes.forEach(element => {
-            DB.delete('resources_by_user', element)
         })
     }
 });
