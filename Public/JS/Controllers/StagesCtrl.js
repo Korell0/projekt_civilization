@@ -3,19 +3,22 @@ app.controller('StagesCtrl',function($scope){
         {
             Title: "Cell Stage",
             Firstrow: "Evolution routes",
-            Secondrow: "Each evolution route have 4 phase"
+            Secondrow: "Each evolution route have 4 phase",
+            PictureName: "single-cell.jpg"
         },
         {
             Title: "Creature Stage",
             Firstrow: "Basic management",
             Secondrow: "Skills to unlock",
-            Thirdrow: "Small herd of species"
+            Thirdrow: "Small herd of species",
+            PictureName: "Public/img/creture.jpg"
         },
         {
             Title: "Tribal Stage",
             Firstrow: "Small settlement",
             Secondrow: "Job management",
-            Thirdrow: "Research"
+            Thirdrow: "Research",
+            PictureName: "Public/img/tribal.jpg"
         }
     ]
 
