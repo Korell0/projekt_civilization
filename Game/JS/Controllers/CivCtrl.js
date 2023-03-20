@@ -4,22 +4,35 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
     $scope.deletes = [];
 
     $interval(function(){   
+        console.log($scope.evolved.length)
         if($scope.evolved.length != 0){
             for(i = 0; i < $rootScope.buttons.length; i++){
                 for(j = 0; j < $scope.evolved.length; j++){
-                    if($rootScope.buttons[i].Evolution_req === $scope.evolved[j].Name && !$rootScope.buttons[i].evolved){
+                    if(($rootScope.buttons[i].Evolution_req === $scope.evolved[j].Name && !$rootScope.buttons[i].evolved)){
                         $scope.visibled.push($rootScope.buttons[i]);
                         $rootScope.buttons[i].hidden = false;                    
                     }
+                    else if($rootScope.buttons[i].Evolution_req === "0"){
+                        $rootScope.buttons[i].hidden = false;                    
+                    }
                     else{
-                        $rootScope.buttons[i].hidden = true;
+                        if($rootScope.buttons[i].Evolution_req.include("/")){
+                            for(e = 0; e < $rootScope.buttons[i].Evolution_req.split("/").length; e++){
+                                if($scope.evolved[j].Name === $rootScope.buttons[i].Evolution_req.split("/")[e]){
+                                    $rootScope.buttons[i].hidden = false;
+                                }
+                            }
+                        }
+                        else{
+                            $rootScope.buttons[i].hidden = true;
+                        }
                     }
                 }
             }
         }
         else{
             for(i = 0; i < $rootScope.buttons.length; i++){
-                if($rootScope.buttons[i].Evolution_req == "0"){
+                if($rootScope.buttons[i].Evolution_req === "0"){
                     $rootScope.buttons[i].hidden = false;
                 }
                 else{
@@ -109,7 +122,7 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                             }
                         }
                     }
-                    $scope.evolved.push(buttons[idx]);
+                    $scope.evolved.push($rootScope.buttons[idx]);
                     if($rootScope.buttons[idx].Specie != 0) $rootScope.Specie = ""+$rootScope.buttons[idx].Specie+""; 
                     //$rootScope.resources[1].quantity -= $rootScope.buttons[idx].DNA;
                     if($rootScope.buttons[idx].Name === "Sentience"){
