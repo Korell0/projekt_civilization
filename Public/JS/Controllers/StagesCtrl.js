@@ -2,66 +2,73 @@ app.controller('StagesCtrl',function($scope){
     $scope.Stages =[
         {
             Title: "Cell Stage",
-            Firstrow: "Evolution routes",
-            Secondrow: "Each evolution route have 4 phase",
-            PictureName: "single-cell.jpg"
+            Firstrow: "Start life on a new planet",
+            Secondrow: "Choose your own route of evolution",
+            PictureName: "../Public/img/singlecell.png"
         },
         {
             Title: "Creature Stage",
-            Firstrow: "Basic management",
-            Secondrow: "Skills to unlock",
-            Thirdrow: "Small herd of species",
-            PictureName: "Public/img/creture.jpg"
+            Firstrow: "Go inland and evolve",
+            Secondrow: "Manage a small herd of creatures",
+            Thirdrow: "Learn to survive",
+            PictureName: "../Public/img/creture.png"
         },
         {
             Title: "Tribal Stage",
-            Firstrow: "Small settlement",
-            Secondrow: "Job management",
-            Thirdrow: "Research",
-            PictureName: "Public/img/tribal.jpg"
+            Firstrow: "Grow your settlement",
+            Secondrow: "Resarch and develop new technologies",
+            Thirdrow: "Start a civilization",
+            PictureName: "../Public/img/tribal.png"
         }
     ]
 
     $scope.Eras = [
         {
             Title: "Classical Era",
-            Firstrow: "Money and agriculture",
-            Secondrow: "Hostile cities",
-            Thirdrow: "Wonders"
+            Firstrow: "Expand your territories",
+            Secondrow: "Conquer or parley with other states",
+            Thirdrow: "Create the wonders of the world",
+            PictureName: "../Public/img/ancient.png"
         },
         {
             Title: "Medieval Era",
-            Firstrow: "Nobility",
-            Secondrow: "Defensive buildings"
+            Firstrow: "Harness the power of steel and stone",
+            Secondrow: "Defend your people",
+            PictureName: "../Public/img/medieval.png"
         },
         {
             Title: "Industrial Era",
-            Firstrow: "Coal mining",
-            Secondrow: "Railway",
-            Thirdrow: "Coal industry/pollution"
+            Firstrow: "Harness the power of steam",
+            Secondrow: "Make leaps in thechnology",
+            Thirdrow: "Connect your empire",
+            PictureName: "../Public/img/industrial.jpg"
         },
         {
             Title: "Modern Era",
-            Firstrow: "Buy cities",
-            Secondrow: "Country system",
-            Thirdrow: "Electronics"
+            Firstrow: "Create your own country",
+            Secondrow: "Make others submit to you",
+            Thirdrow: "Use the wonders of electricity",
+            PictureName: "../Public/img/modern.png"
         },
         {
             Title: "Space Era",
-            Firstrow: "colonize planets",
-            Secondrow: "Satellites and stations",
+            Firstrow: "Leave your little planet",
+            Secondrow: "Eplore your solar system",
+            PictureName: "../Public/img/spaceship.png"
         },
         {
             Title: "Interstellar Era",
-            Firstrow: "colonize systems",
-            Secondrow: "alien species",
-            Thirdrow: "Megastuctures"
+            Firstrow: "Leave your sytem and eplore the galaxy",
+            Secondrow: "Meet alien species",
+            Thirdrow: "Build the first megastuctures",
+            PictureName: "../Public/img/interstellar.png"
         },
         {
             Title: "Intergalactic Era",
             Firstrow: "Explore new galaxies",
-            Secondrow: "Build mass relays",
-            Thirdrow: "Colonize systems in distant galaxies"
+            Secondrow: "Your empire knows no bounds",
+            Thirdrow: "Become the greatest Civilization",
+            PictureName: "../Public/img/intergalactic.png"
         }
 
     ]

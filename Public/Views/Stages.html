@@ -7,13 +7,13 @@
                 <p>{{item.Firstrow}}</p>
                 <p>{{item.Secondrow}}</p>
                 <p>{{item.Thirdrow}}</p>
-                <img ng-src="{{item.PictureName}}" alt="kep">
+                <img ng-src='{{item.PictureName}}' alt="kep">
         </div>
     </div>
 </div>
 <h1 class="mb-5">Eras</h1>
-<div class="container row ms-5">
-    <div class="col-lg-4 mb-3" ng-repeat="item in Eras" >
+<div class="container row mb-5 ms-5">
+    <div class="col-lg-4" ng-repeat="item in Eras" >
         <div class="card">
             <h3>{{item.Title}}</h3>
             <hr>
@@ -21,6 +21,7 @@
                 <li>{{item.Firstrow}}</li>
                 <li>{{item.Secondrow}}</li>
                 <li>{{item.Thirdrow}}</li>
+                <img ng-src='{{item.PictureName}}' alt="kep" height="350" width="300">
             </ul>
         </div>
     </div>
