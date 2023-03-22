@@ -4,53 +4,57 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
     $scope.deletes = [];
 
     $interval(function(){   
-        console.log($scope.evolved.length)
-        if($scope.evolved.length != 0){
-            for(i = 0; i < $rootScope.buttons.length; i++){
-                for(j = 0; j < $scope.evolved.length; j++){
-                    if(($rootScope.buttons[i].Evolution_req === $scope.evolved[j].Name && !$rootScope.buttons[i].evolved)){
-                        $scope.visibled.push($rootScope.buttons[i]);
-                        $rootScope.buttons[i].hidden = false;                    
-                    }
-                    else if($rootScope.buttons[i].Evolution_req === "0"){
-                        $rootScope.buttons[i].hidden = false;                    
-                    }
-                    else{
-                        if($rootScope.buttons[i].Evolution_req.include("/")){
-                            for(e = 0; e < $rootScope.buttons[i].Evolution_req.split("/").length; e++){
-                                if($scope.evolved[j].Name === $rootScope.buttons[i].Evolution_req.split("/")[e]){
-                                    $rootScope.buttons[i].hidden = false;
-                                }
-                            }
+        if($rootScope.User.Specie === 0){
+            if($scope.evolved.length != 0){
+                for(i = 0; i < $rootScope.buttons.length; i++){
+                    for(j = 0; j < $scope.evolved.length; j++){
+                        if(($rootScope.buttons[i].Evolution_req === $scope.evolved[j].Name && !$rootScope.buttons[i].evolved)){
+                            $scope.visibled.push($rootScope.buttons[i]);
+                            $rootScope.buttons[i].hidden = false;                    
+                        }
+                        else if($rootScope.buttons[i].Evolution_req === "0"){
+                            $rootScope.buttons[i].hidden = false;                    
                         }
                         else{
-                            $rootScope.buttons[i].hidden = true;
+                            if($rootScope.buttons[i].Evolution_req.includes("/")){
+                                for(e = 0; e < $rootScope.buttons[i].Evolution_req.split("/").length; e++){
+                                    if($scope.evolved[j].Name === $rootScope.buttons[i].Evolution_req.split("/")[e]){
+                                        $rootScope.buttons[i].hidden = false;
+                                    }
+                                }
+                            }
+                            else{
+                                $rootScope.buttons[i].hidden = true;
+                            }
                         }
                     }
                 }
             }
-        }
-        else{
-            for(i = 0; i < $rootScope.buttons.length; i++){
-                if($rootScope.buttons[i].Evolution_req === "0"){
-                    $rootScope.buttons[i].hidden = false;
-                }
-                else{
-                    $rootScope.buttons[i].hidden = true;
+            else{
+                for(i = 0; i < $rootScope.buttons.length; i++){
+                    if($rootScope.buttons[i].Evolution_req === "0"){
+                        $rootScope.buttons[i].hidden = false;
+                    }
+                    else{
+                        $rootScope.buttons[i].hidden = true;
+                    }
                 }
             }
-        }
-        if($rootScope.resources[0].quantity + $rootScope.RNAI <= $rootScope.resources[0].storage){
-            $rootScope.resources[0].quantity = $rootScope.resources[0].quantity + $rootScope.RNAI;
+            if($rootScope.resources[0].quantity + $rootScope.RNAI <= $rootScope.resources[0].storage){
+                $rootScope.resources[0].quantity = $rootScope.resources[0].quantity + $rootScope.RNAI;
+            }
+            else{
+                $rootScope.resources[0].quantity = $rootScope.resources[0].storage;
+            }
+            if($rootScope.resources[1].quantity + $rootScope.DNAI <= $rootScope.resources[1].storage){
+                $rootScope.resources[1].quantity = $rootScope.resources[1].quantity + $rootScope.DNAI;
+            }
+            else{
+                $rootScope.resources[1].quantity = $rootScope.resources[1].storage;
+            }
         }
         else{
-            $rootScope.resources[0].quantity = $rootScope.resources[0].storage;
-        }
-        if($rootScope.resources[1].quantity + $rootScope.DNAI <= $rootScope.resources[1].storage){
-            $rootScope.resources[1].quantity = $rootScope.resources[1].quantity + $rootScope.DNAI;
-        }
-        else{
-            $rootScope.resources[1].quantity = $rootScope.resources[1].storage;
+            
         }
     }, 1000)
 
