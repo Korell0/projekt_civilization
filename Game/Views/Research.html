@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-lg-3 card ms-5 toolTip text-center pt-1 pb-1" ng-repeat="tech in researchs">
+        {{tech.Name}}
+        <span class="toolTiptext text-justify flex-container">{{tech.Description}} <br>
+            <hr class="m-0">
+            <p class="m-0" ng-if=" tech.First_Resources != 0 " >{{tech.First_Resources}}</p>
+            <hr class="m-0" ng-if="tech.Second_Resources != 0">
+            <p class="m-0" ng-if="tech.Second_Resources != 0">{{tech.Second_Resources}}</p>
+            <hr class="m-0" ng-if="tech.Third_Resources != 0">
+            <p class="m-0" ng-if="tech.Third_Resources != 0">{{tech.Third_Resources}}</p>
+            <hr class="m-0" ng-if="tech.Fourth_Resources != 0">
+            <p class="m-0" ng-if="tech.Fourth_Resources != 0">{{tech.Fourth_Resources}}</p>
+          </span>
+    </div>
+</div>

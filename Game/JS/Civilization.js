@@ -4,9 +4,10 @@ app.run(function($rootScope, DB){
     $rootScope.User = JSON.parse(window.sessionStorage['civilization'])
     $rootScope.govs = [];
     $rootScope.buttons = [];
+    $rootScope.researchs = [];
+    $rootScope.buildings = [];
     if($rootScope.User.Specie === "0"){
         $rootScope.Resources = [];
-        $rootScope.govs = [];
         $rootScope.RNAI = 0;
         $rootScope.DNAI = 0;
         $rootScope.Specie = "0";
@@ -47,9 +48,19 @@ app.run(function($rootScope, DB){
         if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
         DB.selectAll("government").then(function(res){
             res.data.forEach(gov => {
-                $rootScope.govs.push(gov)
+                $rootScope.govs.push(gov);
             });
-        })
+        });
+        DB.selectAll("researchs").then(function(res){
+            res.data.forEach(tech =>{
+                $rootScope.researchs.push(tech);
+            });
+        });
+        DB.selectAll("buildings").then(function(res){
+            res.data.forEach(building =>{
+                $rootScope.buildings.push(building);
+            });
+        });
     }
     $rootScope.Logout = function(){
         $rootScope.User = null;
