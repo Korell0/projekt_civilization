@@ -1,5 +1,5 @@
 <h1 class="mb-5">Stages</h1>
-<div class="container row mb-5 ms-5">
+<div class="container row mb-5 ms-2">
     <div class="col-lg-4" ng-repeat="item in Stages">
         <div class="card">
             <h3>{{item.Title}}</h3>
@@ -12,7 +12,7 @@
     </div>
 </div>
 <h1 class="mb-5">Eras</h1>
-<div class="container row mb-5 ms-5">
+<div class="container row mb-5 ms-2">
     <div class="col-lg-4" ng-repeat="item in Eras" >
         <div class="card">
             <h3>{{item.Title}}</h3>
@@ -21,7 +21,10 @@
                 <li>{{item.Firstrow}}</li>
                 <li>{{item.Secondrow}}</li>
                 <li>{{item.Thirdrow}}</li>
-                <img ng-src='{{item.PictureName}}' alt="kep" height="350" width="300">
+                <div class="middle">
+                    <img class="midle" ng-src='{{item.PictureName}}' alt="kep" height="100%" width="100%">
+                </div>
+               
             </ul>
         </div>
     </div>
