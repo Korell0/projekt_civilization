@@ -1,7 +1,8 @@
-app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
+app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
     $scope.evolved = [];
     $scope.visibled = [];
     $scope.deletes = [];
+    $scope.buildings = $rootScope.buildings;
 
     $interval(function(){   
         if($rootScope.User.Specie === 0){
@@ -128,7 +129,7 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
                     }
                     $scope.evolved.push($rootScope.buttons[idx]);
                     if($rootScope.buttons[idx].Specie != 0) $rootScope.Specie = ""+$rootScope.buttons[idx].Specie+""; 
-                    //$rootScope.resources[1].quantity -= $rootScope.buttons[idx].DNA;
+                    $rootScope.resources[1].quantity -= $rootScope.buttons[idx].DNA;
                     if($rootScope.buttons[idx].Name === "Sentience"){
                         ToCreature();
                     }
@@ -143,13 +144,7 @@ app.controller('CivCtrl',function($scope,$rootScope, DB, $interval){
             Email: $rootScope.User.Email,
             Specie: $rootScope.Specie
         }
-        $rootScope.resources = [];
         DB.update('users', $rootScope.User.ID, data)
-        DB.selectAll('resources').then(function(res){
-            for(i = 3; i < 7; i++){
-                $rootScope.resources.push(res.data[i]);
-            }
-        })
     }
 });
 

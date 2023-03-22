@@ -1,11 +1,23 @@
 <div class="container">
-<ul class="row" >
+<ul class="row" ng-if="Specie === 0">
     <li class="col-lg-2 ms-5" ng-repeat="button in buttons" ng-if="!button.hidden && !button.evolved">
     <button type="button"class="toolTip btn btn-dark" id="{{button.Name}}" ng-click="Click(id, $index)" >
         {{button.Name}}
         <span class="toolTiptext flex-container">{{button.Description}} <br>
           <p ng-if=" button.RNA != 0 " >{{button.RNA}} RNA</p> 
           <p ng-if="button.DNA != 0">{{button.DNA}} DNA</p>
+        </span>
+        </button> 
+        </li>
+  </ul>
+  <ul class="row" ng-if="!Specie === 0">
+    <li class="col-lg-2 ms-5" ng-repeat="building in buildings">
+    <button type="button" class="toolTip btn btn-dark" id="{{building.Name}}" ng-click="Click(id, $index)" >
+        {{building.Name}}
+        <span class="toolTiptext flex-container">{{building.Description}} <br>
+          <p ng-if="building.First_Resources != null ">{{building.First_Resources}}</p> 
+          <p ng-if="building.Second_Resources != null ">{{building.Second_Resources}}</p>
+          <p ng-if="building.Third_Resources != null ">{{building.Third_Resources}}</p>
         </span>
         </button> 
         </li>

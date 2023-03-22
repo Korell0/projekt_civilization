@@ -6,11 +6,11 @@ app.run(function($rootScope, DB){
     $rootScope.buttons = [];
     $rootScope.researchs = [];
     $rootScope.buildings = [];
-    if($rootScope.User.Specie === "0"){
+    
+    if($rootScope.User.Specie === 0){
         $rootScope.Resources = [];
         $rootScope.RNAI = 0;
         $rootScope.DNAI = 0;
-        $rootScope.Specie = "0";
         $rootScope.storage = 100;
         DB.selectAll("resources").then(function(res){
             for(i = 0; i < 2; i++){
@@ -37,15 +37,14 @@ app.run(function($rootScope, DB){
         })
     }
     else{
-        if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
-        if(  $rootScope.User.Specie === "3") $rootScope.Specie = "Mammal";
-        if(  $rootScope.User.Specie === "4") $rootScope.Specie = "Reptilian";
-        if(  $rootScope.User.Specie === "5") $rootScope.Specie = "Arachnid";
-        if(  $rootScope.User.Specie === "6") $rootScope.Specie = "Aquatic";
-        if(  $rootScope.User.Specie === "7") $rootScope.Specie = "Plantoid";
-        if(  $rootScope.User.Specie === "8") $rootScope.Specie = "Fungoid";
-        if(  $rootScope.User.Specie === "9") $rootScope.Specie = "Lithoid";
-        if(  $rootScope.User.Specie === "2") $rootScope.Specie = "Avian";
+        if(  $rootScope.User.Specie === 2) $rootScope.Specie = "Avian";
+        if(  $rootScope.User.Specie === 3) $rootScope.Specie = "Mammal";
+        if(  $rootScope.User.Specie === 4) $rootScope.Specie = "Reptilian";
+        if(  $rootScope.User.Specie === 5) $rootScope.Specie = "Arachnid";
+        if(  $rootScope.User.Specie === 6) $rootScope.Specie = "Aquatic";
+        if(  $rootScope.User.Specie === 7) $rootScope.Specie = "Plantoid";
+        if(  $rootScope.User.Specie === 8) $rootScope.Specie = "Fungoid";
+        if(  $rootScope.User.Specie === 9) $rootScope.Specie = "Lithoid";
         DB.selectAll("government").then(function(res){
             res.data.forEach(gov => {
                 $rootScope.govs.push(gov);
@@ -57,6 +56,7 @@ app.run(function($rootScope, DB){
             });
         });
         DB.selectAll("buildings").then(function(res){
+            console.log()
             res.data.forEach(building =>{
                 $rootScope.buildings.push(building);
             });
