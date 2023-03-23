@@ -4,9 +4,10 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
     $scope.deletes = [];
     $scope.buildings = $rootScope.buildings;
     $scope.Specie = $rootScope.User.Specie;
+    console.log($scope.Specie);
 
     $interval(function(){   
-        if($rootScope.User.Specie === 0){
+        if($rootScope.User.Specie == "Cell"){
             if($scope.evolved.length != 0){
                 for(i = 0; i < $rootScope.buttons.length; i++){
                     for(j = 0; j < $scope.evolved.length; j++){

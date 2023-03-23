@@ -51,7 +51,7 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                 {
                     $rootScope.loggedUser = res.data[0];
                     sessionStorage.setItem('civilization', angular.toJson($rootScope.loggedUser));
-                    window.location.href = '../Game/index.html';
+                    window.location.href = 'Game.html';
                 }
             });
         }

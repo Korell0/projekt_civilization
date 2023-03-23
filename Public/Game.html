@@ -28,13 +28,13 @@
         <li class="nav-item">
           <a class="nav-link" href="#!/Settings">Settings</a>
         </li>
-        <li class="nav-item" ng-if="!rootScope.User.Specie === 0">
-          <span>{{Specie}}</span>
+        <li class="nav-item">
+          <span class="nav-link">{{Specie}}</span>
         </li>
         <li class="nav-item"><button class="btn btn-secondary" ng-click="Logout()">Logout</button></li>
       </ul>
 
-      <section ng-include="'Views/Resources.html'"></section>
+      <section ng-include="'Gameview/Resources.html'"></section>
       <section ng-view>
       </section>
 </body>
@@ -48,12 +48,11 @@
 <script src="JS/Civilization.js"></script>
 <script src="JS/dbFactory.js"></script>
 <!-- controllers -->
-<script src="JS/Controllers/SettingsCtrl.js"></script>
-<script src="JS/Controllers/SocietyCtrl.js"></script>
-<script src="JS/Controllers/MilitaryCtrl.js"></script>
-<script src="JS/Controllers/ResourceController.js"></script>
-<script src="JS/Controllers/CivCtrl.js"></script>
-<script src="JS/Controllers/StagesCtrl.js"></script>
-<script src="JS/Controllers/ResearchCtrl.js"></script>
+<script src="Controllers/SettingsCtrl.js"></script>
+<script src="Controllers/SocietyCtrl.js"></script>
+<script src="Controllers/MilitaryCtrl.js"></script>
+<script src="Controllers/ResourceController.js"></script>
+<script src="Controllers/CivCtrl.js"></script>
+<script src="Controllers/ResearchCtrl.js"></script>
 
 </html>
