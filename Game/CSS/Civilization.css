@@ -1,127 +1,134 @@
 body{
-    background-color: #323232;
-    color: #ffffff;
+background-color: #323232;
+color: #ffffff;
 }
 
 .nav{
-    background-color: #000000;
-    border-bottom: 1px solid #ffffff;
+background-color: #000000;
+border-bottom: 1px solid #ffffff;
 }
 .nav-item{
-    padding-left: 2%;
-    padding-right: 2%;
-    border-right: 1px solid #ffffff;
+padding-left: 2%;
+padding-right: 2%;
+border-right: 1px solid #ffffff;
 }
 .nav-link{
-    color: #ffffff;
+color: #ffffff;
 }
 .nav-link:hover{
-    color:blue;
+color:blue;
 }
 .LogReg{
-    margin-left: 3%;
+margin-left: 3%;
 }
 .LogRegBTN{
-    background-color: #4B4B5C;
-    border-radius: 25px;
+background-color: #4B4B5C;
+border-radius: 25px;
 }
 
 .card{
-    background-color: #252525;
-    margin-top: 1%;
-    margin-bottom: 1%;
-    color: #ffffff;
+background-color: #252525;
+margin-top: 1%;
+margin-bottom: 1%;
+margin-left: 0.5%;
+border: 1px solid #ffffff;
+box-shadow: inset 3px 3px 3px grey;
+color: #ffffff;
 }
 h3{
-    text-align: center;
-    color: #ffffff;
+text-align: center;
+color: #ffffff;
 }
 h1{
-    text-align: center;
-    color: #ffffff;
+text-align: center;
+color: #ffffff;
 }
 .Date{
-    font-size: 50%;
-    float: right;
-    font-weight:normal;
-    padding: 5px;
-    border-radius: 25px;
-    background-color: #4B4B5C;
+font-size: 50%;
+float: right;
+font-weight:normal;
+padding: 5px;
+border-radius: 25px;
+background-color: #4B4B5C;
 }
 .Stages{
-    background-color: #8D8D8D;
-    color: #ffffff;
+background-color: #8D8D8D;
+color: #ffffff;
 }
 th{
-    border: 1px solid gray;
-    text-align: center;
+border: 1px solid gray;
+text-align: center;
 }
 td{
-    border: 1px solid gray;
-    text-align: left;
+border: 1px solid gray;
+text-align: left;
 }
 li{
-    list-style: none;
-    color:aliceblue
+list-style: none;
+color:aliceblue
 }
 
 .Resources{
-    width: 20%;
-    float: left;
-    
+width: 20%;
+float: left;
+
 }
 .toolTip {
-    position: relative;
-    display: inline-block;
-    color: #ffffff !important;
-  }
-  
+position: relative;
+display: inline-block;
+color: #ffffff !important;
+}
+
 .toolTiptext {
-    display: none;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    display: flexbox;
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
-    top: 100%;
-    left: 50%;
-    margin-left: -60px;
-  }
-  
-  .toolTip:hover .toolTiptext {
-    display: block;
+display: none;
+width: 120px;
+background-color: black;
+color: #fff;
+text-align: center;
+border-radius: 6px;
+padding: 5px 0;
+display: flexbox;
+/* Position the tooltip */
+position: absolute;
+z-index: 1;
+top: 100%;
+left: 50%;
+margin-left: -60px;
+}
+
+.toolTip:hover .toolTiptext {
+display: block;
+border: 1px solid #ffffff;
+box-shadow: inset 10px 10px 10px rgb(56, 56, 56);
+}
+.modal-header{
+    background-color: #323232;
+    border: 1px solid #ffffff;
+    box-shadow: inset 10px 10px 10px grey;
+}
+.modal-body{
+    background-color: #000000;
     border: 1px solid #ffffff;
     box-shadow: inset 10px 10px 10px rgb(56, 56, 56);
-  }
-  .modal-header{
-      background-color: #323232;
-      border: 1px solid #ffffff;
-      box-shadow: inset 10px 10px 10px grey;
-  }
-  .modal-body{
-      background-color: #000000;
-      border: 1px solid #ffffff;
-      box-shadow: inset 10px 10px 10px rgb(56, 56, 56);
-  }
-  .list-group-item
-  {
-      background-color: #535353;
-  }
-  p
-  {
-      border-top: #ffffff;
-      border-bottom: #ffffff;
-  }
-  .btn{
-      border: 1px solid #ffffff;
-  }
-  .btn:hover{
-      background-color: rgb(181, 199, 255) !important;
-      color: black !important;
-      border: 1px solid white !important;
-  }
+}
+.list-group-item
+{
+    background-color: #535353;
+}
+p
+{
+    border-top: #ffffff;
+    border-bottom: #ffffff;
+}
+.btn{
+    border: 1px solid #ffffff;
+}
+.btn:hover{
+    background-color: rgb(181, 199, 255) !important;
+    color: black !important;
+    border: 1px solid white !important;
+}
+.resource{
+    border: 1px solid #ffffff;
+    box-shadow: inset 2px 2px 2px grey;
+}

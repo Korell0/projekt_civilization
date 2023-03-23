@@ -7,7 +7,7 @@ app.run(function($rootScope, DB){
     $rootScope.researchs = [];
     $rootScope.buildings = [];
     $rootScope.military = [];
-    $rootScope.User.Specie = parseInt($rootScope.User.Specie);
+    $rootScope.Specie = "";
     
     if($rootScope.User.Specie === 0){
         $rootScope.Resources = [];
@@ -39,14 +39,15 @@ app.run(function($rootScope, DB){
         })
     }
     else{
-        if(  $rootScope.User.Specie === 2) $rootScope.Specie = "Avian";
-        if(  $rootScope.User.Specie === 3) $rootScope.Specie = "Mammal";
-        if(  $rootScope.User.Specie === 4) $rootScope.Specie = "Reptilian";
-        if(  $rootScope.User.Specie === 5) $rootScope.Specie = "Arachnid";
-        if(  $rootScope.User.Specie === 6) $rootScope.Specie = "Aquatic";
-        if(  $rootScope.User.Specie === 7) $rootScope.Specie = "Plantoid";
-        if(  $rootScope.User.Specie === 8) $rootScope.Specie = "Fungoid";
-        if(  $rootScope.User.Specie === 9) $rootScope.Specie = "Lithoid";
+        console.log($rootScope.User.Specie)
+        if($rootScope.User.Specie === 2) $rootScope.Specie = "Avian";
+        else if($rootScope.User.Specie === 3) $rootScope.Specie = "Mammal";
+        else if($rootScope.User.Specie === 4) $rootScope.Specie = "Reptilian";
+        else if($rootScope.User.Specie === 5) $rootScope.Specie = "Arachnid";
+        else if($rootScope.User.Specie === 6) $rootScope.Specie = "Aquatic";
+        else if($rootScope.User.Specie === 7) $rootScope.Specie = "Plantoid";
+        else if($rootScope.User.Specie === 8) $rootScope.Specie = "Fungoid";
+        else if($rootScope.User.Specie === 9) $rootScope.Specie = "Lithoid";
         DB.selectAll("government").then(function(res){
             res.data.forEach(gov => {
                 $rootScope.govs.push(gov);

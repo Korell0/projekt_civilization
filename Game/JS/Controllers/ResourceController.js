@@ -63,7 +63,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB){
                         let data = {
                             name: results.data[i].Name,
                             description: results.data[i].Description,
-                            quantity: res.data[i].Quantity
+                            quantity: res.data[i-2].Quantity
                         }
                         $scope.resources.push(data)
                     }

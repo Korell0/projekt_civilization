@@ -1,15 +1,9 @@
 
-<div class="container-fluid Resources" ng-controller="ResourceCtrl">
+<div class="container-fluid Resources card" ng-controller="ResourceCtrl">
     <h3>Resources</h3>
-    <div class="row"  ng-repeat="resource in resources">
-        <table class="">
-            <tr>
-                <td>
-                    <ul>
-                        <li> {{resource.name}} : {{resource.quantity}}/{{resource.storage}} <span ng-if="resource.name == 'RNA'">{{RNAI}}/s</span><span ng-if="resource.name == 'DNA'">{{DNAI}}/s</span></li>
-                    </ul>
-            </td>
-            </tr>
-        </table>
+    <div class="card resource p-2" ng-repeat="resource in resources">
+        <div>
+            {{resource.name}} : {{resource.quantity}}/{{resource.storage}}
+        </div>
     </div>
 </div>
