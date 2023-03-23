@@ -3,6 +3,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
     $scope.visibled = [];
     $scope.deletes = [];
     $scope.buildings = $rootScope.buildings;
+    $scope.Specie = $rootScope.User.Specie;
 
     $interval(function(){   
         if($rootScope.User.Specie === 0){

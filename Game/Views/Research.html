@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-3 card ms-5 toolTip text-center pt-1 pb-1" ng-repeat="tech in researchs">
+    <button class="col-lg-3 btn card ms-5 toolTip text-center pt-1 pb-1" ng-repeat="tech in researchs">
         {{tech.Name}}
         <span class="toolTiptext text-justify flex-container pr-1 pl-1">{{tech.Description}} <br>
             <hr class="m-0">
@@ -11,5 +11,5 @@
             <hr class="m-0" ng-if="tech.Fourth_Resources != 0">
             <p class="m-0" ng-if="tech.Fourth_Resources != 0">{{tech.Fourth_Resources}}</p>
           </span>
-    </div>
+        </button>
 </div>

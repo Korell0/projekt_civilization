@@ -32,6 +32,9 @@ body{
     border: 1px solid #ffffff;
     color: #ffffff;
 }
+.news{
+    box-shadow:inset 5px 5px 5px grey;
+}
 h3{
     text-align: center;
 }
@@ -43,8 +46,10 @@ h1{
     font-size: 50%;
     float: right;
     font-weight:normal;
-    padding: 5px;
+    padding: 7px;
     border-radius: 25px;
+    border: 2px solid rosybrown;
+    box-shadow: inset 2px 2px 2px rosybrown;
     background-color: #4B4B5C;
 }
 .Stages{

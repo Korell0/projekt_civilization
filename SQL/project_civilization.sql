@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Már 14. 09:28
+-- Létrehozás ideje: 2023. Már 23. 09:13
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -25,18 +25,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `buildable`
---
-
-CREATE TABLE `buildable` (
-  `ID` int(11) NOT NULL,
-  `Building ID` int(11) NOT NULL,
-  `User ID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
--- --------------------------------------------------------
-
---
 -- Tábla szerkezet ehhez a táblához `buildings`
 --
 
@@ -44,16 +32,16 @@ CREATE TABLE `buildings` (
   `ID` int(11) NOT NULL,
   `Name` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
   `Description` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
-  `First Resources` varchar(40) COLLATE utf8_hungarian_ci NOT NULL,
-  `Second Resources` varchar(40) COLLATE utf8_hungarian_ci NOT NULL,
-  `Third Resources` varchar(40) COLLATE utf8_hungarian_ci NOT NULL
+  `First_Resources` varchar(40) COLLATE utf8_hungarian_ci NOT NULL,
+  `Second_Resources` varchar(40) COLLATE utf8_hungarian_ci NOT NULL,
+  `Third_Resources` varchar(40) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `buildings`
 --
 
-INSERT INTO `buildings` (`ID`, `Name`, `Description`, `First Resources`, `Second Resources`, `Third Resources`) VALUES
+INSERT INTO `buildings` (`ID`, `Name`, `Description`, `First_Resources`, `Second_Resources`, `Third_Resources`) VALUES
 (1, 'Nest', 'A basic burrow for creatures', '35 wood', '', ''),
 (2, 'Bone Hoard', 'A place to hoard bones', '25 bone', '', ''),
 (3, 'Stone Quarry', 'A hole to mine stone', '50 wood', '', ''),
@@ -104,20 +92,6 @@ CREATE TABLE `builted` (
   `ID` int(11) NOT NULL,
   `Building ID` int(11) NOT NULL,
   `User ID` int(11) NOT NULL,
-  `Quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `cell evolution by user`
---
-
-CREATE TABLE `cell evolution by user` (
-  `id` int(11) NOT NULL,
-  `evolution id` int(11) NOT NULL,
-  `user id` int(11) NOT NULL,
-  `Evolution` tinyint(4) NOT NULL,
   `Quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
@@ -229,8 +203,32 @@ INSERT INTO `government` (`ID`, `Name`, `Description`, `Bonus`, `Penalty`) VALUE
 
 CREATE TABLE `military` (
   `ID` int(11) NOT NULL,
-  `Required Tech` varchar(40) COLLATE utf8_hungarian_ci NOT NULL,
-  `User ID` int(11) NOT NULL,
+  `Name` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
+  `Required_Tech` varchar(40) COLLATE utf8_hungarian_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+--
+-- A tábla adatainak kiíratása `military`
+--
+
+INSERT INTO `military` (`ID`, `Name`, `Required_Tech`) VALUES
+(1, 'Soldier', 'Barracks'),
+(2, 'Tank', 'Tanks'),
+(3, 'Anti-tank troop', 'Anti tank rockets'),
+(4, 'Fighter', 'Fighters'),
+(5, 'Bomber', 'Bombers'),
+(6, 'Anti-Aircraft', 'Anti aircrafts');
+
+-- --------------------------------------------------------
+
+--
+-- Tábla szerkezet ehhez a táblához `millitary_by_user`
+--
+
+CREATE TABLE `millitary_by_user` (
+  `ID` int(11) NOT NULL,
+  `millitaryID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
   `Quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
@@ -260,6 +258,15 @@ CREATE TABLE `opponents` (
   `Relation` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
+--
+-- A tábla adatainak kiíratása `opponents`
+--
+
+INSERT INTO `opponents` (`ID`, `Name`, `Strength`, `Economy`, `Relation`) VALUES
+(1, 0, 100, 200, 75),
+(2, 0, 150, 175, 25),
+(3, 0, 250, 150, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -282,10 +289,10 @@ CREATE TABLE `researchs` (
   `ID` int(11) NOT NULL,
   `Name` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
   `Description` varchar(200) COLLATE utf8_hungarian_ci NOT NULL,
-  `First Resources` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
-  `Second Resources` varchar(50) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Third Resources` varchar(50) COLLATE utf8_hungarian_ci DEFAULT NULL,
-  `Fourth Resources` varchar(50) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `First_Resources` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
+  `Second_Resources` varchar(50) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Third_Resources` varchar(50) COLLATE utf8_hungarian_ci DEFAULT NULL,
+  `Fourth_Resources` varchar(50) COLLATE utf8_hungarian_ci DEFAULT NULL,
   `passive` tinyint(1) NOT NULL,
   `passive_bonus` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `tech_req` varchar(50) COLLATE utf8_hungarian_ci NOT NULL
@@ -295,7 +302,7 @@ CREATE TABLE `researchs` (
 -- A tábla adatainak kiíratása `researchs`
 --
 
-INSERT INTO `researchs` (`ID`, `Name`, `Description`, `First Resources`, `Second Resources`, `Third Resources`, `Fourth Resources`, `passive`, `passive_bonus`, `tech_req`) VALUES
+INSERT INTO `researchs` (`ID`, `Name`, `Description`, `First_Resources`, `Second_Resources`, `Third_Resources`, `Fourth_Resources`, `passive`, `passive_bonus`, `tech_req`) VALUES
 (4, 'Bonfire', 'The first step towards the stars', '100 wood', '', '', '', 1, '0.5 knowledge', ''),
 (5, 'Housing', 'A place for people to live', '10 wood', '20 knowledge', '', '', 0, '', 'Bonfire'),
 (6, 'Bone Tools', 'Tools made of bones', '50 bones', '25 knowledge', '', '', 0, '', 'Bonfire'),
@@ -402,19 +409,6 @@ INSERT INTO `resources` (`ID`, `Name`, `Description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `resources by user`
---
-
-CREATE TABLE `resources by user` (
-  `ID` int(11) NOT NULL,
-  `Resource ID` int(11) NOT NULL,
-  `User ID` int(11) NOT NULL,
-  `Quantity` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
--- --------------------------------------------------------
-
---
 -- Tábla szerkezet ehhez a táblához `resources_by_user`
 --
 
@@ -424,14 +418,6 @@ CREATE TABLE `resources_by_user` (
   `UserID` int(11) NOT NULL,
   `Quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
-
---
--- A tábla adatainak kiíratása `resources_by_user`
---
-
-INSERT INTO `resources_by_user` (`ID`, `ResourceID`, `UserID`, `Quantity`) VALUES
-(1, 1, 1, 0),
-(2, 2, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -443,25 +429,21 @@ CREATE TABLE `users` (
   `ID` int(11) NOT NULL,
   `Username` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
   `Password` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
-  `Email` varchar(40) COLLATE utf8_hungarian_ci NOT NULL
+  `Email` varchar(40) COLLATE utf8_hungarian_ci NOT NULL,
+  `Specie` varchar(2) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 --
 -- A tábla adatainak kiíratása `users`
 --
 
-INSERT INTO `users` (`ID`, `Username`, `Password`, `Email`) VALUES
-(1, 'Admin', '7af2d10b73ab7cd8f603937f7697cb5fe432c7ff', 'Admin@Civilization.civ');
+INSERT INTO `users` (`ID`, `Username`, `Password`, `Email`, `Specie`) VALUES
+(1, 'Admin', '7af2d10b73ab7cd8f603937f7697cb5fe432c7ff', 'Admin@Civilization.civ', '3'),
+(2, 'pr', '0d22579e62dfd0502854f0bb16e5f992c125ba01', 'pg@gu.hu', '0');
 
 --
 -- Indexek a kiírt táblákhoz
 --
-
---
--- A tábla indexei `buildable`
---
-ALTER TABLE `buildable`
-  ADD PRIMARY KEY (`ID`);
 
 --
 -- A tábla indexei `buildings`
@@ -474,12 +456,6 @@ ALTER TABLE `buildings`
 --
 ALTER TABLE `builted`
   ADD PRIMARY KEY (`ID`);
-
---
--- A tábla indexei `cell evolution by user`
---
-ALTER TABLE `cell evolution by user`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- A tábla indexei `cell_evolution`
@@ -497,12 +473,6 @@ ALTER TABLE `cell_evolution_by_user`
 -- A tábla indexei `government`
 --
 ALTER TABLE `government`
-  ADD PRIMARY KEY (`ID`);
-
---
--- A tábla indexei `military`
---
-ALTER TABLE `military`
   ADD PRIMARY KEY (`ID`);
 
 --
@@ -530,32 +500,14 @@ ALTER TABLE `resources`
   ADD PRIMARY KEY (`ID`);
 
 --
--- A tábla indexei `resources by user`
---
-ALTER TABLE `resources by user`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- A tábla indexei `resources_by_user`
 --
 ALTER TABLE `resources_by_user`
   ADD PRIMARY KEY (`ID`);
 
 --
--- A tábla indexei `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`ID`);
-
---
 -- A kiírt táblák AUTO_INCREMENT értéke
 --
-
---
--- AUTO_INCREMENT a táblához `buildable`
---
-ALTER TABLE `buildable`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `buildings`
@@ -568,12 +520,6 @@ ALTER TABLE `buildings`
 --
 ALTER TABLE `builted`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT a táblához `cell evolution by user`
---
-ALTER TABLE `cell evolution by user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT a táblához `cell_evolution`
@@ -594,12 +540,6 @@ ALTER TABLE `government`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT a táblához `military`
---
-ALTER TABLE `military`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT a táblához `opponent by user`
 --
 ALTER TABLE `opponent by user`
@@ -609,7 +549,7 @@ ALTER TABLE `opponent by user`
 -- AUTO_INCREMENT a táblához `opponents`
 --
 ALTER TABLE `opponents`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT a táblához `researchs`
@@ -627,13 +567,7 @@ ALTER TABLE `resources`
 -- AUTO_INCREMENT a táblához `resources_by_user`
 --
 ALTER TABLE `resources_by_user`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT a táblához `users`
---
-ALTER TABLE `users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

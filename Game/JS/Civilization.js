@@ -6,6 +6,8 @@ app.run(function($rootScope, DB){
     $rootScope.buttons = [];
     $rootScope.researchs = [];
     $rootScope.buildings = [];
+    $rootScope.military = [];
+    $rootScope.User.Specie = parseInt($rootScope.User.Specie);
     
     if($rootScope.User.Specie === 0){
         $rootScope.Resources = [];
@@ -56,9 +58,13 @@ app.run(function($rootScope, DB){
             });
         });
         DB.selectAll("buildings").then(function(res){
-            console.log()
             res.data.forEach(building =>{
                 $rootScope.buildings.push(building);
+            });
+        });
+        DB.selectAll("military").then(function(res){
+            res.data.forEach(troop =>{
+                $rootScope.military.push(troop);
             });
         });
     }
