@@ -2,7 +2,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB){
     $scope.resources = [];
     
     DB.select('resources_by_user', 'UserID', $rootScope.User.ID).then(function(res){
-        if(res.data.length === 0 && $rootScope.Specie === 0){
+        if(res.data.length == 0 && $rootScope.Specie == 'Cell'){
             for(i = 0; i < 2; i++){
                 let data ={
                     ResourceID: i,
@@ -38,7 +38,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB){
         
             })
         }
-        else if(res.data.length === 0){
+        else if(res.data.length == 0){
             DB.selectAll("resources").then(function(res){
                 let i = 0;
                 res.data.forEach(element =>{

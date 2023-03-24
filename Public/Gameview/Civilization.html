@@ -1,17 +1,19 @@
 <div class="container">
-<ul class="row" ng-if="Specie == Cell; else else">
+<ul class="row" ng-if="$scope.Specie == 'Cell'; else=else">
     <li class="col-lg-2 ms-5" ng-repeat="button in buttons" ng-if="!button.hidden && !button.evolved">
     <button type="button"class="toolTip btn btn-dark" id="{{button.Name}}" ng-click="Click(id, $index)" >
-        {{button.Name}}
-        <span class="toolTiptext flex-container">{{button.Description}} <br>
-          <p ng-if="button.RNA != 0 " >{{button.RNA}} RNA</p> 
-          <p ng-if="button.DNA != 0">{{button.DNA}} DNA</p>
+        <span class="text-justify">{{button.Name}}</span>
+        <span class="toolTiptext flex-container">
+          <span>{{button.Description}}</span>
+          <hr class="m-0">
+          <span ng-if="button.RNA != 0 " >{{button.RNA}} RNA</span>
+          <hr class="m-0" ng-if="button.DNA != 0"> 
+          <span ng-if="button.DNA != 0">{{button.DNA}} DNA</span>
         </span>
         </button> 
         </li>
   </ul>
-  <ng-template #else>
-    <ul class="row">
+    <ul class="row" ng-else>
       <li class="col-lg-2 ms-5" ng-repeat="building in buildings">
       <button type="button" class="toolTip card btn btn-dark" id="{{building.Name}}" ng-click="Click(id, $index)" >
           <span class="text-justify">{{building.Name}}</span>
@@ -27,5 +29,4 @@
           </button> 
           </li>
     </ul>
-  </ng-template>
 </div>

@@ -10,7 +10,7 @@ app.run(function($rootScope, DB){
         $rootScope.military = [];
         $rootScope.Specie = $rootScope.User.Specie;
         
-        if($rootScope.User.Specie === 0){
+        if($rootScope.User.Specie == "Cell"){
             $rootScope.Resources = [];
             $rootScope.RNAI = 0;
             $rootScope.DNAI = 0;
