@@ -14,7 +14,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
                             $scope.visibled.push($rootScope.buttons[i]);
                             $rootScope.buttons[i].hidden = false;                    
                         }
-                        else if($rootScope.buttons[i].Evolution_req === "0"){
+                        else if($rootScope.buttons[i].Evolution_req == "0"){
                             $rootScope.buttons[i].hidden = false;                    
                         }
                         else{
@@ -42,17 +42,17 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
                     }
                 }
             }
-            if($rootScope.resources[0].quantity + $rootScope.RNAI <= $rootScope.resources[0].storage){
-                $rootScope.resources[0].quantity = $rootScope.resources[0].quantity + $rootScope.RNAI;
+            if($rootScope.resources[0].Quantity + $rootScope.resources[0].Increase <= $rootScope.resources[0].Storage){
+                $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity + $rootScope.resources[0].Increase;
             }
             else{
-                $rootScope.resources[0].quantity = $rootScope.resources[0].storage;
+                $rootScope.resources[0].Quantity = $rootScope.resources[0].Storage;
             }
-            if($rootScope.resources[1].quantity + $rootScope.DNAI <= $rootScope.resources[1].storage){
-                $rootScope.resources[1].quantity = $rootScope.resources[1].quantity + $rootScope.DNAI;
+            if($rootScope.resources[1].Quantity + $rootScope.resources[1].Increase <= $rootScope.resources[1].Storage){
+                $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity + $rootScope.resources[1].Increase;
             }
             else{
-                $rootScope.resources[1].quantity = $rootScope.resources[1].storage;
+                $rootScope.resources[1].Quantity = $rootScope.resources[1].Storage;
             }
         }
         else{
@@ -61,17 +61,17 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
     }, 1000)
 
     $scope.Click = function(id,idx){
-        if($rootScope.buttons[idx].Evolution == 0 && $rootScope.buttons[idx].storage == 0 && $rootScope.buttons[idx].producer === 0){
+        if($rootScope.buttons[idx].Evolution == 0 && $rootScope.buttons[idx].storage == 0 && $rootScope.buttons[idx].producer == 0){
             if($rootScope.buttons[idx].Name == "RNA"){
-                if($rootScope.resources[0].quantity < $rootScope.resources[0].storage){
-                    $rootScope.resources[0].quantity++;
+                if($rootScope.resources[0].Quantity < $rootScope.resources[0].Storage){
+                    $rootScope.resources[0].Quantity++;
                 }
             }
             if($rootScope.buttons[idx].Name == "DNA"){
-                if($rootScope.resources[0].quantity >= 2){
-                    if($rootScope.resources[1].quantity < $rootScope.resources[1].storage){
-                        $rootScope.resources[0].quantity = $rootScope.resources[0].quantity - 2;
-                        $rootScope.resources[1].quantity++;
+                if($rootScope.resources[0].Quantity >= 2){
+                    if($rootScope.resources[1].Quantity < $rootScope.resources[1].Storage){
+                        $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - 2;
+                        $rootScope.resources[1].Quantity++;
                     }
                 }
             }

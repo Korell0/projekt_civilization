@@ -1,44 +1,23 @@
 app.controller('ResourceCtrl',function($scope,$rootScope, DB){
-    $scope.resources = [];
+    $scope.resources = $rootScope.Resources;
     
-    DB.select('resources_by_user', 'UserID', $rootScope.User.ID).then(function(res){
-        if(res.data.length == 0 && $rootScope.Specie == 'Cell'){
-            for(i = 0; i < 2; i++){
-                let data ={
-                    ResourceID: i,
-                    UserID: $rootScope.User.ID,
-                    Quantity: 0                
-                }
-                DB.insert('resources_by_user', data)
-            }
+    DB.select('resources_by_user', 'UserID', $rootScope.User.ID).then(function(result){
+        if(result.data.length == 0 && $rootScope.Specie == 'Cell'){
             DB.selectAll('resources').then(function(res){
-                $scope.all = [];
-                $scope.userall = [];
-                res.data.forEach(element => {
-                    $scope.all.push(element);
-                });
-                DB.select('resources_by_user','UserID',$rootScope.User.ID).then(function(res){
-                    res.data.forEach(element =>{
-                        $scope.userall.push(element);
-                    })
-                    for(i = 0; i <= $scope.all.length; i++){
-                        if($scope.userall.length > i){
-                            console.log($scope.userall[i]);
-                            let resource ={
-                                name: $scope.all[i].Name,
-                                description: $scope.all[i].Description,
-                                quantity: $scope.userall[i].Quantity,
-                                storage: $rootScope.storage
-                            }
-                            $scope.resources.push(resource)
-                        }
+                for(i = 0; i < 2; i++){
+                    let data = {
+                        Name: res.data[i].Name,
+                        Description: res.data[i].Description,
+                        Quantity: 0,
+                        Storage: 100,
+                        Increase: 0
                     }
-                    $rootScope.resources = $scope.resources;
-                });
-        
+                    $scope.resources.push(data)
+                }
+                $rootScope.Resources = $scope.resources
             })
         }
-        else if(res.data.length == 0){
+        else if(result.data.length == 0){
             DB.selectAll("resources").then(function(res){
                 let i = 0;
                 res.data.forEach(element =>{
@@ -56,20 +35,22 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB){
             });
         }
         else{
-            let i = 0 
-            DB.selectAll("resources").then(function(results){
-                results.data.forEach(element =>{
-                    if(i > 1){
-                        let data = {
-                            name: results.data[i].Name,
-                            description: results.data[i].Description,
-                            quantity: res.data[i-2].Quantity
+            DB.select('resources_by_user','UserID', $rootScope.User.ID).then(function(res){
+                DB.selectAll('resources').then(function(result){
+                    let i = 0;
+                    res.data.forEach(element =>{
+                        if(i > 1){
+                            let data = {
+                                Name: result.data[i].Name,
+                                Description: result.data[i].Description,
+                                Quantity: element.Quantity
+                            }
+                            $scope.resources.push(data);
                         }
-                        $scope.resources.push(data)
-                    }
-                    i++;
-                });
-            });
+                        i++;
+                    })
+                })
+            })
         };
     });
 });

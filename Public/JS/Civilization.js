@@ -12,16 +12,7 @@ app.run(function($rootScope, DB){
         
         if($rootScope.User.Specie == "Cell"){
             $rootScope.Resources = [];
-            $rootScope.RNAI = 0;
-            $rootScope.DNAI = 0;
             $rootScope.storage = 100;
-            DB.selectAll("resources").then(function(res){
-                for(i = 0; i < 2; i++){
-                        $rootScope.resource = res.data[i];
-                        $rootScope.resource.quantity = 0;
-                        $rootScope.Resources.push($rootScope.resource)
-                }
-            })
             DB.selectAll("Cell_evolution").then(function(res){
                 res.data.forEach(element => {
                     element.clicked = false;
@@ -34,7 +25,6 @@ app.run(function($rootScope, DB){
                     if(element.storage !=0 || element.producer){
                         element.quantity = 0;
                     }
-        
                     $rootScope.buttons.push(element)
                 });
             })
