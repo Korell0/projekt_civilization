@@ -79,47 +79,47 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
         else{
             if($rootScope.buttons[idx].storage == 1){
                 if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
-                    if($rootScope.resources[1].quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].quantity >= parseInt($rootScope.buttons[idx].RNA)){
-                        $rootScope.resources[1].quantity = $rootScope.resources[1].quantity - parseInt($rootScope.buttons[idx].DNA)
-                        $rootScope.resources[0].quantity = $rootScope.resources[0].quantity - parseInt($rootScope.buttons[idx].RNA)
+                    if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
+                        $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity - parseInt($rootScope.buttons[idx].DNA)
+                        $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - parseInt($rootScope.buttons[idx].RNA)
                         $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
                         $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
                         $rootScope.buttons[idx].quantity++;
                         if($rootScope.buttons[idx].storageRNAplus > 0){
-                            $rootScope.resources[0].storage += $rootScope.buttons[idx].storageRNAplus;
+                            $rootScope.resources[0].Storage += $rootScope.buttons[idx].storageRNAplus;
                         }
                         if($rootScope.buttons[idx].storageDNAplus > 0){
-                            $rootScope.resources[1].storage += $rootScope.buttons[idx].storageDNAplus;
+                            $rootScope.resources[1].Storage += $rootScope.buttons[idx].storageDNAplus;
                         }
                     }
                 }
             }
             if($rootScope.buttons[idx].producer == 1){
                 if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
-                    if($rootScope.resources[1].quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].quantity >= parseInt($rootScope.buttons[idx].RNA)){
-                        $rootScope.resources[1].quantity = $rootScope.resources[1].quantity - parseInt($rootScope.buttons[idx].DNA)
-                        $rootScope.resources[0].quantity = $rootScope.resources[0].quantity - parseInt($rootScope.buttons[idx].RNA)
+                    if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
+                        $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity - parseInt($rootScope.buttons[idx].DNA)
+                        $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - parseInt($rootScope.buttons[idx].RNA)
                         $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
                         $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
                         $rootScope.buttons[idx].quantity++;
                         if($rootScope.buttons[idx].RNA_Increament > 0){
-                            $rootScope.RNAI = $rootScope.RNAI + $rootScope.buttons[idx].RNA_Increament;
+                            $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + $rootScope.buttons[idx].RNA_Increament;
                         }
                         if($rootScope.buttons[idx].RNA_Decrament > 0){
-                            $rootScope.RNAI = $rootScope.RNAI - $rootScope.buttons[idx].RNA_Decrament;
+                            $rootScope.resources[0].Increase = $rootScope.resources[0].Increase - $rootScope.buttons[idx].RNA_Decrament;
                         }
                         if($rootScope.buttons[idx].DNA_increament > 0){
-                            $rootScope.DNAI = $rootScope.DNAI + $rootScope.buttons[idx].DNA_increament;
+                            $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + $rootScope.buttons[idx].DNA_increament;
                         }
                     }
                 }
             }
             if($rootScope.buttons[idx].Evolution == 1){
-                if($rootScope.resources[1].quantity >= $rootScope.buttons[idx].DNA){
-                    $rootScope.resources[0].storage += 20;
-                    $rootScope.resources[1].storage += 20;
-                    $rootScope.RNAI = $rootScope.RNAI + 6;
-                    $rootScope.DNAI = $rootScope.DNAI + 2;
+                if($rootScope.resources[1].Quantity >= $rootScope.buttons[idx].DNA){
+                    $rootScope.resources[0].Storage += 20;
+                    $rootScope.resources[1].Storage += 20;
+                    $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + 6;
+                    $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + 2;
                     $rootScope.buttons[idx].clicked = true;
                     for(i = 0; i < $scope.visibled.length; i++){
                         for(j = 0; j< $rootScope.buttons.length; j++){
@@ -129,8 +129,8 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
                         }
                     }
                     $scope.evolved.push($rootScope.buttons[idx]);
-                    if($rootScope.buttons[idx].Specie != 0) $rootScope.Specie = ""+$rootScope.buttons[idx].Specie+""; 
-                    $rootScope.resources[1].quantity -= $rootScope.buttons[idx].DNA;
+                    if($rootScope.buttons[idx].Specie != "0" && $rootScope.Specie == "0") $rootScope.Specie = $rootScope.buttons[idx].Specie; 
+                    $rootScope.resources[1].Quantity -= $rootScope.buttons[idx].DNA;
                     if($rootScope.buttons[idx].Name == "Sentience"){
                         ToCreature();
                     }

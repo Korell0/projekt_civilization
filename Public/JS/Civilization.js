@@ -11,7 +11,7 @@ app.run(function($rootScope, DB){
         $rootScope.Specie = $rootScope.User.Specie;
         
         if($rootScope.User.Specie == "Cell"){
-            $rootScope.Resources = [];
+            $rootScope.resources = [];
             $rootScope.storage = 100;
             DB.selectAll("Cell_evolution").then(function(res){
                 res.data.forEach(element => {
