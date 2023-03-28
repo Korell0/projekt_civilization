@@ -147,4 +147,9 @@ margin-bottom: 8%;
 .right{
     float: right;
     border: 1px solid #ffffff;
+    
+}
+.middle
+{
+    text-align: center;
 }

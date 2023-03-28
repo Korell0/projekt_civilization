@@ -4,6 +4,7 @@ app.controller('StagesCtrl',function($scope){
             Title: "Cell Stage",
             Firstrow: "Start life on a new planet",
             Secondrow: "Choose your own route of evolution",
+            Thirdrow: ".",
             PictureName: "../Public/img/singlecell.png"
         },
         {
@@ -34,6 +35,7 @@ app.controller('StagesCtrl',function($scope){
             Title: "Medieval Era",
             Firstrow: "Harness the power of steel and stone",
             Secondrow: "Defend your people",
+            Thirdrow: ".",
             PictureName: "../Public/img/medieval.png"
         },
         {
@@ -54,6 +56,7 @@ app.controller('StagesCtrl',function($scope){
             Title: "Space Era",
             Firstrow: "Leave your little planet",
             Secondrow: "Eplore your solar system",
+            Thirdrow: ".",
             PictureName: "../Public/img/spaceship.png"
         },
         {
