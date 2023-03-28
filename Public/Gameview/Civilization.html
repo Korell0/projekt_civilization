@@ -1,0 +1,32 @@
+<div class="container">
+<ul class="row" ng-if="Specie == 'Cell'">
+    <li class="col-lg-2 ms-5" ng-repeat="button in buttons" ng-if="!button.hidden && !button.evolved">
+    <button type="button"class="toolTip btn btn-dark" id="{{button.Name}}" ng-click="Click(id, $index)" >
+        <span class="text-justify">{{button.Name}}</span>
+        <span class="toolTiptext flex-container">
+          <span>{{button.Description}}</span>
+          <hr class="m-0">
+          <span ng-if="button.RNA != 0 " >{{button.RNA}} RNA</span>
+          <hr class="m-0" ng-if="button.DNA != 0"> 
+          <span ng-if="button.DNA != 0">{{button.DNA}} DNA</span>
+        </span>
+        </button> 
+        </li>
+</ul>
+<ul class="row" ng-if="Specie != 'Cell'">
+  <li class="col-lg-2 ms-5" ng-repeat="building in buildings">
+  <button type="button" class="toolTip card btn btn-dark" id="{{building.Name}}" ng-click="Click(id, $index)" >
+      <span class="text-justify">{{building.Name}}</span>
+      <span class="toolTiptext card flex-container">
+        <span class="text-justify">{{building.Description}}</span>
+          <hr class="m-0">
+          <span ng-if="building.First_Resources != null ">{{building.First_Resources}}</span>
+          <hr class="m-0" ng-if="building.Second_Resources != null"> 
+          <span ng-if="building.Second_Resources != null ">{{building.Second_Resources}}</span>
+          <hr class="m-0" ng-if="building.Third_Resources != null">
+          <span ng-if="building.Third_Resources != null ">{{building.Third_Resources}}</span>
+      </span>          
+      </button> 
+      </li>
+</ul>
+</div>

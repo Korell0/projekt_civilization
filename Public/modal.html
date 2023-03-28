@@ -1,0 +1,23 @@
+<div class="modal fade modal-xl" id="modalWindow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content modal-card">
+            <div class="modal-header">
+                <h1 class="modal-title" id="staticBackdropLabel">{{ modal.Title }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                        <button type="button" class="toolTip m-3 btn col-lg-3 p-2 card" ng-repeat="item in govs">{{item.Name}}
+                            <span class="toolTiptext">
+                                <span class="text-justify">{{item.Description}}</span> 
+                                <hr class="m-0">
+                                <span>{{item.Bonus}}</span>
+                                <hr class="m-0">
+                                <span> {{item.Penalty}}</span>
+                            </span>
+                        </button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -182,7 +182,7 @@ app.delete('/:table/:id', tokencheck(), (req, res) => {
     var table = req.params.table;
     var id = req.params.id;
 
-    pool.query(`DELETE FROM ${table} WHERE ID=${id}`, (err, results) => {
+    pool.query(`DELETE FROM ${table} WHERE UserID=${id}`, (err, results) => {
         if (err) {
             log(req.socket.remoteAddress, err);
             res.status(500).send(err);
