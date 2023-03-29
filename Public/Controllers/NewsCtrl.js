@@ -1,14 +1,13 @@
-app.controller('NewsCtrl',function($scope){
-    $scope.exampleNews = [
-        {
-            Title: "First",
-            Date: "2023.02.03",
-            Description:"First new"
-        },
-        {
-            Title: "Second",
-            Date: "2023.02.03",
-            Description: "Second new"
-        }
-    ]
-});
+app.controller('NewsCtrl',function($scope,$rootScope,DB){
+    $scope.exampleNews= [];
+
+            DB.selectAll("news").then(function(res){
+                res.data.forEach(element => {
+                    console.log(element)
+                    $scope.exampleNews.push(element)
+                    
+                });
+                $rootScope.News = $scope.exampleNews
+                })
+            }   
+)
