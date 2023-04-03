@@ -58,6 +58,13 @@ app.run(function($rootScope, DB){
                     $rootScope.jobs.push(job);
                 });
             })
+            DB.select("jobs_by_user","UserID",$rootScope.User.ID).then(function(res){
+                if(res.data.length == 0){
+                    $rootScope.jobs.forEach(element => {
+                        element.Quantity = 0;
+                    });
+                }  
+            })
         }
         $rootScope.Logout = function(){
             $rootScope.User = null;

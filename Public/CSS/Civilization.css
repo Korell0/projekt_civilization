@@ -36,6 +36,9 @@ border: 1px solid #ffffff;
 box-shadow: inset 3px 3px 3px grey;
 color: #ffffff;
 }
+button{
+    box-shadow: inset 2px 2px 2px grey;
+}
 h3{
 text-align: center;
 color: #ffffff;
