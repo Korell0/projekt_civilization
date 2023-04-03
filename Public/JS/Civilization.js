@@ -81,10 +81,10 @@ app.config(function($routeProvider){
         templateUrl: 'Gameview/Projects.html',
         controller: 'ProjectsCtrl'
     })
-    .when('/Jobs'),{
+    .when('/Jobs',{
         templateUrl: 'Gameview/Jobs.html',
         controller: 'JobsCtrl'
-    }
+    })
     .when('/Research',{
         templateUrl: 'Gameview/Research.html',
         controller: 'ResearchCtrl'
