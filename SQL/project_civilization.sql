@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2023. Már 29. 11:28
+-- Létrehozás ideje: 2023. Ápr 03. 09:35
 -- Kiszolgáló verziója: 10.4.6-MariaDB
 -- PHP verzió: 7.3.8
 
@@ -195,6 +195,7 @@ CREATE TABLE `jobs` (
   `ID` int(11) NOT NULL,
   `Name` varchar(50) COLLATE utf8_hungarian_ci NOT NULL,
   `Description` varchar(500) COLLATE utf8_hungarian_ci NOT NULL,
+  `Product` varchar(30) COLLATE utf8_hungarian_ci NOT NULL,
   `Tech_req` varchar(100) COLLATE utf8_hungarian_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
@@ -202,10 +203,23 @@ CREATE TABLE `jobs` (
 -- A tábla adatainak kiíratása `jobs`
 --
 
-INSERT INTO `jobs` (`ID`, `Name`, `Description`, `Tech_req`) VALUES
-(1, 'Hunter', 'Hunting in the woods', '-'),
-(2, 'Gatherer', 'Gathering in the wilds', '-'),
-(3, 'Stone Gatherer', 'Gather stones near to tribe', 'Bone tools');
+INSERT INTO `jobs` (`ID`, `Name`, `Description`, `Product`, `Tech_req`) VALUES
+(1, 'Hunter', 'Hunting in the woods', '1 food', '-'),
+(2, 'Gatherer', 'Gathering in the wilds', '2 wood', '-'),
+(3, 'Stone Gatherer', 'Gather stones near to tribe', '1 stone', 'Bone tools'),
+(4, 'Shaman', 'The man who predict the future', '1 Morale/1 Knowlegde', 'Shamans'),
+(5, 'Miner', 'Mine for valuable materials', '0.8 Iron/0.4 Copper/0.4 Tin', 'Iron mining'),
+(6, 'Farmer', 'Farming in the fields', '10 Food', 'Feudalism'),
+(7, 'Noble', 'The upper class of society', '1 Gold', 'Manors'),
+(8, 'Carpenter', 'Turns wood into a processed wood', '0.3 Plywood/-3 Wood', 'Guilds'),
+(9, 'Brickmaker', 'Turns stones into standard brick', '0.3 Brick/-3 Wood', 'Guilds'),
+(10, 'Teacher', 'Teach young ones', '1 Knowledge', 'Schools'),
+(11, 'Coal miner', 'Mines deep underground for coal', '0.6 Coal', 'Coal mining'),
+(12, 'Professor', 'Perform lectures in university', '3 Knowlegde', 'Universities'),
+(13, 'Scientist', 'Researchs new ways in technologies', '5 Knowledge', 'Science labors'),
+(14, 'Cement worker', 'Makes cement form hard stones', '+1 cement/-6 stone', 'Factories'),
+(15, 'Concrete worker', 'Makes concrete from cements', '+0.25 concrete/-0.5 cement', 'Factories'),
+(16, 'Luxury good maker', 'Makes luxury good for people', '+5 gold/-10 furs', 'Factories');
 
 -- --------------------------------------------------------
 
@@ -571,7 +585,7 @@ ALTER TABLE `government`
 -- AUTO_INCREMENT a táblához `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT a táblához `military`

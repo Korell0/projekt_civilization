@@ -56,7 +56,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
             }
         }
         else{
-            
+
         }
     }, 1000)
 

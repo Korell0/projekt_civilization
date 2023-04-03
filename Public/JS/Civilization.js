@@ -9,6 +9,8 @@ app.run(function($rootScope, DB){
         $rootScope.researchs = [];
         $rootScope.buildings = [];
         $rootScope.military = [];
+        $rootScope.researched = [];
+        $rootScope.jobs = [];
         $rootScope.Specie = $rootScope.User.Specie;
         
         if($rootScope.User.Specie == "Cell"){
@@ -51,6 +53,11 @@ app.run(function($rootScope, DB){
                     $rootScope.military.push(troop);
                 });
             });
+            DB.selectAll("jobs").then(function(res){
+                res.data.forEach(job => {
+                    $rootScope.jobs.push(job);
+                });
+            })
         }
         $rootScope.Logout = function(){
             $rootScope.User = null;
@@ -74,6 +81,10 @@ app.config(function($routeProvider){
         templateUrl: 'Gameview/Projects.html',
         controller: 'ProjectsCtrl'
     })
+    .when('/Jobs'),{
+        templateUrl: 'Gameview/Jobs.html',
+        controller: 'JobsCtrl'
+    }
     .when('/Research',{
         templateUrl: 'Gameview/Research.html',
         controller: 'ResearchCtrl'
