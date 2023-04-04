@@ -17,7 +17,6 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
   });
   
   $scope.ResearchShow = function(){
-    console.log($rootScope.researchs.length)
     if($rootScope.researched.length !=0){
       $rootScope.researchs.forEach(element => {
         $rootScope.researched.forEach(item =>{
@@ -31,7 +30,6 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
     else{
       $rootScope.researchs[0].hidden = false;
     }
-    console.log($rootScope.researchs[0].hidden)
   }
   $scope.ResearchShow()
   

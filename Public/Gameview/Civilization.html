@@ -14,9 +14,9 @@
         </li>
 </ul>
 <ul class="row" ng-if="Specie != 'Cell'">
-  <li class="col-lg-2 ms-5" ng-repeat="building in buildings">
+  <li class="col-lg-2 ms-5" ng-repeat="building in buildings" ng-if="!building.hidden">
   <button type="button" class="toolTip card btn btn-dark" id="{{building.Name}}" ng-click="Click(id, $index)" >
-      <span class="text-justify">{{building.Name}}</span>
+      <span class="text-justify">{{building.Name}}</span><span class="card" ng-if="building.Quantity != 0">{{building.Quantity}}</span>
       <span class="toolTiptext card flex-container">
         <span class="text-justify">{{building.Description}}</span>
           <hr class="m-0">
