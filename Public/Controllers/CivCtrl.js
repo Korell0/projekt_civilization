@@ -1,142 +1,121 @@
-app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
+app.controller('CivCtrl',function($scope, $rootScope, DB,){
     $scope.evolved = [];
     $scope.visibled = [];
     $scope.deletes = [];
     $scope.buildings = $rootScope.buildings;
     $scope.Specie = $rootScope.User.Specie;
 
-    $interval(function(){   
-        if($rootScope.User.Specie == "Cell"){
-            if($scope.evolved.length != 0){
-                for(i = 0; i < $rootScope.buttons.length; i++){
-                    for(j = 0; j < $scope.evolved.length; j++){
-                        if(($rootScope.buttons[i].Evolution_req == $scope.evolved[j].Name && !$rootScope.buttons[i].evolved)){
-                            $scope.visibled.push($rootScope.buttons[i]);
-                            $rootScope.buttons[i].hidden = false;                    
-                        }
-                        else if($rootScope.buttons[i].Evolution_req == "0"){
-                            $rootScope.buttons[i].hidden = false;                    
-                        }
-                        else{
-                            if($rootScope.buttons[i].Evolution_req.includes("/")){
-                                for(e = 0; e < $rootScope.buttons[i].Evolution_req.split("/").length; e++){
-                                    if($scope.evolved[j].Name == $rootScope.buttons[i].Evolution_req.split("/")[e]){
-                                        $rootScope.buttons[i].hidden = false;
-                                    }
-                                }
-                            }
-                            else{
-                                $rootScope.buttons[i].hidden = true;
-                            }
-                        }
-                    }
-                }
+    for(i = 0;i < $rootScope.buildings.length;i++){
+        for(j = 0;j < $rootScope.researched.length;j++){
+            if($rootScope.buildings[i].Tech_req == tech[j].Name){
+                $rootScope.buildings[i].hidden = false;
+                break;
             }
-            else{
-                for(i = 0; i < $rootScope.buttons.length; i++){
-                    if($rootScope.buttons[i].Evolution_req == "0"){
-                        $rootScope.buttons[i].hidden = false;
-                    }
-                    else{
-                        $rootScope.buttons[i].hidden = true;
-                    }
-                }
-            }
-            if($rootScope.resources[0].Quantity + $rootScope.resources[0].Increase <= $rootScope.resources[0].Storage){
-                $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity + $rootScope.resources[0].Increase;
-            }
-            else{
-                $rootScope.resources[0].Quantity = $rootScope.resources[0].Storage;
-            }
-            if($rootScope.resources[1].Quantity + $rootScope.resources[1].Increase <= $rootScope.resources[1].Storage){
-                $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity + $rootScope.resources[1].Increase;
-            }
-            else{
-                $rootScope.resources[1].Quantity = $rootScope.resources[1].Storage;
+            else if($rootScope.buildings[i].Tech_req != $rootScope.researched[j].Name && $rootScope.buildings.hidden == true){
+                $rootScope.buildings[i].hidden = true;
             }
         }
-        else{
-            
-        }
-    }, 1000)
+    }
 
     $scope.Click = function(id,idx){
-        if($rootScope.buttons[idx].Evolution == 0 && $rootScope.buttons[idx].storage == 0 && $rootScope.buttons[idx].producer == 0){
-            if($rootScope.buttons[idx].Name == "RNA"){
-                if($rootScope.resources[0].Quantity < $rootScope.resources[0].Storage){
-                    $rootScope.resources[0].Quantity++;
-                }
-            }
-            if($rootScope.buttons[idx].Name == "DNA"){
-                if($rootScope.resources[0].Quantity >= 2){
-                    if($rootScope.resources[1].Quantity < $rootScope.resources[1].Storage){
-                        $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - 2;
-                        $rootScope.resources[1].Quantity++;
+        if($rootScope.User.Specie == "Cell"){
+            if($rootScope.buttons[idx].Evolution == 0 && $rootScope.buttons[idx].storage == 0 && $rootScope.buttons[idx].producer == 0){
+                if($rootScope.buttons[idx].Name == "RNA"){
+                    if($rootScope.resources[0].Quantity < $rootScope.resources[0].Storage){
+                        $rootScope.resources[0].Quantity++;
                     }
                 }
-            }
-        }
-        else{
-            if($rootScope.buttons[idx].storage == 1){
-                if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
-                    if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
-                        $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity - parseInt($rootScope.buttons[idx].DNA)
-                        $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - parseInt($rootScope.buttons[idx].RNA)
-                        $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
-                        $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
-                        $rootScope.buttons[idx].quantity++;
-                        if($rootScope.buttons[idx].storageRNAplus > 0){
-                            $rootScope.resources[0].Storage += $rootScope.buttons[idx].storageRNAplus;
-                        }
-                        if($rootScope.buttons[idx].storageDNAplus > 0){
-                            $rootScope.resources[1].Storage += $rootScope.buttons[idx].storageDNAplus;
+                if($rootScope.buttons[idx].Name == "DNA"){
+                    if($rootScope.resources[0].Quantity >= 2){
+                        if($rootScope.resources[1].Quantity < $rootScope.resources[1].Storage){
+                            $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - 2;
+                            $rootScope.resources[1].Quantity++;
                         }
                     }
                 }
             }
-            if($rootScope.buttons[idx].producer == 1){
-                if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
-                    if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
-                        $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity - parseInt($rootScope.buttons[idx].DNA)
-                        $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - parseInt($rootScope.buttons[idx].RNA)
-                        $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
-                        $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
-                        $rootScope.buttons[idx].quantity++;
-                        if($rootScope.buttons[idx].RNA_Increament > 0){
-                            $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + $rootScope.buttons[idx].RNA_Increament;
-                        }
-                        if($rootScope.buttons[idx].RNA_Decrament > 0){
-                            $rootScope.resources[0].Increase = $rootScope.resources[0].Increase - $rootScope.buttons[idx].RNA_Decrament;
-                        }
-                        if($rootScope.buttons[idx].DNA_increament > 0){
-                            $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + $rootScope.buttons[idx].DNA_increament;
-                        }
-                    }
-                }
-            }
-            if($rootScope.buttons[idx].Evolution == 1){
-                if($rootScope.resources[1].Quantity >= $rootScope.buttons[idx].DNA){
-                    $rootScope.resources[0].Storage += 20;
-                    $rootScope.resources[1].Storage += 20;
-                    $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + 6;
-                    $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + 2;
-                    $rootScope.buttons[idx].clicked = true;
-                    for(i = 0; i < $scope.visibled.length; i++){
-                        for(j = 0; j< $rootScope.buttons.length; j++){
-                            if($scope.visibled[i].Name == $rootScope.buttons[j].Name){
-                                $rootScope.buttons[j].hidden = true;
+            else{
+                if($rootScope.buttons[idx].storage == 1){
+                    if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
+                        if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
+                            $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity - parseInt($rootScope.buttons[idx].DNA)
+                            $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - parseInt($rootScope.buttons[idx].RNA)
+                            $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
+                            $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
+                            $rootScope.buttons[idx].quantity++;
+                            if($rootScope.buttons[idx].storageRNAplus > 0){
+                                $rootScope.resources[0].Storage += $rootScope.buttons[idx].storageRNAplus;
+                            }
+                            if($rootScope.buttons[idx].storageDNAplus > 0){
+                                $rootScope.resources[1].Storage += $rootScope.buttons[idx].storageDNAplus;
                             }
                         }
                     }
-                    $scope.evolved.push($rootScope.buttons[idx]);
-                    if($rootScope.buttons[idx].Specie != "0" && $rootScope.Specie == "0") $rootScope.Specie = $rootScope.buttons[idx].Specie; 
-                    $rootScope.resources[1].Quantity -= $rootScope.buttons[idx].DNA;
-                    if($rootScope.buttons[idx].Name == "Sentience"){
-                        ToCreature();
+                }
+                if($rootScope.buttons[idx].producer == 1){
+                    if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
+                        if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
+                            $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity - parseInt($rootScope.buttons[idx].DNA)
+                            $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - parseInt($rootScope.buttons[idx].RNA)
+                            $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
+                            $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
+                            $rootScope.buttons[idx].quantity++;
+                            if($rootScope.buttons[idx].RNA_Increament > 0){
+                                $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + $rootScope.buttons[idx].RNA_Increament;
+                            }
+                            if($rootScope.buttons[idx].RNA_Decrament > 0){
+                                $rootScope.resources[0].Increase = $rootScope.resources[0].Increase - $rootScope.buttons[idx].RNA_Decrament;
+                            }
+                            if($rootScope.buttons[idx].DNA_increament > 0){
+                                $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + $rootScope.buttons[idx].DNA_increament;
+                            }
+                        }
                     }
                 }
+                if($rootScope.buttons[idx].Evolution == 1){
+                    if($rootScope.resources[1].Quantity >= $rootScope.buttons[idx].DNA){
+                        $rootScope.resources[0].Storage += 20;
+                        $rootScope.resources[1].Storage += 20;
+                        $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + 6;
+                        $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + 2;
+                        $rootScope.buttons[idx].clicked = true;
+                        for(i = 0; i < $scope.visibled.length; i++){
+                            for(j = 0; j< $rootScope.buttons.length; j++){
+                                if($scope.visibled[i].Name == $rootScope.buttons[j].Name){
+                                    $rootScope.buttons[j].hidden = true;
+                                }
+                            }
+                        }
+                        $scope.evolved.push($rootScope.buttons[idx]);
+                        if($rootScope.buttons[idx].Specie != "0" && $rootScope.Specie == "0") $rootScope.Specie = $rootScope.buttons[idx].Specie; 
+                        $rootScope.resources[1].Quantity -= $rootScope.buttons[idx].DNA;
+                        if($rootScope.buttons[idx].Name == "Sentience"){
+                            ToCreature();
+                        }
+                    }
+                }
+
+        }
+        }
+        else{
+            if(ResourceProduct(idx)){
+
+            }
+            else if(PeopleCap(idx)){
+                $rootScope.buildings[idx].Quantity++
+                $rootScope.peopleMax += 3
+            }
+            else if(StorageCap(idx)){
+
+            }
+            else if(JobCap(idx)){
+
+            }
+            else if(TradeCap(idx)){
+
             }
         }
+
     }
     ToCreature = function(){
         let data = {
@@ -146,6 +125,72 @@ app.controller('CivCtrl',function($scope, $rootScope, DB, $interval){
             Specie: $rootScope.Specie
         }
         DB.update('users', $rootScope.User.ID, data)
+    }
+    ResourceProduct = function(idx){
+        switch($rootScope.buildings[idx].Bonus.split(" ")[1]){
+            case "bones":
+                return true;
+            case "wine":
+                return true;
+            case "steam":
+                return true;
+            default:
+                return false;
+        }
+    }
+    PeopleCap = function(idx){
+        if($rootScope.buildings[idx].Bonus.split(" ")[1] == "people"){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    StorageCap = function(idx){
+        if($rootScope.buildings[idx].Bonus.split(" ")[1] == "storage" || $rootScope.buildings[idx].Bonus.split(" ")[2] == "storage"){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    JobCap = function(idx){
+        switch($rootScope.buildings[idx].Bonus.split(" ")[1]){
+            case "shaman":
+                return true;
+            case "stone":
+                return true;
+            case "miner":
+                return true;
+            case "farmer":
+                return true;
+            case "guild":
+                return true;
+            case "teacher":
+                return true;
+            case "scientist":
+                return true;
+            case "professor":
+                return true;
+            case "noble":
+                return true;
+            case "coal":
+                return true;
+            case "envoy":
+                return true;
+            case "operator":
+                return true;
+            default:
+                return false;
+        }
+    }
+    TradeCap = function(idx){
+        if($rootScope.buildings[idx].Bonus.split(" ")[1] == "trade"){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 });
 
