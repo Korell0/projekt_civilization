@@ -4,6 +4,8 @@ app.run(function($rootScope, DB, $interval){
     $rootScope.News= [];
     if(window.sessionStorage['civilization']){
         $rootScope.User = JSON.parse(window.sessionStorage['civilization']);
+        $rootScope.evolved = [];
+        $rootScope.visibled = [];
         $rootScope.govs = [];
         $rootScope.buttons = [];
         $rootScope.researchs = [];
@@ -17,11 +19,11 @@ app.run(function($rootScope, DB, $interval){
 
         $interval(function(){   
             if($rootScope.User.Specie == "Cell"){
-                if($scope.evolved.length != 0){
+                if($rootScope.evolved.length != 0){
                     for(i = 0; i < $rootScope.buttons.length; i++){
-                        for(j = 0; j < $scope.evolved.length; j++){
-                            if(($rootScope.buttons[i].Evolution_req == $scope.evolved[j].Name && !$rootScope.buttons[i].evolved)){
-                                $scope.visibled.push($rootScope.buttons[i]);
+                        for(j = 0; j < $rootScope.evolved.length; j++){
+                            if(($rootScope.buttons[i].Evolution_req == $rootScope.evolved[j].Name && !$rootScope.buttons[i].evolved)){
+                                $rootScope.visibled.push($rootScope.buttons[i]);
                                 $rootScope.buttons[i].hidden = false;                    
                             }
                             else if($rootScope.buttons[i].Evolution_req == "0"){
@@ -30,7 +32,7 @@ app.run(function($rootScope, DB, $interval){
                             else{
                                 if($rootScope.buttons[i].Evolution_req.includes("/")){
                                     for(e = 0; e < $rootScope.buttons[i].Evolution_req.split("/").length; e++){
-                                        if($scope.evolved[j].Name == $rootScope.buttons[i].Evolution_req.split("/")[e]){
+                                        if($rootScope.evolved[j].Name == $rootScope.buttons[i].Evolution_req.split("/")[e]){
                                             $rootScope.buttons[i].hidden = false;
                                         }
                                     }

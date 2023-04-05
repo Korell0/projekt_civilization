@@ -1,20 +1,30 @@
 app.controller('CivCtrl',function($scope, $rootScope, DB,){
-    $scope.evolved = [];
-    $scope.visibled = [];
     $scope.deletes = [];
     $scope.buildings = $rootScope.buildings;
     $scope.Specie = $rootScope.User.Specie;
 
-    for(i = 0;i < $rootScope.buildings.length;i++){
-        for(j = 0;j < $rootScope.researched.length;j++){
-            if($rootScope.buildings[i].Tech_req == tech[j].Name){
-                $rootScope.buildings[i].hidden = false;
-                break;
+    $scope.BuildingsShow = function(){
+        console.log(0)
+        $rootScope.buildings.forEach(building => {
+            if($rootScope.researched.length != 0){
+                $rootScope.researched.forEach(tech =>{
+                    if(building.Tech_req == tech.Name){
+                        building.hidden = false;
+                    }
+                    else{
+                        building.hidden = true;
+                    }
+                })
             }
-            else if($rootScope.buildings[i].Tech_req != $rootScope.researched[j].Name && $rootScope.buildings.hidden == true){
-                $rootScope.buildings[i].hidden = true;
+            else{
+                if(building.Tech_req == ""){
+                    building.hidden = false;
+                }
+                else{
+                    building.hidden = true;
+                }
             }
-        }
+        });
     }
 
     $scope.Click = function(id,idx){

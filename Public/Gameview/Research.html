@@ -2,14 +2,16 @@
     <button class="col-lg-3 btn card ms-5 toolTip text-center pt-1 pb-1" ng-if="tech.hidden == false" ng-repeat="tech in researchs" ng-click="Research($index)">
         {{tech.Name}}
         <span class="toolTiptext text-justify flex-container pr-1 pl-1">{{tech.Description}} <br>
-            <hr class="m-0">
-            <p class="m-0" ng-if=" tech.First_Resources != 0 " >{{tech.First_Resources}}</p>
-            <hr class="m-0" ng-if="tech.Second_Resources != 0">
-            <p class="m-0" ng-if="tech.Second_Resources != 0">{{tech.Second_Resources}}</p>
-            <hr class="m-0" ng-if="tech.Third_Resources != 0">
-            <p class="m-0" ng-if="tech.Third_Resources != 0">{{tech.Third_Resources}}</p>
-            <hr class="m-0" ng-if="tech.Fourth_Resources != 0">
-            <p class="m-0" ng-if="tech.Fourth_Resources != 0">{{tech.Fourth_Resources}}</p>
-          </span>
-        </button>
+          <hr class="m-0">
+          <p class="m-0 card">{{tech.passive_bonus}}</p>
+          <hr class="m-0">
+          <p class="m-0 text-danger" ng-if=" tech.First_Resources != 0 " >{{tech.First_Resources}}</p>
+          <hr class="m-0" ng-if="tech.Second_Resources != 0">
+          <p class="m-0" ng-if="tech.Second_Resources != 0">{{tech.Second_Resources}}</p>
+          <hr class="m-0" ng-if="tech.Third_Resources != 0">
+          <p class="m-0" ng-if="tech.Third_Resources != 0">{{tech.Third_Resources}}</p>
+          <hr class="m-0" ng-if="tech.Fourth_Resources != 0">
+          <p class="m-0" ng-if="tech.Fourth_Resources != 0">{{tech.Fourth_Resources}}</p>
+        </span>
+      </button>
 </div>

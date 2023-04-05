@@ -5,7 +5,11 @@
         <span class="text-justify">{{button.Name}}</span>
         <span class="toolTiptext flex-container">
           <span>{{button.Description}}</span>
-          <hr class="m-0">
+          <div class="mb-0 ms-2 me-2 card" ng-if="button.RNA_Increament != 0 || button.DNA_Increament != 0 || button.RNA_Decreament != 0">
+            <p class="m-0 text-success" ng-if="button.RNA_Increament != 0">+{{button.RNA_Increament}} RNA</p>
+            <p class="m-0 text-success" ng-if="button.DNA_Increament != 0">+{{button.DNA_Increament}} DNA</p>
+            <p class="m-0 text-danger" ng-if="button.RNA_Decreament != 0">-{{button.RNA_Decreament}} RNA</p>
+          </div>
           <span ng-if="button.RNA != 0 " >{{button.RNA}} RNA</span>
           <hr class="m-0" ng-if="button.DNA != 0"> 
           <span ng-if="button.DNA != 0">{{button.DNA}} DNA</span>
@@ -15,10 +19,12 @@
 </ul>
 <ul class="row" ng-if="Specie != 'Cell'">
   <li class="col-lg-2 ms-5" ng-repeat="building in buildings" ng-if="!building.hidden">
-  <button type="button" class="toolTip card btn btn-dark" id="{{building.Name}}" ng-click="Click(id, $index)" >
+  <button type="button" class="toolTip card btn btn-dark" id="{{building.Name}}" ng-click="Click(id, $index)" ng-init="BuildingsShow()">
       <span class="text-justify">{{building.Name}}</span><span class="card" ng-if="building.Quantity != 0">{{building.Quantity}}</span>
       <span class="toolTiptext card flex-container">
         <span class="text-justify">{{building.Description}}</span>
+          <hr class="m-0">
+          <p class="m-0 card">{{building.Bonus}}</p>
           <hr class="m-0">
           <span ng-if="building.First_Resources != null ">{{building.First_Resources}}</span>
           <hr class="m-0" ng-if="building.Second_Resources != null"> 
