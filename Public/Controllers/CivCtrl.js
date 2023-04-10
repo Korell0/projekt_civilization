@@ -108,18 +108,14 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         }
         }
         else{
-            if(ResourceProduct(idx)){
-
-            }
-            else if(PeopleCap(idx)){
-                $rootScope.buildings[idx].Quantity++
-                $rootScope.peopleMax += 3
-            }
-            else if(StorageCap(idx)){
-
+            if(StorageCap(idx)){
+    
             }
             else if(JobCap(idx)){
 
+            }
+            else if(PeopleCap(idx)){
+                $rootScope.peopleMax += parseInt($rootScope.buildings[idx].Bonus.split(" ")[0])
             }
             else if(TradeCap(idx)){
 
@@ -135,18 +131,6 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
             Specie: $rootScope.Specie
         }
         DB.update('users', $rootScope.User.ID, data)
-    }
-    ResourceProduct = function(idx){
-        switch($rootScope.buildings[idx].Bonus.split(" ")[1]){
-            case "bones":
-                return true;
-            case "wine":
-                return true;
-            case "steam":
-                return true;
-            default:
-                return false;
-        }
     }
     PeopleCap = function(idx){
         if($rootScope.buildings[idx].Bonus.split(" ")[1] == "people"){
