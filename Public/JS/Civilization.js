@@ -4,6 +4,7 @@ app.run(function($rootScope, DB){
     $rootScope.News= [];
     if(window.sessionStorage['civilization']){
         $rootScope.User = JSON.parse(window.sessionStorage['civilization']);
+        $rootScope.resources = [];
         $rootScope.evolved = [];
         $rootScope.visibled = [];
         $rootScope.govs = [];
@@ -19,7 +20,6 @@ app.run(function($rootScope, DB){
 
 
         if($rootScope.User.Specie == "Cell"){
-            $rootScope.resources = [];
             $rootScope.storage = 100;
             DB.selectAll("Cell_evolution").then(function(res){
                 res.data.forEach(element => {

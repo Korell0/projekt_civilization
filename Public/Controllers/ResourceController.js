@@ -54,8 +54,23 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         }
         else{
             $rootScope.buildings.forEach(building =>{
+                let idx = building.ID;
                 if(ResourceProduct(idx)){
-
+                    for(i = 0; i < $rootScope.resources.length; i++){
+                        if(building.Bonus.split(" ")[1] == $rootScope.resources[i].Name){
+                            $rootScope.resources[i].Change = 0;
+                            $rootScope.resources[i].Quantity += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
+                            $rootScope.resources[i].Change += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
+                        }
+                    }
+                }
+            })
+            $rootScope.jobs.forEach(job =>{
+                for(i = 0; i<$rootScope.resources.length; i++){
+                    if(job.Product.split(" ")[1] == $rootScope.resources[i].Name){
+                        $rootScope.resources[i].Quantity += job.Product.split(' ')[0] * job.Quantity;
+                        $rootScope.resources[i].Change += job.Product.split(' ')[0] * job.Quantity
+                    }
                 }
             })
         }
@@ -69,7 +84,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                         Description: res.data[i].Description,
                         Quantity: 0,
                         Storage: 100,
-                        Increase: 0
+                        Change: 0
                     }
                     $scope.resources.push(data)
                 }
@@ -81,6 +96,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 let i = 0;
                 res.data.forEach(element =>{
                     if(i > 1){
+                        element.Change = 0;
                         $scope.resources.push(element)
                         let data ={
                             ResourceID: i,
@@ -101,7 +117,8 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                         let data = {
                             Name: results.data[i].Name,
                             Description: results.data[i].Description,
-                            Quantity: element.Quantity
+                            Quantity: element.Quantity,
+                            change: 0
                         }
                         $scope.resources.push(data);
                     }
@@ -111,7 +128,8 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         };
     });
     ResourceProduct = function(idx){
-        switch($rootScope.buildings[idx].Bonus.split(" ")[1]){
+        Bonus = $rootScope.buildings[idx].Bonus.split(' ')[1] 
+        switch(Bonus){
             case "bones":
                 return true;
             case "wine":
