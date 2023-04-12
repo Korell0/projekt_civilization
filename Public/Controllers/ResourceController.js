@@ -1,6 +1,5 @@
 app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     $scope.resources = $rootScope.resources;
-    $scope.resources = [];
     
     $interval(function(){   
         if($rootScope.User.Specie == "Cell"){
@@ -56,22 +55,23 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
             $rootScope.buildings.forEach(building =>{
                 let idx = building.ID;
                 if(ResourceProduct(idx)){
-                    for(i = 0; i < $rootScope.resources.length; i++){
-                        if(building.Bonus.split(" ")[1] == $rootScope.resources[i].Name){
-                            $rootScope.resources[i].Change = 0;
-                            $rootScope.resources[i].Quantity += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
-                            $rootScope.resources[i].Change += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
+                    $rootScope.resources.forEach(resource =>{
+                        if(building.Bonus.split(' ')[1] == resource.Name){
+                            resource.Change = 0;
+                            resource.Quantity += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
+                            resource.Change += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
                         }
-                    }
+                    })
                 }
             })
             $rootScope.jobs.forEach(job =>{
-                for(i = 0; i<$rootScope.resources.length; i++){
-                    if(job.Product.split(" ")[1] == $rootScope.resources[i].Name){
-                        $rootScope.resources[i].Quantity += job.Product.split(' ')[0] * job.Quantity;
-                        $rootScope.resources[i].Change += job.Product.split(' ')[0] * job.Quantity
+                console.log($rootScope.resources.length)
+                $rootScope.resources.forEach(resource =>{
+                    if(job.Product.split(' ')[1] == resource.Name){
+                        resource.Quantity += parseInt(job.Product.split(' ')[0]) * job.Quantity;
+                        resource.Change += parseInt(job.Product.split(' ')[0]) * job.Quantity
                     }
-                }
+                })
             })
         }
     }, 1000)
@@ -128,16 +128,17 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         };
     });
     ResourceProduct = function(idx){
-        Bonus = $rootScope.buildings[idx].Bonus.split(' ')[1] 
-        switch(Bonus){
-            case "bones":
-                return true;
-            case "wine":
-                return true;
-            case "steam":
-                return true;
-            default:
-                return false;
+        if($rootScope.buildings[idx] != null){
+            switch($rootScope.buildings[idx].Bonus.split(' ')[1]){
+                case "bones":
+                    return true;
+                case "wine":
+                    return true;
+                case "steam":
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 });
