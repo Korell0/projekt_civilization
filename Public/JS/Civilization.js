@@ -1,4 +1,4 @@
-let app = new angular.module('Civilization',['ngRoute'])
+let app = new angular.module('Civilization',['ngRoute', 'ui.bootstrap'])
 
 app.run(function($rootScope, DB){
     $rootScope.News= [];
@@ -228,6 +228,10 @@ app.config(function($routeProvider){
     .when('/log',{
         templateUrl: 'Views/Login.html',
         controller: 'UserCtrl'
+    })
+    .when('/Admin',{
+        templateUrl: 'Views/Admin.html',
+        controller:'AdminCtrl'
     })
     .otherwise('/News')
 });

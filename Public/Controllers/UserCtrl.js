@@ -49,9 +49,14 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                 }
                 else 
                 {
-                    $rootScope.loggedUser = res.data[0];
-                    sessionStorage.setItem('civilization', angular.toJson($rootScope.loggedUser));
-                    window.location.href = 'Game.html';
+                    if(data.Username == "Admin"){
+                        window.location.href = '#!/Admin';
+                    }
+                    else{
+                        $rootScope.loggedUser = res.data[0];
+                        sessionStorage.setItem('civilization', angular.toJson($rootScope.loggedUser));
+                        window.location.href = 'Game.html';
+                    }
                 }
             });
         }
