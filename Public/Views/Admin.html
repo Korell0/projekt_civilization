@@ -1,22 +1,24 @@
-<h2 class="text-center">Users</h2>
-<table border="4" class="table table-dark table-hover table-striped text-white ">
-    <thead class="thead-dark">
-        <th>ID</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Ban</th>
-    </thead>
-    <tbody>
-        <tr ng-repeat="User in Users" ng-if="User.Username != 'Admin'">
-            <td class="text-center">{{User.ID}}</td>
-            <td class="text-center">{{User.Username}}</td>
-            <td class="text-center">{{User.Email}}</td>
-            <td>
-                <div class="text-center">
-                    <button class="btn">❌</button>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize" data-boundary-links="true"></div>
+<div ng-app="UI">
+    <h2 class="text-center">Users</h2>
+    <table border="4" class="table table-dark table-hover table-striped text-white container">
+        <thead class="thead-dark">
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Ban</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="User in Users" ng-if="User.Username != 'Admin'">
+                <td class="text-center">{{User.ID}}</td>
+                <td class="text-center">{{User.Username}}</td>
+                <td class="text-center">{{User.Email}}</td>
+                <td>
+                    <div class="text-center">
+                        <button class="btn" ng-click="Ban(User.ID)">❌</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div data-pagination="" data-num-pages="numOfPages()" data-current-page="curPage" data-max-size="maxSize" data-boundary-links="true"></div>
+</div>

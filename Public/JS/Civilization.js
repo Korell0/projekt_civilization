@@ -1,4 +1,5 @@
-let app = new angular.module('Civilization',['ngRoute', 'ui.bootstrap'])
+let app = new angular.module('Civilization',['ngRoute'])
+let UI = new angular.module('UI',['ui.bootstrap'])
 
 app.run(function($rootScope, DB){
     $rootScope.News= [];

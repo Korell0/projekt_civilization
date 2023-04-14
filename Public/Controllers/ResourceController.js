@@ -65,11 +65,15 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 }
             })
             $rootScope.jobs.forEach(job =>{
-                console.log($rootScope.resources.length)
                 $rootScope.resources.forEach(resource =>{
-                    if(job.Product.split(' ')[1] == resource.Name){
-                        resource.Quantity += parseInt(job.Product.split(' ')[0]) * job.Quantity;
-                        resource.Change += parseInt(job.Product.split(' ')[0]) * job.Quantity
+                    if(!job.Product.match("/")){
+                        if(job.Product.split(' ')[1] == resource.Name){
+                            resource.Quantity += parseInt(job.Product.split(' ')[0]) * job.Quantity;
+                            resource.Change += parseInt(job.Product.split(' ')[0]) * job.Quantity
+                        }
+                    }
+                    else{
+                        
                     }
                 })
             })

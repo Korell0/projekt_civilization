@@ -97,7 +97,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                             }
                         }
                         $scope.evolved.push($rootScope.buttons[idx]);
-                        if($rootScope.buttons[idx].Specie != "0" && $rootScope.Specie == "0") $rootScope.Specie = $rootScope.buttons[idx].Specie; 
+                        if($rootScope.buttons[idx].Specie.length > 1 && $rootScope.Specie == "Cell") $rootScope.Specie = $rootScope.buttons[idx].Specie; 
                         $rootScope.resources[1].Quantity -= $rootScope.buttons[idx].DNA;
                         if($rootScope.buttons[idx].Name == "Sentience"){
                             ToCreature();
