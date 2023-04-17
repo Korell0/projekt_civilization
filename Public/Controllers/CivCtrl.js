@@ -71,13 +71,13 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                             $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
                             $rootScope.buttons[idx].quantity++;
                             if($rootScope.buttons[idx].RNA_Increament > 0){
-                                $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + $rootScope.buttons[idx].RNA_Increament;
+                                $rootScope.resources[0].Change = $rootScope.resources[0].Change + $rootScope.buttons[idx].RNA_Increament;
                             }
                             if($rootScope.buttons[idx].RNA_Decrament > 0){
-                                $rootScope.resources[0].Increase = $rootScope.resources[0].Increase - $rootScope.buttons[idx].RNA_Decrament;
+                                $rootScope.resources[0].Change = $rootScope.resources[0].Change - $rootScope.buttons[idx].RNA_Decrament;
                             }
                             if($rootScope.buttons[idx].DNA_increament > 0){
-                                $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + $rootScope.buttons[idx].DNA_increament;
+                                $rootScope.resources[1].Change = $rootScope.resources[1].Change + $rootScope.buttons[idx].DNA_increament;
                             }
                         }
                     }
@@ -86,8 +86,8 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                     if($rootScope.resources[1].Quantity >= $rootScope.buttons[idx].DNA){
                         $rootScope.resources[0].Storage += 20;
                         $rootScope.resources[1].Storage += 20;
-                        $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + 6;
-                        $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + 2;
+                        $rootScope.resources[0].Change = $rootScope.resources[0].Change + 6;
+                        $rootScope.resources[1].Change = $rootScope.resources[1].Change + 2;
                         $rootScope.buttons[idx].clicked = true;
                         for(i = 0; i < $scope.visibled.length; i++){
                             for(j = 0; j< $rootScope.buttons.length; j++){

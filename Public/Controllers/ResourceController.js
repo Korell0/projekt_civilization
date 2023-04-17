@@ -38,26 +38,26 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                     }
                 }
             }
-            if($rootScope.resources[0].Quantity + $rootScope.resources[0].Increase <= $rootScope.resources[0].Storage){
-                $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity + $rootScope.resources[0].Increase;
+            if(RNA_DNA_Storage(0)){
+                $rootScope.resources[0].Quantity = QuantityChange(0);
             }
             else{
                 $rootScope.resources[0].Quantity = $rootScope.resources[0].Storage;
             }
-            if($rootScope.resources[1].Quantity + $rootScope.resources[1].Increase <= $rootScope.resources[1].Storage){
-                $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity + $rootScope.resources[1].Increase;
+            if(RNA_DNA_Storage(1)){
+                $rootScope.resources[1].Quantity = QuantityChange(1);
             }
             else{
                 $rootScope.resources[1].Quantity = $rootScope.resources[1].Storage;
             }
         }
         else{
+            ChangesZero()
             $rootScope.buildings.forEach(building =>{
                 let idx = building.ID;
-                if(ResourceProduct(idx)){
+                if(ResourceProduct(idx-1)){
                     $rootScope.resources.forEach(resource =>{
                         if(building.Bonus.split(' ')[1] == resource.Name){
-                            resource.Change = 0;
                             resource.Quantity += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
                             resource.Change += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
                         }
@@ -67,7 +67,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
             $rootScope.jobs.forEach(job =>{
                 $rootScope.resources.forEach(resource =>{
                     if(!job.Product.match("/")){
-                        if(job.Product.split(' ')[1] == resource.Name){
+                        if(job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1) == resource.Name){
                             resource.Quantity += parseInt(job.Product.split(' ')[0]) * job.Quantity;
                             resource.Change += parseInt(job.Product.split(' ')[0]) * job.Quantity
                         }
@@ -122,7 +122,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                             Name: results.data[i].Name,
                             Description: results.data[i].Description,
                             Quantity: element.Quantity,
-                            change: 0
+                            Change: 0
                         }
                         $scope.resources.push(data);
                     }
@@ -131,6 +131,21 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
             })
         };
     });
+    RNA_DNA_Storage = function(idx){
+        if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change <= $rootScope.resources[idx].Storage){
+            return true;
+        }
+        else return false;
+    }
+    QuantityChange = function(idx){
+        console.log($rootScope.resources[idx].Change)
+        return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
+    }
+    ChangesZero = function(){
+        $rootScope.resources.forEach(resource =>{
+            resource.Change = 0;
+        })
+    }
     ResourceProduct = function(idx){
         if($rootScope.buildings[idx] != null){
             switch($rootScope.buildings[idx].Bonus.split(' ')[1]){

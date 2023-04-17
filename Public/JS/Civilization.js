@@ -15,13 +15,14 @@ app.run(function($rootScope, DB){
         $rootScope.military = [];
         $rootScope.researched = [];
         $rootScope.people = 5;
+        $rootScope.assigned = 0;
         $rootScope.peopleMax = 5;
         $rootScope.jobs = [];
         $rootScope.Specie = $rootScope.User.Specie;
 
 
         if($rootScope.User.Specie == "Cell"){
-            $rootScope.storage = 100;
+            
             DB.selectAll("Cell_evolution").then(function(res){
                 res.data.forEach(element => {
                     element.clicked = false;
