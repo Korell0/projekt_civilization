@@ -58,8 +58,8 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 if(ResourceProduct(idx-1)){
                     $rootScope.resources.forEach(resource =>{
                         if(building.Bonus.split(' ')[1].charAt(0).toUpperCase() + building.Bonus.split(' ')[1].slice(1) == resource.Name){
-                            resource.Quantity += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
-                            resource.Change += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
+                            resource.Quantity += parseFloat(building.Bonus.split(' ')[0] * building.Quantity);
+                            resource.Change += parseFloat(building.Bonus.split(' ')[0] * building.Quantity);
                         }
                     })
                 }
@@ -68,12 +68,24 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 $rootScope.resources.forEach(resource =>{
                     if(!job.Product.match("/")){
                         if(job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1) == resource.Name){
-                            resource.Quantity += parseInt(job.Product.split(' ')[0]) * job.Quantity;
-                            resource.Change += parseInt(job.Product.split(' ')[0]) * job.Quantity
+                            resource.Quantity += parseFloat(job.Product.split(' ')[0] * job.Quantity);
+                            resource.Change += parseFloat(job.Product.split(' ')[0] * job.Quantity)
                         }
                     }
                     else{
-                        
+                        if(job.Product.split('/').length == 2){
+                            if(job.Product.split(' ')[4].charAt(0).toUpperCase() + job.Product.split(' ')[4].slice(1) == resource.Name){
+                                resource.Quantity += parseFloat(job.Product.split(' ')[3] * job.Quantity);
+                                resource.Change += parseFloat(job.Product.split(' ')[3] * job.Quantity)
+                            }
+                        }
+                        else if(job.Product.split('/').length == 3){
+                            if(job.Product.split(' ')[7].charAt(0).toUpperCase() + job.Product.split(' ')[7].slice(1) == resource.Name){
+                                console.log(job.Product.split(' ')[3])
+                                resource.Quantity += parseFloat(job.Product.split(' ')[6] * job.Quantity);
+                                resource.Change += parseFloat(job.Product.split(' ')[6] * job.Quantity)
+                            }
+                        }
                     }
                 })
             })
@@ -86,9 +98,9 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                     let data = {
                         Name: res.data[i].Name,
                         Description: res.data[i].Description,
-                        Quantity: 0,
+                        Quantity: parseFloat(0),
                         Storage: 100,
-                        Change: 0
+                        Change: parseFloat(0)
                     }
                     $scope.resources.push(data)
                 }
@@ -105,7 +117,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                         let data ={
                             ResourceID: i,
                             UserID: $rootScope.User.ID,
-                            Quantity: 0                
+                            Quantity: parseFloat(0)                
                         };
                         DB.insert('resources_by_user', data);
                     }
@@ -122,7 +134,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                             Name: results.data[i].Name,
                             Description: results.data[i].Description,
                             Quantity: element.Quantity,
-                            Change: 0
+                            Change: parseFloat(0)
                         }
                         $scope.resources.push(data);
                     }
@@ -143,7 +155,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     }
     ChangesZero = function(){
         $rootScope.resources.forEach(resource =>{
-            resource.Change = 0;
+            resource.Change = parseFloat(0);
         })
     }
     ResourceProduct = function(idx){

@@ -53,6 +53,7 @@ app.run(function($rootScope, DB){
             DB.selectAll("buildings").then(function(res){
                 res.data.forEach(building =>{
                     building.Quantity = 0;
+                    building.Bonus = building.Bonus.replaceAll("_"," ")
                     $rootScope.buildings.push(building);
                 });
             });
