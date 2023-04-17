@@ -57,7 +57,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 let idx = building.ID;
                 if(ResourceProduct(idx-1)){
                     $rootScope.resources.forEach(resource =>{
-                        if(building.Bonus.split(' ')[1] == resource.Name){
+                        if(building.Bonus.split(' ')[1].charAt(0).toUpperCase() + building.Bonus.split(' ')[1].slice(1) == resource.Name){
                             resource.Quantity += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
                             resource.Change += parseInt(building.Bonus.split(' ')[0] * building.Quantity);
                         }
