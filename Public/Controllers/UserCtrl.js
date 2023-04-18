@@ -16,7 +16,7 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                         Username: $scope.user.name,
                         Password: CryptoJS.SHA1($scope.user.password).toString(),
                         Email: $scope.user.email,
-                        Specie: "0"
+                        Specie: "Cell"
                     }
                     DB.insert('users', data).then(function(res) {
                         if (res.data.affectedRows != 0) {
@@ -48,9 +48,14 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                 }
                 else 
                 {
-                    $rootScope.loggedUser = res.data[0];
-                    sessionStorage.setItem('civilization', angular.toJson($rootScope.loggedUser));
-                    window.location.href = 'Game.html';
+                    if(data.Username == "Admin"){
+                        window.location.href = '#!/Admin';
+                    }
+                    else{
+                        $rootScope.loggedUser = res.data[0];
+                        sessionStorage.setItem('civilization', angular.toJson($rootScope.loggedUser));
+                        window.location.href = 'Game.html';
+                    }
                 }
             });
         }

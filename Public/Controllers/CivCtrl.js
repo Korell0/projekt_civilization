@@ -1,20 +1,30 @@
 app.controller('CivCtrl',function($scope, $rootScope, DB,){
-    $scope.evolved = [];
-    $scope.visibled = [];
     $scope.deletes = [];
     $scope.buildings = $rootScope.buildings;
     $scope.Specie = $rootScope.User.Specie;
 
-    for(i = 0;i < $rootScope.buildings.length;i++){
-        for(j = 0;j < $rootScope.researched.length;j++){
-            if($rootScope.buildings[i].Tech_req == tech[j].Name){
-                $rootScope.buildings[i].hidden = false;
-                break;
+    $scope.BuildingsShow = function(){
+        console.log(0)
+        $rootScope.buildings.forEach(building => {
+            if($rootScope.researched.length != 0){
+                $rootScope.researched.forEach(tech =>{
+                    if(building.Tech_req == tech.Name){
+                        building.hidden = false;
+                    }
+                    else{
+                        building.hidden = true;
+                    }
+                })
             }
-            else if($rootScope.buildings[i].Tech_req != $rootScope.researched[j].Name && $rootScope.buildings.hidden == true){
-                $rootScope.buildings[i].hidden = true;
+            else{
+                if(building.Tech_req == ""){
+                    building.hidden = false;
+                }
+                else{
+                    building.hidden = true;
+                }
             }
-        }
+        });
     }
 
     $scope.Click = function(id,idx){
@@ -61,13 +71,13 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                             $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
                             $rootScope.buttons[idx].quantity++;
                             if($rootScope.buttons[idx].RNA_Increament > 0){
-                                $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + $rootScope.buttons[idx].RNA_Increament;
+                                $rootScope.resources[0].Change = $rootScope.resources[0].Change + $rootScope.buttons[idx].RNA_Increament;
                             }
                             if($rootScope.buttons[idx].RNA_Decrament > 0){
-                                $rootScope.resources[0].Increase = $rootScope.resources[0].Increase - $rootScope.buttons[idx].RNA_Decrament;
+                                $rootScope.resources[0].Change = $rootScope.resources[0].Change - $rootScope.buttons[idx].RNA_Decrament;
                             }
                             if($rootScope.buttons[idx].DNA_increament > 0){
-                                $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + $rootScope.buttons[idx].DNA_increament;
+                                $rootScope.resources[1].Change = $rootScope.resources[1].Change + $rootScope.buttons[idx].DNA_increament;
                             }
                         }
                     }
@@ -76,8 +86,8 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                     if($rootScope.resources[1].Quantity >= $rootScope.buttons[idx].DNA){
                         $rootScope.resources[0].Storage += 20;
                         $rootScope.resources[1].Storage += 20;
-                        $rootScope.resources[0].Increase = $rootScope.resources[0].Increase + 6;
-                        $rootScope.resources[1].Increase = $rootScope.resources[1].Increase + 2;
+                        $rootScope.resources[0].Change = $rootScope.resources[0].Change + 6;
+                        $rootScope.resources[1].Change = $rootScope.resources[1].Change + 2;
                         $rootScope.buttons[idx].clicked = true;
                         for(i = 0; i < $scope.visibled.length; i++){
                             for(j = 0; j< $rootScope.buttons.length; j++){
@@ -87,7 +97,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                             }
                         }
                         $scope.evolved.push($rootScope.buttons[idx]);
-                        if($rootScope.buttons[idx].Specie != "0" && $rootScope.Specie == "0") $rootScope.Specie = $rootScope.buttons[idx].Specie; 
+                        if($rootScope.buttons[idx].Specie.length > 1 && $rootScope.Specie == "Cell") $rootScope.Specie = $rootScope.buttons[idx].Specie; 
                         $rootScope.resources[1].Quantity -= $rootScope.buttons[idx].DNA;
                         if($rootScope.buttons[idx].Name == "Sentience"){
                             ToCreature();
@@ -98,18 +108,14 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         }
         }
         else{
-            if(ResourceProduct(idx)){
-
-            }
-            else if(PeopleCap(idx)){
-                $rootScope.buildings[idx].Quantity++
-                $rootScope.peopleMax += 3
-            }
-            else if(StorageCap(idx)){
-
+            if(StorageCap(idx)){
+    
             }
             else if(JobCap(idx)){
 
+            }
+            else if(PeopleCap(idx)){
+                $rootScope.peopleMax += parseInt($rootScope.buildings[idx].Bonus.split(" ")[0])
             }
             else if(TradeCap(idx)){
 
@@ -125,18 +131,6 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
             Specie: $rootScope.Specie
         }
         DB.update('users', $rootScope.User.ID, data)
-    }
-    ResourceProduct = function(idx){
-        switch($rootScope.buildings[idx].Bonus.split(" ")[1]){
-            case "bones":
-                return true;
-            case "wine":
-                return true;
-            case "steam":
-                return true;
-            default:
-                return false;
-        }
     }
     PeopleCap = function(idx){
         if($rootScope.buildings[idx].Bonus.split(" ")[1] == "people"){

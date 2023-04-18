@@ -1,9 +1,22 @@
 <div class="container-fluid Resources card" ng-controller="ResourceCtrl">
-    <h3>Resources</h3>
-    <div>People: <span>{{people}}</span>/<span>{{peopleMax}}</span></div>
+    <table class="table table-borderless mb-1" ng-if="User.Specie != Cell">
+        <tr>
+            <th class="SpecieCell p-1"><span class="card">Specie</span></th>
+            <th class="SpecieCell p-1"><span class="card">Max</span></th>
+            <th class="SpecieCell p-1"><span class="card">Jobless</span></th>
+            <th class="SpecieCell p-1"><span class="card">Employed</span></th>
+        </tr>
+        <tr>
+            <td class="SpecieCell p-1"><span class="card text-center">{{User.Specie}}</span></td>
+            <td class="SpecieCell p-1"><span class="card text-center">{{peopleMax}}</span></td>
+            <td class="SpecieCell p-1"><span class="card text-center">{{people}}</span></td>
+            <td class="SpecieCell p-1"><span class="card text-center">{{assigned}}</span></td>
+        </tr>
+    </table>
+    <h3 class="card mt-0">Resources</h3>
     <div class="card resource p-2" ng-repeat="resource in resources">
         <div>
-            {{resource.Name}} : {{resource.Quantity}}/{{resource.Storage}} <span>{{resource.Increase}}</span>/s
+            {{resource.Name}} : {{resource.Quantity}}/{{resource.Storage}} <span>{{resource.Change}}</span>/s
         </div>
     </div>
 </div>

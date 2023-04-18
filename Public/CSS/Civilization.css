@@ -66,6 +66,11 @@ td{
 border: 1px solid gray;
 text-align: left;
 }
+
+.SpecieCell{
+  border: 0px;
+  font-size: 75%;
+}
 li{
 list-style: none;
 color:aliceblue
