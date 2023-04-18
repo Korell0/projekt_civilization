@@ -36,14 +36,14 @@ app.controller('StagesCtrl',function($scope){
             Firstrow: "Harness the power of steel and stone",
             Secondrow: "Defend your people",
             Thirdrow: ".",
-            PictureName: "../Public/img/medieval.png"
+            PictureName: "../Public/img/french.png"
         },
         {
             Title: "Industrial Era",
             Firstrow: "Harness the power of steam",
             Secondrow: "Make leaps in thechnology",
             Thirdrow: "Connect your empire",
-            PictureName: "../Public/img/industrial.jpg"
+            PictureName: "../Public/img/industri.png"
         },
         {
             Title: "Modern Era",
