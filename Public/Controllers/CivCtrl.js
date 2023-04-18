@@ -123,6 +123,21 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         }
 
     }
+    $scope.Gather = function(resource){
+        console.log(resource)
+        switch(resource){
+            case "Food":
+                $rootScope.resources[0].Quantity++
+                break;
+            case "Wood":
+                $rootScope.resources[2].Quantity++
+                break;
+            case "Stone":
+                $rootScope.resources[3].Quantity++
+                break;
+        }
+    }
+
     ToCreature = function(){
         let data = {
             Username: $rootScope.User.Username,

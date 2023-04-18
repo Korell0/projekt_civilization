@@ -1,6 +1,5 @@
 app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     $scope.resources = $rootScope.resources;
-    
     $interval(function(){   
         if($rootScope.User.Specie == "Cell"){
             if($rootScope.evolved.length != 0){
@@ -67,24 +66,14 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
             $rootScope.jobs.forEach(job =>{
                 $rootScope.resources.forEach(resource =>{
                     if(!job.Product.match("/")){
-                        if(job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1) == resource.Name){
-                            resource.Quantity += parseFloat(job.Product.split(' ')[0] * job.Quantity);
-                            resource.Change += parseFloat(job.Product.split(' ')[0] * job.Quantity)
-                        }
+                        ResourceQuantity(job, 0, resource)
                     }
                     else{
                         if(job.Product.split('/').length == 2){
-                            if(job.Product.split(' ')[4].charAt(0).toUpperCase() + job.Product.split(' ')[4].slice(1) == resource.Name){
-                                resource.Quantity += parseFloat(job.Product.split(' ')[3] * job.Quantity);
-                                resource.Change += parseFloat(job.Product.split(' ')[3] * job.Quantity)
-                            }
+                            ResourceQuantity(job, 1, resource)
                         }
-                        else if(job.Product.split('/').length == 3){
-                            if(job.Product.split(' ')[7].charAt(0).toUpperCase() + job.Product.split(' ')[7].slice(1) == resource.Name){
-                                console.log(job.Product.split(' ')[3])
-                                resource.Quantity += parseFloat(job.Product.split(' ')[6] * job.Quantity);
-                                resource.Change += parseFloat(job.Product.split(' ')[6] * job.Quantity)
-                            }
+                        if(job.Product.split('/').length == 3){
+                            ResourceQuantity(job, 2, resource)
                         }
                     }
                 })
@@ -144,19 +133,52 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         };
     });
     RNA_DNA_Storage = function(idx){
+        console.log($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change)
         if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change <= $rootScope.resources[idx].Storage){
             return true;
         }
         else return false;
     }
     QuantityChange = function(idx){
-        console.log($rootScope.resources[idx].Change)
         return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
     }
     ChangesZero = function(){
         $rootScope.resources.forEach(resource =>{
             resource.Change = parseFloat(0);
         })
+    }
+    ResourceQuantity = function(job, route, resource){
+        if(route == 0){
+            if(resource.Name == job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1)){
+                resource.Quantity += parseFloat(job.Product.split(' ')[0] * job.Quantity);
+                resource.Change += parseFloat(job.Product.split(' ')[0] * job.Quantity)
+            }
+        }
+        else if(route == 1){
+            if(resource.Name == job.Product.split(' ')[4].charAt(0).toUpperCase() + job.Product.split(' ')[4].slice(1)){
+                resource.Quantity += parseFloat(job.Product.split(' ')[3] * job.Quantity);
+                resource.Change += parseFloat(job.Product.split(' ')[3] * job.Quantity)
+            }
+            if(resource.Name == job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1)){
+                resource.Quantity += parseFloat(job.Product.split(' ')[0] * job.Quantity);
+                resource.Change += parseFloat(job.Product.split(' ')[0] * job.Quantity)
+            }
+        }
+        else if(route == 2){
+            if(resource.Name == job.Product.split(' ')[7].charAt(0).toUpperCase() + job.Product.split(' ')[7].slice(1)){
+                console.log($rootScope.resources[6].Quantity)
+                resource.Quantity += parseFloat(job.Product.split(' ')[7] * job.Quantity);
+                resource.Change += parseFloat(job.Product.split(' ')[7] * job.Quantity);
+            }
+            if(resource.Name == job.Product.split(' ')[4].charAt(0).toUpperCase() + job.Product.split(' ')[4].slice(1)){
+                resource.Quantity += parseFloat(job.Product.split(' ')[3] * job.Quantity);
+                resource.Change += parseFloat(job.Product.split(' ')[3] * job.Quantity);
+            }
+            if(resource.Name == job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1)){
+                resource.Quantity += parseFloat(job.Product.split(' ')[0] * job.Quantity);
+                resource.Change += parseFloat(job.Product.split(' ')[0] * job.Quantity);
+            }
+        }
     }
     ResourceProduct = function(idx){
         if($rootScope.buildings[idx] != null){
