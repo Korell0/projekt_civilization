@@ -1,7 +1,6 @@
 app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
 
     $scope.user = {};
-
     $scope.registration = function() {
         if ($scope.user.name == null || $scope.user.email == null || $scope.user.password == null || $scope.user.passwordA == null) {
             alert('Nem adtál meg minden kötelező adatot!');
