@@ -123,6 +123,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                             Name: results.data[i].Name,
                             Description: results.data[i].Description,
                             Quantity: element.Quantity,
+                            Storage: parseFloat(100),
                             Change: parseFloat(0)
                         }
                         $scope.resources.push(data);
@@ -133,7 +134,6 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         };
     });
     RNA_DNA_Storage = function(idx){
-        console.log($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change)
         if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change <= $rootScope.resources[idx].Storage){
             return true;
         }
@@ -166,7 +166,6 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         }
         else if(route == 2){
             if(resource.Name == job.Product.split(' ')[7].charAt(0).toUpperCase() + job.Product.split(' ')[7].slice(1)){
-                console.log($rootScope.resources[6].Quantity)
                 resource.Quantity += parseFloat(job.Product.split(' ')[7] * job.Quantity);
                 resource.Change += parseFloat(job.Product.split(' ')[7] * job.Quantity);
             }

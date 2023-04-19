@@ -5,17 +5,14 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
   })
   $scope.Research = function(idx){
     if(EnoughResource(idx)){
-      
+      let data = {
+        UserID: $rootScope.User.ID,
+        ResearchID: idx + 4
+      }
+      $rootScope.researched.push(data);
+      $rootScope.researchs[idx].hidden = true;
+      $scope.ResearchShow();
     }
-    else{
-      console.log("emd")
-    }
-    /*let data = {
-      UserID: $rootScope.User.ID,
-      ResearchID: idx
-    }
-    $rootScope.researched.push(data);
-    $scope.ResearchShow();*/
   }
   
   $rootScope.researchs.forEach(element => {
@@ -28,7 +25,6 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
         $rootScope.researched.forEach(item =>{
           if(element.ID == item.ResearchID){
             element.hidden = false;
-            item.hidden = true;
           }
         });
       });
@@ -42,24 +38,27 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
   EnoughResource = function(idx){
     if($rootScope.researchs[idx].First_Resources != null){
       $scope.FirstResource = ExamResource($rootScope.researchs[idx].First_Resources);
-    }
-    if($rootScope.researchs[idx].Second_Resources != null){
-      $scope.SecondResources = ExamResource($rootScope.researchs[idx].Second_Resources);
+      if($rootScope.researchs[idx].Second_Resources != null){
+        $scope.SecondResources = ExamResource($rootScope.researchs[idx].Second_Resources);
+        if($rootScope.researchs[idx].Third_Resources != null){
+          $scope.ThirdResources = ExamResource($rootScope.researchs[idx].Third_Resources);
+          if($rootScope.researchs[idx].Fourth_Resources != null){
+            $scope.FourthResources = ExamResource($rootScope.researchs[idx].Fourth_Resources);
+          }
+          else{
+            $scope.FourthResources = true;
+          }
+        }
+        else{
+          $scope.ThirdResources = true;
+        }
+      }
+      else{
+        $scope.SecondResources = true;
+      }
     }
     else{
-      $scope.SecondResources = true;
-    }
-    if($rootScope.researchs[idx].Third_Resources != null){
-      $scope.ThirdResources = ExamResource($rootScope.researchs[idx].Third_Resources);
-    }
-    else{
-      $scope.ThirdResources = true;
-    }
-    if($rootScope.researchs[idx].Fourth_Resources != null){
-      $scope.FourthResources = ExamResource($rootScope.researchs[idx].Fourth_Resources);
-    }
-    else{
-      $scope.FourthResources = true;
+      $scope.FirstResource = true;
     }
     if($scope.FirstResource && $scope.SecondResources && $scope.ThirdResources && $scope.FourthResources){
       return true;
@@ -70,18 +69,26 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
   }
 
   ExamResource = function(require){
-    console.log(require.split(' ')[1])
-    $rootScope.resources.forEach(resource =>{
-      if(resource.Name == require.split(' ')[1].charAt(0).toUpperCase() + require.split(' ')[1].slice(1)){
-        if(resource.Quantity >= require.split(' ')[0]){
-          return true;
+    let bool = false;
+    if(require.split(' ')[1] != undefined){
+      $rootScope.resources.forEach(resource =>{
+        if(resource.Name == require.split(' ')[1].charAt(0).toUpperCase() + require.split(' ')[1].slice(1)){
+          if(resource.Quantity >= require.split(' ')[0]-0){
+            bool = true;
+          }
+          else{
+            bool = false;
+          }
         }
-      }
-    })
-    return false;
+      })
+    }
+    else{
+      bool = true;
+    }
+    return bool;
   }
   
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)
 })

@@ -4,7 +4,6 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
     $scope.Specie = $rootScope.User.Specie;
 
     $scope.BuildingsShow = function(){
-        console.log(0)
         $rootScope.buildings.forEach(building => {
             if($rootScope.researched.length != 0){
                 $rootScope.researched.forEach(tech =>{
@@ -38,7 +37,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                 if($rootScope.buttons[idx].Name == "DNA"){
                     if($rootScope.resources[0].Quantity >= 2){
                         if($rootScope.resources[1].Quantity < $rootScope.resources[1].Storage){
-                            $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - 2;
+                            $rootScope.resources[0].Quantity -= 2;
                             $rootScope.resources[1].Quantity++;
                         }
                     }
@@ -48,10 +47,8 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                 if($rootScope.buttons[idx].storage == 1){
                     if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
                         if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
-                            $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity - parseInt($rootScope.buttons[idx].DNA)
-                            $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - parseInt($rootScope.buttons[idx].RNA)
-                            $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
-                            $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
+                            QuantityDecrease(idx)
+                            CostIncrease(idx)
                             $rootScope.buttons[idx].quantity++;
                             if($rootScope.buttons[idx].storageRNAplus > 0){
                                 $rootScope.resources[0].Storage += $rootScope.buttons[idx].storageRNAplus;
@@ -65,10 +62,8 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                 if($rootScope.buttons[idx].producer == 1){
                     if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
                         if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
-                            $rootScope.resources[1].Quantity = $rootScope.resources[1].Quantity - parseInt($rootScope.buttons[idx].DNA)
-                            $rootScope.resources[0].Quantity = $rootScope.resources[0].Quantity - parseInt($rootScope.buttons[idx].RNA)
-                            $rootScope.buttons[idx].DNA = parseInt($rootScope.buttons[idx].DNA) + parseInt($rootScope.buttons[idx].DNAplus);
-                            $rootScope.buttons[idx].RNA = parseInt($rootScope.buttons[idx].RNA) + parseInt($rootScope.buttons[idx].RNAplus);
+                            QuantityDecrease(idx)
+                            CostIncrease(idx)
                             $rootScope.buttons[idx].quantity++;
                             if($rootScope.buttons[idx].RNA_Increament > 0){
                                 $rootScope.resources[0].Change = $rootScope.resources[0].Change + $rootScope.buttons[idx].RNA_Increament;
@@ -86,8 +81,8 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                     if($rootScope.resources[1].Quantity >= $rootScope.buttons[idx].DNA){
                         $rootScope.resources[0].Storage += 20;
                         $rootScope.resources[1].Storage += 20;
-                        $rootScope.resources[0].Change = $rootScope.resources[0].Change + 6;
-                        $rootScope.resources[1].Change = $rootScope.resources[1].Change + 2;
+                        $rootScope.resources[0].Change += 6;
+                        $rootScope.resources[1].Change += 2;
                         $rootScope.buttons[idx].clicked = true;
                         for(i = 0; i < $scope.visibled.length; i++){
                             for(j = 0; j< $rootScope.buttons.length; j++){
@@ -124,16 +119,21 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
 
     }
     $scope.Gather = function(resource){
-        console.log(resource)
         switch(resource){
             case "Food":
-                $rootScope.resources[0].Quantity++
+                if($rootScope.resources[0].Storage >= $rootScope.resources[0].Quantity + 1){
+                    $rootScope.resources[0].Quantity++
+                }
                 break;
             case "Wood":
-                $rootScope.resources[2].Quantity++
+                if($rootScope.resources[2].Storage >= $rootScope.resources[2].Quantity + 1){
+                    $rootScope.resources[2].Quantity++
+                }
                 break;
             case "Stone":
-                $rootScope.resources[3].Quantity++
+                if($rootScope.resources[3].Storage >= $rootScope.resources[3].Quantity + 1){
+                    $rootScope.resources[3].Quantity++
+                }
                 break;
         }
     }
@@ -200,6 +200,14 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         else{
             return false;
         }
+    }
+    QuantityDecrease = function(idx){
+        $rootScope.resources[0].Quantity -= parseInt($rootScope.buttons[idx].RNA)
+        $rootScope.resources[1].Quantity -= parseInt($rootScope.buttons[idx].DNA)
+    }
+    CostIncrease = function(idx){
+        $rootScope.buttons[idx].RNA += parseInt($rootScope.buttons[idx].RNAplus)
+        $rootScope.buttons[idx].DNA += parseInt($rootScope.buttons[idx].DNAplus)
     }
 });
 

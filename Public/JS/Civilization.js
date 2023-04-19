@@ -47,9 +47,23 @@ app.run(function($rootScope, DB){
             });
             DB.selectAll("researchs").then(function(res){
                 res.data.forEach(tech =>{
+                    tech.Searched = false;
                     $rootScope.researchs.push(tech);
                 });
             });
+            DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
+                if(res.data.length != 0){
+                    $rootScope.researchs.forEach(tech =>{
+                        res.data.forEach(Searched =>{
+                            if(tech.ID == Searched.ID){
+                                tech.Searched = true;
+                                tech.hidden = true;
+                                $rootScope.researched.push(Searched)
+                            }
+                        })
+                    })
+                }
+            })
             DB.selectAll("buildings").then(function(res){
                 res.data.forEach(building =>{
                     building.Quantity = 0;
