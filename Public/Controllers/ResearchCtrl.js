@@ -5,10 +5,7 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
   })
   $scope.Research = function(idx){
     if(EnoughResource(idx)){
-      let data = {
-        UserID: $rootScope.User.ID,
-        ResearchID: idx + 4
-      }
+      let data = $rootScope.researchs[idx]
       $rootScope.researched.push(data);
       $rootScope.researchs[idx].hidden = true;
       $scope.ResearchShow();
@@ -23,7 +20,8 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
     if($rootScope.researched.length !=0){
       $rootScope.researchs.forEach(element => {
         $rootScope.researched.forEach(item =>{
-          if(element.ID == item.ResearchID){
+          
+          if(element.tech_req == item.Name){
             element.hidden = false;
           }
         });

@@ -51,7 +51,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
             }
         }
         else{
-            ChangesZero()
+            ChangesZero();
             $rootScope.buildings.forEach(building =>{
                 let idx = building.ID;
                 if(ResourceProduct(idx-1)){
@@ -77,6 +77,12 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                         }
                     }
                 })
+            })
+            ResearchResources();
+            peopleChange()
+            $rootScope.resources.forEach(resource =>{
+                let idx = $rootScope.resources.indexOf(resource)
+                resource.Quantity = QuantityChange(idx)
             })
         }
     }, 1000)
@@ -190,6 +196,41 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                     return true;
                 default:
                     return false;
+            }
+        }
+    }
+    ResearchResources = function(){
+        $rootScope.researched.forEach(researched =>{
+            if(researched.passive_bonus.includes(" ")){
+                switch(researched.passive_bonus.split(' ')[1]){
+                    case "knowledge":
+                        let resource = $rootScope.resources.find(x=> x.Name == researched.passive_bonus.split(' ')[1].charAt(0).toUpperCase() + researched.passive_bonus.split(' ')[1].slice(1))
+                        resource.Change += parseFloat(researched.passive_bonus.split(' ')[0])
+                        $rootScope.resources[resource.ID-1] = resource;
+                        break;
+                    case "all":
+                        ResourceBonus(1, parseFloat(researched.passive_bonus.split(' ')[0]))
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+    }
+    ResourceBonus = function(route, percent){
+        if(route == 1){
+            $rootScope.resources.forEach(resource =>{
+                if(resource.Name != "Knowledge"){
+                    resource.Change = resource.Change*percent
+                }
+            })
+        }
+    }
+    peopleChange = function(){
+        if($rootScope.peopleMax > $rootScope.people){
+            let RNumber = Math.random()
+            if(RNumber > 0.5){
+                $rootScope.people++
             }
         }
     }
