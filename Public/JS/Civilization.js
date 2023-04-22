@@ -66,6 +66,7 @@ app.run(function($rootScope, DB){
             })
             DB.selectAll("buildings").then(function(res){
                 res.data.forEach(building =>{
+                    MinimalCostSet(building)
                     building.Quantity = 0;
                     building.Bonus = building.Bonus.replaceAll("_"," ")
                     $rootScope.buildings.push(building);
@@ -108,6 +109,12 @@ app.run(function($rootScope, DB){
             });
             DB.selectAll("jobs").then(function(res){
                 res.data.forEach(job => {
+                    if(!BasicJob(job.Name)){
+                        job.Max = 0;
+                    }
+                    else{
+                        job.Max = $rootScope.peopleMax
+                    }
                     $rootScope.jobs.push(job);
                 });
             })
@@ -184,6 +191,17 @@ app.run(function($rootScope, DB){
             else{
                 return false;
             }
+        }
+        BasicJob = function(job){
+            if(job == "Hunter" || job == "Gatherer"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        MinimalCostSet = function(building){
+            
         }
     }
 });

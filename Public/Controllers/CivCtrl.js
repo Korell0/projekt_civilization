@@ -48,14 +48,10 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                     if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
                         if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
                             QuantityDecrease(idx)
-                            CostIncrease(idx)
+                            CellCostIncrease(idx)
+                            RNAStorage(idx)
+                            DNAStorage(idx)
                             $rootScope.buttons[idx].quantity++;
-                            if($rootScope.buttons[idx].storageRNAplus > 0){
-                                $rootScope.resources[0].Storage += $rootScope.buttons[idx].storageRNAplus;
-                            }
-                            if($rootScope.buttons[idx].storageDNAplus > 0){
-                                $rootScope.resources[1].Storage += $rootScope.buttons[idx].storageDNAplus;
-                            }
                         }
                     }
                 }
@@ -63,17 +59,9 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                     if($rootScope.buttons[idx].DNA > 0 || $rootScope.buttons[idx].RNA > 0){
                         if($rootScope.resources[1].Quantity >= parseInt($rootScope.buttons[idx].DNA) && $rootScope.resources[0].Quantity >= parseInt($rootScope.buttons[idx].RNA)){
                             QuantityDecrease(idx)
-                            CostIncrease(idx)
+                            CellCostIncrease(idx)
+                            CellIncreaments(idx)
                             $rootScope.buttons[idx].quantity++;
-                            if($rootScope.buttons[idx].RNA_Increament > 0){
-                                $rootScope.resources[0].Change = $rootScope.resources[0].Change + $rootScope.buttons[idx].RNA_Increament;
-                            }
-                            if($rootScope.buttons[idx].RNA_Decrament > 0){
-                                $rootScope.resources[0].Change = $rootScope.resources[0].Change - $rootScope.buttons[idx].RNA_Decrament;
-                            }
-                            if($rootScope.buttons[idx].DNA_increament > 0){
-                                $rootScope.resources[1].Change = $rootScope.resources[1].Change + $rootScope.buttons[idx].DNA_increament;
-                            }
                         }
                     }
                 }
@@ -103,17 +91,34 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         }
         }
         else{
-            if(StorageCap(idx)){
+            if(EnoughResource(idx)){
+                if(StorageCap(idx)){
+                    $rootScope.resources.forEach(resource =>{
+                        if($rootScope.buttons[idx].Bonus.split(" ")[2] != undefined){
+                            if(resource.Name == $rootScope.buttons[idx].Bonus.split(" ")[1].charAt(0).toUpperCase() + $rootScope.buttons[idx].Bonus.split(" ")[1].slice(1)){
+                                resource.Storage = resource.Storage + parseFloat($rootScope.buttons[idx].Bonus.split(" ")[0])
+                            }
+                        }else{
+                            if(resource.Name = "Coal"){
+                                resource.Storage = resource.Storage + parseFloat($rootScope.buttons[idx].Bonus.split(" ")[0])
+                            }
+                        }
+                    })
+                }
+                else if(JobCap(idx)){
+                    $rootScope.jobs.forEach(job =>{
+                        if(job.Name == $rootScope.buttons[idx].Bonus.split(" ")[1].charAt(0).toUpperCase() + $rootScope.buttons[idx].Bonus.split(" ")[1].slice(1)){
+                            job.Max++;
+                        }
+                    })
+                }
+                else if(PeopleCap(idx)){
+                    $rootScope.peopleMax += parseInt($rootScope.buildings[idx].Bonus.split(" ")[0])
+                }
+                else if(TradeCap(idx)){
     
-            }
-            else if(JobCap(idx)){
-
-            }
-            else if(PeopleCap(idx)){
-                $rootScope.peopleMax += parseInt($rootScope.buildings[idx].Bonus.split(" ")[0])
-            }
-            else if(TradeCap(idx)){
-
+                }
+                CivilCostIncrease(idx)
             }
         }
 
@@ -121,19 +126,13 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
     $scope.Gather = function(resource){
         switch(resource){
             case "Food":
-                if($rootScope.resources[0].Storage >= $rootScope.resources[0].Quantity + 1){
-                    $rootScope.resources[0].Quantity++
-                }
+                Gathering(0)
                 break;
             case "Wood":
-                if($rootScope.resources[2].Storage >= $rootScope.resources[2].Quantity + 1){
-                    $rootScope.resources[2].Quantity++
-                }
+                Gathering(2)
                 break;
             case "Stone":
-                if($rootScope.resources[3].Storage >= $rootScope.resources[3].Quantity + 1){
-                    $rootScope.resources[3].Quantity++
-                }
+                Gathering(3)
                 break;
         }
     }
@@ -205,9 +204,84 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         $rootScope.resources[0].Quantity -= parseInt($rootScope.buttons[idx].RNA)
         $rootScope.resources[1].Quantity -= parseInt($rootScope.buttons[idx].DNA)
     }
-    CostIncrease = function(idx){
+    CellCostIncrease = function(idx){
         $rootScope.buttons[idx].RNA += parseInt($rootScope.buttons[idx].RNAplus)
         $rootScope.buttons[idx].DNA += parseInt($rootScope.buttons[idx].DNAplus)
+    }
+    EnoughResource = function(idx){
+        if($rootScope.buildings[idx].First_Resources != null){
+            $scope.FirstResource = ExamResource($rootScope.buildings[idx].First_Resources);
+            if($rootScope.buildings[idx].Second_Resources != null){
+              $scope.SecondResources = ExamResource($rootScope.buildings[idx].Second_Resources);
+              if($rootScope.buildings[idx].Third_Resources != null){
+                $scope.ThirdResources = ExamResource($rootScope.buildings[idx].Third_Resources);
+              }
+              else{
+                $scope.ThirdResources = true;
+              }
+            }
+            else{
+              $scope.SecondResources = true;
+            }
+          }
+          else{
+            $scope.FirstResource = true;
+          }
+          if($scope.FirstResource && $scope.SecondResources && $scope.ThirdResources){
+            return true;
+          }
+          else{
+            return false;
+          }
+    }
+    ExamResource = function(require){
+        let bool = false;
+        if(require.split(' ')[1] != undefined){
+          $rootScope.resources.forEach(resource =>{
+            if(resource.Name == require.split(' ')[1].charAt(0).toUpperCase() + require.split(' ')[1].slice(1)){
+              if(resource.Quantity >= require.split(' ')[0]-0){
+                bool = true;
+              }
+              else{
+                bool = false;
+              }
+            }
+          })
+        }
+        else{
+          bool = true;
+        }
+        return bool;
+    }
+    RNAStorage = function(idx){
+        if($rootScope.buttons[idx].storageRNAplus > 0){
+            $rootScope.resources[0].Storage += $rootScope.buttons[idx].storageRNAplus;
+        }
+    }
+    DNAStorage = function(idx){
+        if($rootScope.buttons[idx].storageDNAplus > 0){
+            $rootScope.resources[1].Storage += $rootScope.buttons[idx].storageDNAplus;
+        }
+    }
+    CellIncreaments = function(idx){
+        if($rootScope.buttons[idx].RNA_Increament > 0){
+            $rootScope.resources[0].Change = $rootScope.resources[0].Change + $rootScope.buttons[idx].RNA_Increament;
+        }
+        if($rootScope.buttons[idx].RNA_Decrament > 0){
+            $rootScope.resources[0].Change = $rootScope.resources[0].Change - $rootScope.buttons[idx].RNA_Decrament;
+        }
+        if($rootScope.buttons[idx].DNA_increament > 0){
+            $rootScope.resources[1].Change = $rootScope.resources[1].Change + $rootScope.buttons[idx].DNA_increament;
+        }
+    }
+    Gathering = function(idx){
+        if($rootScope.resources[idx].Storage >= $rootScope.resources[idx].Quantity + 1){
+            $rootScope.resources[idx].Quantity++
+        }
+    }
+    CivilCostIncrease = function(idx){
+        console.log(typeof $rootScope.buildings[idx].MinimalCost)
+        $rootScope.buildings[idx].Cost += $rootScope.buildings[idx].MinimalCost * 1.10
     }
 });
 

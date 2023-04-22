@@ -26,6 +26,7 @@ app.controller('JobsCtrl',function($scope,$rootScope, DB){
     ShowJobs = function(){
         $rootScope.jobs.forEach(job => {
             if(job.Tech_req == "-"){
+                jobCap(job);
                 job.hidden = false;
             }
             else{
@@ -39,5 +40,8 @@ app.controller('JobsCtrl',function($scope,$rootScope, DB){
                 job.hidden = true;
             }
         });
+    }
+    jobCap = function(job){
+        job.Max = $rootScope.peopleMax
     }
 });

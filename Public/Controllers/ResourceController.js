@@ -155,33 +155,57 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     }
     ResourceQuantity = function(job, route, resource){
         if(route == 0){
-            if(resource.Name == job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1)){
-                resource.Quantity += parseFloat(job.Product.split(' ')[0] * job.Quantity);
-                resource.Change += parseFloat(job.Product.split(' ')[0] * job.Quantity)
+            if(resource.Name == FirstCharUp(job.Product.split(' ')[1])){
+                if(StorageMax(resource,job)){
+                    Quantity(resource,0,job,1)
+                }
+                else{
+                    Quantity(resource,0,job,2)
+                }
             }
         }
         else if(route == 1){
-            if(resource.Name == job.Product.split(' ')[4].charAt(0).toUpperCase() + job.Product.split(' ')[4].slice(1)){
-                resource.Quantity += parseFloat(job.Product.split(' ')[3] * job.Quantity);
-                resource.Change += parseFloat(job.Product.split(' ')[3] * job.Quantity)
+            if(resource.Name == FirstCharUp(job.Product.split(' ')[4])){
+                if(StorageMax(resource,job)){
+                    Quantity(resource,3,job,1)
+                }
+                else{
+                    Quantity(resource,3,job,2)
+                }
             }
-            if(resource.Name == job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1)){
-                resource.Quantity += parseFloat(job.Product.split(' ')[0] * job.Quantity);
-                resource.Change += parseFloat(job.Product.split(' ')[0] * job.Quantity)
+            if(resource.Name == FirstCharUp(job.Product.split(' ')[1])){
+                if(StorageMax(resource,job)){
+                    Quantity(resource,0,job,1)
+                }
+                else{
+                    Quantity(resource,0,job,2)
+                }
             }
         }
         else if(route == 2){
-            if(resource.Name == job.Product.split(' ')[7].charAt(0).toUpperCase() + job.Product.split(' ')[7].slice(1)){
-                resource.Quantity += parseFloat(job.Product.split(' ')[7] * job.Quantity);
-                resource.Change += parseFloat(job.Product.split(' ')[7] * job.Quantity);
+            if(resource.Name == FirstCharUp(job.Product.split(' ')[7])){
+                if(StorageMax(resource,job)){
+                    Quantity(resource,7,job,1)
+                }
+                else{
+                    Quantity(resource,7,job,2)
+                }
             }
-            if(resource.Name == job.Product.split(' ')[4].charAt(0).toUpperCase() + job.Product.split(' ')[4].slice(1)){
-                resource.Quantity += parseFloat(job.Product.split(' ')[3] * job.Quantity);
-                resource.Change += parseFloat(job.Product.split(' ')[3] * job.Quantity);
+            if(resource.Name == FirstCharUp(job.Product.split(' ')[4])){
+                if(StorageMax(resource,job)){
+                    Quantity(resource,3,job,1)
+                }
+                else{
+                    Quantity(resource,3,job,2)
+                }
             }
-            if(resource.Name == job.Product.split(' ')[1].charAt(0).toUpperCase() + job.Product.split(' ')[1].slice(1)){
-                resource.Quantity += parseFloat(job.Product.split(' ')[0] * job.Quantity);
-                resource.Change += parseFloat(job.Product.split(' ')[0] * job.Quantity);
+            if(resource.Name == FirstCharUp(job.Product.split(' ')[1])){
+                if(StorageMax(resource,job)){
+                    Quantity(resource,0,job,1)
+                }
+                else{
+                    Quantity(resource,0,job,2)
+                }
             }
         }
     }
@@ -204,12 +228,18 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
             if(researched.passive_bonus.includes(" ")){
                 switch(researched.passive_bonus.split(' ')[1]){
                     case "knowledge":
-                        let resource = $rootScope.resources.find(x=> x.Name == researched.passive_bonus.split(' ')[1].charAt(0).toUpperCase() + researched.passive_bonus.split(' ')[1].slice(1))
+                        let resource = $rootScope.resources.find(x=> x.Name == FirstCharUp(researched.passive_bonus.split(' ')[1]))
                         resource.Change += parseFloat(researched.passive_bonus.split(' ')[0])
                         $rootScope.resources[resource.ID-1] = resource;
                         break;
                     case "all":
                         ResourceBonus(1, parseFloat(researched.passive_bonus.split(' ')[0]))
+                        break;
+                    case "gathering":
+                        ResourceBonus(2, parseFloat(researched.passive_bonus.split(' ')[0]))
+                        break;
+                    case "mining":
+                        ResourceBonus(3, parseFloat(researched.passive_bonus.split(' ')[0]))
                         break;
                     default:
                         break;
@@ -221,7 +251,21 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         if(route == 1){
             $rootScope.resources.forEach(resource =>{
                 if(resource.Name != "Knowledge"){
-                    resource.Change = resource.Change*percent
+                    resource.Change = resource.Change * percent
+                }
+            })
+        }
+        if(route == 2){
+            $rootScope.resources.forEach(resource =>{
+                if(resource.Name == "Wood" || resource.Name == "Stone"){
+                    resource.Change = resource.Change * percent
+                }
+            })
+        }
+        if(route == 3){
+            $rootScope.resources.forEach(resource =>{
+                if(resource.Name == "Iron" || resource.Name == "Copper" || resource.Name == "Tin" || resource.Name == "Coal"){
+                    resource.Change = resource.Change * percent
                 }
             })
         }
@@ -233,5 +277,25 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 $rootScope.people++
             }
         }
+    }
+    StorageMax = function(resource,job){
+        if(resource.Storage >= resource.Quantity + parseFloat(job.Product.split(' ')[0] * job.Quantity)){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    Quantity = function(resource,idx,job,route){
+        if(route == 1){
+            resource.Quantity += parseFloat(job.Product.split(' ')[idx] * job.Quantity);
+            resource.Change += parseFloat(job.Product.split(' ')[idx] * job.Quantity)
+        }
+        else{
+            resource.Quantity = resource.Storage;
+        }
+    }
+    FirstCharUp = function(Product){
+        return Product.charAt(0).toUpperCase() + Product.slice(1)
     }
 });
