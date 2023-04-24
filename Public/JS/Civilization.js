@@ -1,18 +1,28 @@
 let app = new angular.module('Civilization',['ngRoute'])
+let UI = new angular.module('UI',['ui.bootstrap'])
 
 app.run(function($rootScope, DB){
+    $rootScope.News= [];
     if(window.sessionStorage['civilization']){
         $rootScope.User = JSON.parse(window.sessionStorage['civilization']);
+        $rootScope.resources = [];
+        $rootScope.evolved = [];
+        $rootScope.visibled = [];
         $rootScope.govs = [];
         $rootScope.buttons = [];
         $rootScope.researchs = [];
         $rootScope.buildings = [];
         $rootScope.military = [];
+        $rootScope.researched = [];
+        $rootScope.people = 5;
+        $rootScope.assigned = 0;
+        $rootScope.peopleMax = 5;
+        $rootScope.jobs = [];
         $rootScope.Specie = $rootScope.User.Specie;
-        
+
+
         if($rootScope.User.Specie == "Cell"){
-            $rootScope.resources = [];
-            $rootScope.storage = 100;
+            
             DB.selectAll("Cell_evolution").then(function(res){
                 res.data.forEach(element => {
                     element.clicked = false;
@@ -37,24 +47,161 @@ app.run(function($rootScope, DB){
             });
             DB.selectAll("researchs").then(function(res){
                 res.data.forEach(tech =>{
+                    tech.Searched = false;
                     $rootScope.researchs.push(tech);
                 });
             });
+            DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
+                if(res.data.length != 0){
+                    $rootScope.researchs.forEach(tech =>{
+                        res.data.forEach(Searched =>{
+                            if(tech.ID == Searched.ID){
+                                tech.Searched = true;
+                                tech.hidden = true;
+                                $rootScope.researched.push(Searched)
+                            }
+                        })
+                    })
+                }
+            })
             DB.selectAll("buildings").then(function(res){
                 res.data.forEach(building =>{
+                    MinimalCostSet(building)
+                    building.Quantity = 0;
+                    building.Bonus = building.Bonus.replaceAll("_"," ")
                     $rootScope.buildings.push(building);
                 });
             });
+            DB.select("builted","UserID",$rootScope.User.ID).then(function(res){
+                if(res.data.length == 0){
+                    $rootScope.buildings.forEach(building => {
+                        building.Quantity = 0;
+                    });
+                }
+                else{
+                    let i = 0;
+                    $rootScope.buildings.forEach(building =>{
+                        building.Quantity = res.data[i].Quantity;
+                        i++;
+                    })
+                    res.data.forEach(building =>{
+                        if(StorageCap(building)){
+                            if(building.Bonus.split(" ")[1] == "storage"){
+                                $rootScope.resources.forEach()
+                            }
+                        }
+                        else if(JobCap(building)){
+            
+                        }
+                        else if(PeopleCap(building)){
+                            $rootScope.peopleMax += parseInt(building.Bonus.split(" ")[0])*building.Quantity;
+                        }
+                        else if(TradeCap(building)){
+            
+                        }
+                    })
+                } 
+            })
             DB.selectAll("military").then(function(res){
                 res.data.forEach(troop =>{
                     $rootScope.military.push(troop);
                 });
             });
+            DB.selectAll("jobs").then(function(res){
+                res.data.forEach(job => {
+                    if(!BasicJob(job.Name)){
+                        job.Max = 0;
+                    }
+                    else{
+                        job.Max = $rootScope.peopleMax
+                    }
+                    $rootScope.jobs.push(job);
+                });
+            })
+            DB.select("jobs_by_user","UserID",$rootScope.User.ID).then(function(res){
+                if(res.data.length == 0){
+                    $rootScope.jobs.forEach(job => {
+                        job.Quantity = 0;
+                    });
+                }
+                else{
+                    let i = 0;
+                    $rootScope.jobs.forEach(job =>{
+                        job.Quantity = res.data[i].Quantity;
+                        i++;
+                    })
+                } 
+            })
         }
         $rootScope.Logout = function(){
             $rootScope.User = null;
             sessionStorage.clear('civilization', angular.toJson($rootScope.loggedUser));
             window.location.href = 'index.html';
+        }
+        PeopleCap = function(idx){
+            if($rootScope.buildings[idx].Bonus.split(" ")[1] == "people"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        StorageCap = function(idx){
+            if($rootScope.buildings[idx].Bonus.split(" ")[1] == "storage" || $rootScope.buildings[idx].Bonus.split(" ")[2] == "storage"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        JobCap = function(idx){
+            switch($rootScope.buildings[idx].Bonus.split(" ")[1]){
+                case "shaman":
+                    return true;
+                case "stone":
+                    return true;
+                case "miner":
+                    return true;
+                case "farmer":
+                    return true;
+                case "guild":
+                    return true;
+                case "teacher":
+                    return true;
+                case "scientist":
+                    return true;
+                case "professor":
+                    return true;
+                case "noble":
+                    return true;
+                case "coal":
+                    return true;
+                case "envoy":
+                    return true;
+                case "operator":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        TradeCap = function(idx){
+            if($rootScope.buildings[idx].Bonus.split(" ")[1] == "trade"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        BasicJob = function(job){
+            if(job == "Hunter" || job == "Gatherer"){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        MinimalCostSet = function(building){
+            
         }
     }
 });
@@ -72,6 +219,10 @@ app.config(function($routeProvider){
     .when('/Projects',{
         templateUrl: 'Gameview/Projects.html',
         controller: 'ProjectsCtrl'
+    })
+    .when('/Jobs',{
+        templateUrl: 'Gameview/Jobs.html',
+        controller: 'JobsCtrl'
     })
     .when('/Research',{
         templateUrl: 'Gameview/Research.html',
@@ -113,5 +264,18 @@ app.config(function($routeProvider){
         templateUrl: 'Views/Login.html',
         controller: 'UserCtrl'
     })
+    .when('/Admin',{
+        templateUrl: 'Views/Admin.html',
+        controller:'AdminCtrl'
+    })
     .otherwise('/News')
 });
+
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  }
