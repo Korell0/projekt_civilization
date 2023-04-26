@@ -23,6 +23,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                     building.hidden = true;
                 }
             }
+            CostSet(building);
         });
     }
 
@@ -91,7 +92,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         }
         }
         else{
-            if(EnoughResource(idx)){
+            if(EnoughResource($rootScope.buildings[idx])){
                 if(StorageCap(idx)){
                     $rootScope.resources.forEach(resource =>{
                         if($rootScope.buildings[idx].Bonus.split(" ")[2] != undefined){
@@ -119,7 +120,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                     
                 }
                 $rootScope.buildings[idx].Quantity++;
-                CostSet(idx)
+                CostSet($rootScope.buildings[idx])
             }
         }
         
@@ -193,14 +194,14 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                 return false;
         }
     }
-    CostSet = function(idx){
-        if($rootScope.buildings[idx].Quantity > 0){
-            if($rootScope.buildings[idx].First_Resources != null){
-                $rootScope.buildings[idx].First_Resources.split(' ')[0] = parseFloat($rootScope.buildings[idx].FirstMinimalCost*($rootScope.buildings[idx].Quantity*1.20))
-                if($rootScope.buildings[idx].Second_Resources != null){
-                    $rootScope.buildings[idx].Second_Resources.split(' ')[0] = $rootScope.buildings[idx].SecondMinimalCost*($rootScope.buildings[idx].Quantity*1.20)
-                    if($rootScope.buildings[idx].Third_Resources != null){
-                        $rootScope.buildings[idx].Third_Resources.split(' ')[0] = $rootScope.buildings[idx].ThirdMinimalCost*($rootScope.buildings[idx].Quantity*1.20)
+    CostSet = function(building){
+        if(building.Quantity > 0){
+            if(building.First_Resources != null){
+                building.First_Resources = "" + Math.round(parseFloat(building.FirstMinimalCost*(building.Quantity*0.20+1)))+ " " + building.First_Resources.split(' ')[1];
+                if(building.Second_Resources != null){
+                    building.Second_Resources.split(' ')[0] = "" + Math.round(parseFloat(building.SecondMinimalCost*(building.Quantity*0.20+1))) + " " + building.Second_Resources.split(' ')[1]
+                    if(building.Third_Resources != null){
+                        building.Third_Resources.split(' ')[0] = "" + Math.round(parseFloat(building.ThirdMinimalCost*(building.Quantity*0.20+1))) + " " + building.Third_Resources.split(' ')[1]
                     }
                 }
             }
@@ -218,17 +219,27 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         $rootScope.resources[0].Quantity -= parseInt($rootScope.buttons[idx].RNA)
         $rootScope.resources[1].Quantity -= parseInt($rootScope.buttons[idx].DNA)
     }
+    CivQuantityDecrease = function(require){
+        $rootScope.resources.forEach(resource =>{
+            if(require != ""){
+                console.log(require)
+                if(FirstCharUp(require.split(' ')[1]) == resource.Name){
+                    resource.Quantity -= require.split(' ')[0]
+                }
+            }
+        })
+    }
     CellCostIncrease = function(idx){
         $rootScope.buttons[idx].RNA += parseInt($rootScope.buttons[idx].RNAplus)
         $rootScope.buttons[idx].DNA += parseInt($rootScope.buttons[idx].DNAplus)
     }
-    EnoughResource = function(idx){
-        if($rootScope.buildings[idx].First_Resources != null){
-            $scope.FirstResource = ExamResource($rootScope.buildings[idx].First_Resources);
-            if($rootScope.buildings[idx].Second_Resources != null){
-              $scope.SecondResources = ExamResource($rootScope.buildings[idx].Second_Resources);
-              if($rootScope.buildings[idx].Third_Resources != null){
-                $scope.ThirdResources = ExamResource($rootScope.buildings[idx].Third_Resources);
+    EnoughResource = function(building){
+        if(building.First_Resources != null){
+            $scope.FirstResource = ExamResource(building.First_Resources);
+            if(building.Second_Resources != null){
+              $scope.SecondResources = ExamResource(building.Second_Resources);
+              if(building.Third_Resources != null){
+                $scope.ThirdResources = ExamResource(building.Third_Resources);
               }
               else{
                 $scope.ThirdResources = true;
@@ -242,6 +253,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
             $scope.FirstResource = true;
           }
           if($scope.FirstResource && $scope.SecondResources && $scope.ThirdResources){
+            GetDecreasebleResource(building)
             return true;
           }
           else{
@@ -252,7 +264,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         let bool = false;
         if(require.split(' ')[1] != undefined){
           $rootScope.resources.forEach(resource =>{
-            if(resource.Name == require.split(' ')[1].charAt(0).toUpperCase() + require.split(' ')[1].slice(1)){
+            if(resource.Name == FirstCharUp(require.split(' ')[1])){
               if(resource.Quantity >= require.split(' ')[0]-0){
                 bool = true;
               }
@@ -266,6 +278,17 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
           bool = true;
         }
         return bool;
+    }
+    GetDecreasebleResource = function(building){
+        if(building.First_Resources != null){
+            CivQuantityDecrease(building.First_Resources);
+        }
+        if(building.Second_Resources != null){
+            CivQuantityDecrease(building.Second_Resources);
+        }
+        if(building.Third_Resources != null){
+            CivQuantityDecrease(building.Third_Resources);
+        }
     }
     RNAStorage = function(idx){
         if($rootScope.buttons[idx].storageRNAplus > 0){
@@ -296,6 +319,9 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
     CivilCostIncrease = function(idx){
         console.log(typeof $rootScope.buildings[idx].MinimalCost)
         $rootScope.buildings[idx].Cost += $rootScope.buildings[idx].MinimalCost * 1.10
+    }
+    FirstCharUp = function(Product){
+        return Product.charAt(0).toUpperCase() + Product.slice(1)
     }
 });
 
