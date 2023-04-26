@@ -66,8 +66,10 @@ app.run(function($rootScope, DB){
             })
             DB.selectAll("buildings").then(function(res){
                 res.data.forEach(building =>{
-                    MinimalCostSet(building)
                     building.Quantity = 0;
+                    building.FirstMinimalCost = building.First_Resources.split(' ')[0]
+                    building.SecondMinimalCost = building.Second_Resources.split(' ')[0]
+                    building.ThirdMinimalCost = building.Third_Resources.split(' ')[0]
                     building.Bonus = building.Bonus.replaceAll("_"," ")
                     $rootScope.buildings.push(building);
                 });
@@ -82,6 +84,9 @@ app.run(function($rootScope, DB){
                     let i = 0;
                     $rootScope.buildings.forEach(building =>{
                         building.Quantity = res.data[i].Quantity;
+                        building.MinimalCost = building.Cost
+                        CostSet(building);
+
                         i++;
                     })
                     res.data.forEach(building =>{
@@ -200,8 +205,18 @@ app.run(function($rootScope, DB){
                 return false;
             }
         }
-        MinimalCostSet = function(building){
-            
+        CostSet = function(building){
+            if(building.Quantity != 0){
+                if(building.First_Resources != null){
+                    building.First_Resources[0] = building.building.FirstMinimalCost*(Quantity*1.20)
+                }
+                if(building.Second_Resources != null){
+                    building.Second_Resources[0] = building.building.SecondMinimalCost*(Quantity*1.20)
+                }
+                if(building.Third_Resources != null){
+                    building.Third_Resources[0] = building.building.ThirdMinimalCost*(Quantity*1.20)
+                }
+            }
         }
     }
 });

@@ -94,20 +94,20 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
             if(EnoughResource(idx)){
                 if(StorageCap(idx)){
                     $rootScope.resources.forEach(resource =>{
-                        if($rootScope.buttons[idx].Bonus.split(" ")[2] != undefined){
-                            if(resource.Name == $rootScope.buttons[idx].Bonus.split(" ")[1].charAt(0).toUpperCase() + $rootScope.buttons[idx].Bonus.split(" ")[1].slice(1)){
-                                resource.Storage = resource.Storage + parseFloat($rootScope.buttons[idx].Bonus.split(" ")[0])
+                        if($rootScope.buildings[idx].Bonus.split(" ")[2] != undefined){
+                            if(resource.Name == $rootScope.buildings[idx].Bonus.split(" ")[1].charAt(0).toUpperCase() + $rootScope.buttons[idx].Bonus.split(" ")[1].slice(1)){
+                                resource.Storage = resource.Storage + parseFloat($rootScope.buildings[idx].Bonus.split(" ")[0])
                             }
                         }else{
                             if(resource.Name = "Coal"){
-                                resource.Storage = resource.Storage + parseFloat($rootScope.buttons[idx].Bonus.split(" ")[0])
+                                resource.Storage = resource.Storage + parseFloat($rootScope.buildings[idx].Bonus.split(" ")[0])
                             }
                         }
                     })
                 }
                 else if(JobCap(idx)){
                     $rootScope.jobs.forEach(job =>{
-                        if(job.Name == $rootScope.buttons[idx].Bonus.split(" ")[1].charAt(0).toUpperCase() + $rootScope.buttons[idx].Bonus.split(" ")[1].slice(1)){
+                        if(job.Name == $rootScope.buildings[idx].Bonus.split(" ")[1].charAt(0).toUpperCase() + $rootScope.buildings[idx].Bonus.split(" ")[1].slice(1)){
                             job.Max++;
                         }
                     })
@@ -116,12 +116,13 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                     $rootScope.peopleMax += parseInt($rootScope.buildings[idx].Bonus.split(" ")[0])
                 }
                 else if(TradeCap(idx)){
-    
+                    
                 }
-                CivilCostIncrease(idx)
+                $rootScope.buildings[idx].Quantity++;
+                CostSet(idx)
             }
         }
-
+        
     }
     $scope.Gather = function(resource){
         switch(resource){
@@ -190,6 +191,19 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                 return true;
             default:
                 return false;
+        }
+    }
+    CostSet = function(idx){
+        if($rootScope.buildings[idx].Quantity > 0){
+            if($rootScope.buildings[idx].First_Resources != null){
+                $rootScope.buildings[idx].First_Resources.split(' ')[0] = parseFloat($rootScope.buildings[idx].FirstMinimalCost*($rootScope.buildings[idx].Quantity*1.20))
+                if($rootScope.buildings[idx].Second_Resources != null){
+                    $rootScope.buildings[idx].Second_Resources.split(' ')[0] = $rootScope.buildings[idx].SecondMinimalCost*($rootScope.buildings[idx].Quantity*1.20)
+                    if($rootScope.buildings[idx].Third_Resources != null){
+                        $rootScope.buildings[idx].Third_Resources.split(' ')[0] = $rootScope.buildings[idx].ThirdMinimalCost*($rootScope.buildings[idx].Quantity*1.20)
+                    }
+                }
+            }
         }
     }
     TradeCap = function(idx){
