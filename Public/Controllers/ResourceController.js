@@ -185,10 +185,10 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         else if(route == 2){
             if(resource.Name == FirstCharUp(job.Product.split(' ')[7])){
                 if(StorageMax(resource,job)){
-                    Quantity(resource,7,job,1)
+                    Quantity(resource,6,job,1)
                 }
                 else{
-                    Quantity(resource,7,job,2)
+                    Quantity(resource,6,job,2)
                 }
             }
             if(resource.Name == FirstCharUp(job.Product.split(' ')[4])){

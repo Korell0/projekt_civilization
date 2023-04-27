@@ -1,5 +1,4 @@
 app.controller('MilitaryCtrl',function($scope, $rootScope){
-    console.log($rootScope.military.length)
     $scope.MilitaryShow = function(){
         $rootScope.military.forEach(Troop => {
             Troop.hidden = true;

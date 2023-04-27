@@ -8,6 +8,7 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
       let data = $rootScope.researchs[idx]
       $rootScope.researched.push(data);
       $rootScope.researchs[idx].hidden = true;
+      $rootScope.researchs[idx].researched = true;
       $scope.ResearchShow();
     }
   }
@@ -19,9 +20,8 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
   $scope.ResearchShow = function(){
     if($rootScope.researched.length !=0){
       $rootScope.researchs.forEach(element => {
-        $rootScope.researched.forEach(item =>{
-          
-          if(element.tech_req == item.Name){
+        $rootScope.researched.forEach(item =>{        
+          if(element.tech_req == item.Name && !element.researched){
             element.hidden = false;
           }
         });
