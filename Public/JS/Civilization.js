@@ -111,6 +111,7 @@ app.run(function($rootScope, DB){
                 res.data.forEach(troop =>{
                     $rootScope.military.push(troop);
                 });
+                MilitaryShow();
             });
             DB.selectAll("jobs").then(function(res){
                 res.data.forEach(job => {
@@ -208,7 +209,7 @@ app.run(function($rootScope, DB){
         CostSet = function(building){
             if(building.Quantity != 0){
                 if(building.First_Resources != null){
-                    building.First_Resources[0] = building.building.FirstMinimalCost*(Quantity*1.20)
+                    building.First_Resources[0] = building.building.FirstMinimalCost*(building.Quantity*0.20 + 1)
                 }
                 if(building.Second_Resources != null){
                     building.Second_Resources[0] = building.building.SecondMinimalCost*(Quantity*1.20)
@@ -217,6 +218,21 @@ app.run(function($rootScope, DB){
                     building.Third_Resources[0] = building.building.ThirdMinimalCost*(Quantity*1.20)
                 }
             }
+        }
+        MilitaryShow = function(){
+            $rootScope.military.forEach(Troop => {
+                Troop.hidden = true;
+                if(Troop.Required_Tech == null){
+                    Troop.hidden = false;
+                }
+                else{
+                    $rootScope.researched.forEach(tech =>{
+                        if(Troop.hidden == true && tech.Name == Troop.Required_Tech){
+                            Troop.hidden = false;
+                        }
+                    })
+                }
+            });
         }
     }
 });
