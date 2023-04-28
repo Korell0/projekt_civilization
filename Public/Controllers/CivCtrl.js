@@ -230,8 +230,8 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         })
     }
     CellCostIncrease = function(idx){
-        $rootScope.buttons[idx].RNA += parseInt($rootScope.buttons[idx].RNAplus)
-        $rootScope.buttons[idx].DNA += parseInt($rootScope.buttons[idx].DNAplus)
+        $rootScope.buttons[idx].RNA += $rootScope.buttons[idx].RNAplus
+        $rootScope.buttons[idx].DNA += $rootScope.buttons[idx].DNAplus
     }
     EnoughResource = function(building){
         if(building.First_Resources != null){
@@ -304,11 +304,11 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         if($rootScope.buttons[idx].RNA_Increament > 0){
             $rootScope.resources[0].Change = $rootScope.resources[0].Change + $rootScope.buttons[idx].RNA_Increament;
         }
-        if($rootScope.buttons[idx].RNA_Decrament > 0){
-            $rootScope.resources[0].Change = $rootScope.resources[0].Change - $rootScope.buttons[idx].RNA_Decrament;
+        if($rootScope.buttons[idx].RNA_Decreament > 0){
+            $rootScope.resources[0].Change = $rootScope.resources[0].Change - $rootScope.buttons[idx].RNA_Decreament;
         }
-        if($rootScope.buttons[idx].DNA_increament > 0){
-            $rootScope.resources[1].Change = $rootScope.resources[1].Change + $rootScope.buttons[idx].DNA_increament;
+        if($rootScope.buttons[idx].DNA_Increament > 0){
+            $rootScope.resources[1].Change = $rootScope.resources[1].Change + $rootScope.buttons[idx].DNA_Increament;
         }
     }
     Gathering = function(idx){

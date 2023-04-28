@@ -25,6 +25,8 @@ app.run(function($rootScope, DB){
             
             DB.selectAll("Cell_evolution").then(function(res){
                 res.data.forEach(element => {
+                    element.DNA = parseInt(element.DNA)
+                    element.RNA = parseInt(element.RNA)
                     element.clicked = false;
                     if(element.Evolution != 0 || element.storage != 0 || element.producer != 0){
                         element.hidden = true;
@@ -234,6 +236,22 @@ app.run(function($rootScope, DB){
                 }
             });
         }
+        $rootScope.Save = function(){
+            DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
+                if(res.data.length > 0){
+
+                }
+                else{
+                    $rootScope.researched.forEach(tech =>{
+                        let data ={
+                            UserID: $rootScope.User.ID,
+                            ResearchID: tech.ID
+                        }
+                        DB.insert("researched_techs", data)
+                    })
+                }
+            })
+        }
     }
 });
 
@@ -247,10 +265,6 @@ app.config(function($routeProvider){
         templateUrl: 'Gameview/Military.html',
         controller: 'MilitaryCtrl'
     })
-    .when('/Projects',{
-        templateUrl: 'Gameview/Projects.html',
-        controller: 'ProjectsCtrl'
-    })
     .when('/Jobs',{
         templateUrl: 'Gameview/Jobs.html',
         controller: 'JobsCtrl'
@@ -262,10 +276,6 @@ app.config(function($routeProvider){
     .when('/Society',{
         templateUrl: 'Gameview/Society.html',
         controller: 'SocietyCtrl'
-    })
-    .when('/Settings',{
-        templateUrl: 'Gameview/Settings.html',
-        controller: 'SettingsCtrl'
     })
     .when('/Resources',{
         templateUrl: 'Gameview/Resources.html',
