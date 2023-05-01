@@ -49,23 +49,21 @@ app.run(function($rootScope, DB){
             });
             DB.selectAll("researchs").then(function(res){
                 res.data.forEach(tech =>{
-                    tech.Searched = false;
+                    DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
+                        if(res.data.length != 0){
+                            res.data.forEach(Searched =>{
+                                if(tech.ID == Searched.ID){
+                                    tech.researched = true;
+                                    Searched.Name = tech.Name;
+                                    Searched.passive_bonus = tech.passive_bonus
+                                    $rootScope.researched.push(Searched)
+                                }
+                            })
+                        }
+                    })
                     $rootScope.researchs.push(tech);
                 });
             });
-            DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
-                if(res.data.length != 0){
-                    $rootScope.researchs.forEach(tech =>{
-                        res.data.forEach(Searched =>{
-                            if(tech.ID == Searched.ID){
-                                tech.Searched = true;
-                                tech.hidden = true;
-                                $rootScope.researched.push(Searched)
-                            }
-                        })
-                    })
-                }
-            })
             DB.selectAll("buildings").then(function(res){
                 res.data.forEach(building =>{
                     building.Quantity = 0;
@@ -239,7 +237,17 @@ app.run(function($rootScope, DB){
         $rootScope.Save = function(){
             DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
                 if(res.data.length > 0){
+                    $rootScope.researched.forEach(searched =>{
+                        let Ni = 0;
+                        for(i = Ni; i < res.data.length; i++){
+                            if(res.data[i].ID != searched.ResearchID){
+                                Ni++;
+                                DB.insert("researched_techs", searched);
+                                break;
+                            }
+                        }
 
+                    })
                 }
                 else{
                     $rootScope.researched.forEach(tech =>{
@@ -247,7 +255,7 @@ app.run(function($rootScope, DB){
                             UserID: $rootScope.User.ID,
                             ResearchID: tech.ID
                         }
-                        DB.insert("researched_techs", data)
+                        DB.insert("researched_techs", data);
                     })
                 }
             })

@@ -1,11 +1,13 @@
 app.controller('ResearchCtrl',function($scope, $rootScope, DB){
   $scope.researchs = $rootScope.researchs
+  console.log($rootScope.researched.length)
   DB.select("Researched_techs","UserID",$rootScope.User.ID).then(function(res){
     $rootScope.researched = res.data;
   })
   $scope.Research = function(idx){
     if(EnoughResource(idx)){
       let data = $rootScope.researchs[idx]
+      data.ResearchID = data.ID;
       $rootScope.researched.push(data);
       $rootScope.researchs[idx].hidden = true;
       $rootScope.researchs[idx].researched = true;
@@ -21,8 +23,16 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
     if($rootScope.researched.length !=0){
       $rootScope.researchs.forEach(element => {
         $rootScope.researched.forEach(item =>{        
-          if(element.tech_req == item.Name && !element.researched){
+          if(!element.tech_req.includes('/') && element.tech_req == item.Name && !element.researched){
             element.hidden = false;
+          }
+          else{
+            if(element.researched){
+              element.hidden == true
+            }
+            else if(TechReq(element.tech_req,item.Name)){
+                element.hidden = false;
+            }
           }
         });
       });
@@ -84,6 +94,101 @@ app.controller('ResearchCtrl',function($scope, $rootScope, DB){
       bool = true;
     }
     return bool;
+  }
+  TechReq = function(tech,researched){
+    if(tech.split('/').length == 2){
+      if(TechObtained(tech, researched, 2)){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else if(tech.split('/').length == 3){   
+      if(TechObtained(tech, researched, 3)){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    else if(tech.split('/').length == 4){                  
+      if(TechObtained(tech, researched, 4)){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+  }
+
+  TechObtained = function(tech,researched, route){
+    if(route == 2){
+      if(typeof tech.firsttech == undefined){
+        tech.firsttech = false;
+        tech.secondtech = false;
+      }
+      if(tech.split('/')[0] == researched && tech.firsttech == false){
+        tech.firsttech = true;
+      }
+      if(tech.split('/')[1] == researched && tech.secondtech == false){
+        tech.secondtech = true;
+      }
+      if(tech.firsttech && tech.secondtech){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    if(route == 3){
+      if(typeof tech.firsttech == undefined){
+        tech.firsttech = false;
+        tech.secondtech = false;
+        tech.thirdtech = false;
+      }
+      if(tech.split('/')[0] == researched && tech.firsttech == false){
+        tech.firsttech = true;
+      }
+      if(tech.split('/')[1] == researched && tech.secondtech == false){
+        tech.secondtech = true;
+      }
+      if(tech.split('/')[2] == researched && tech.thirdtech == false){
+        tech.thirdtech = true;
+      }
+      if(tech.firsttech && tech.secondtech && tech.thirdtech){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
+    if(route == 4){
+      if(typeof tech.firsttech == undefined){
+        tech.firsttech = false;
+        tech.secondtech = false;
+        tech.thirdtech = false;
+        tech.fourthtech = false;
+      }
+      if(tech.split('/')[0] == researched && tech.firsttech == false){
+        tech.firsttech = true;
+      }
+      if(tech.split('/')[1] == researched && tech.secondtech == false){
+        tech.secondtech = true;
+      }
+      if(tech.split('/')[2] == researched && tech.thirdtech == false){
+        tech.thirdtech = true;
+      }
+      if(tech.split('/')[3] == researched && tech.fourthtech == false){
+        tech.fourthtech = true;
+      }
+      if(tech.firsttech && tech.secondtech && tech.thirdtech && tech.fourthtech){
+        return true;
+      }
+      else{
+        return false;
+      }
+    }
   }
   
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
