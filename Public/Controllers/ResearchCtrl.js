@@ -1,9 +1,4 @@
 app.controller('ResearchCtrl',function($scope, $rootScope, DB){
-  $scope.researchs = $rootScope.researchs
-  console.log($rootScope.researched.length)
-  DB.select("Researched_techs","UserID",$rootScope.User.ID).then(function(res){
-    $rootScope.researched = res.data;
-  })
   $scope.Research = function(idx){
     if(EnoughResource(idx)){
       let data = $rootScope.researchs[idx]

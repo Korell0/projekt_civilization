@@ -52,7 +52,7 @@ app.run(function($rootScope, DB){
                     DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
                         if(res.data.length != 0){
                             res.data.forEach(Searched =>{
-                                if(tech.ID == Searched.ID){
+                                if(tech.ID == Searched.ResearchID){
                                     tech.researched = true;
                                     Searched.Name = tech.Name;
                                     Searched.passive_bonus = tech.passive_bonus
@@ -240,9 +240,13 @@ app.run(function($rootScope, DB){
                     $rootScope.researched.forEach(searched =>{
                         let Ni = 0;
                         for(i = Ni; i < res.data.length; i++){
-                            if(res.data[i].ID != searched.ResearchID){
+                            if(res.data[i].ResearchID != searched.ResearchID){
                                 Ni++;
-                                DB.insert("researched_techs", searched);
+                                let data ={
+                                    UserID: $rootScope.User.ID,
+                                    ResearchID: searched.ResearchID
+                                }
+                                DB.insert("researched_techs", data);
                                 break;
                             }
                         }
@@ -258,6 +262,18 @@ app.run(function($rootScope, DB){
                         DB.insert("researched_techs", data);
                     })
                 }
+            })
+            DB.select("resources_by_user", "UserID", $rootScope.User.ID).then(function(res){
+                res.data.forEach(savedres =>{
+                    $rootScope.resources.forEach(resource =>{
+                        let data ={
+                            ResourceID: resource.ID,
+                            UserID: $rootScope.User.ID,
+                            Quantity: resource.Quantity
+                        }
+                        DB.update("resources_by_user",savedres.ID, data)
+                    })
+                })
             })
         }
     }

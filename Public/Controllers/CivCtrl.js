@@ -7,7 +7,7 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
         $rootScope.buildings.forEach(building => {
             if($rootScope.researched.length != 0){
                 $rootScope.researched.forEach(tech =>{
-                    if(building.Tech_req == tech.Name){
+                    if(building.Tech_req == tech.Name || building.Tech_req == ""){
                         building.hidden = false;
                     }
                     else{
