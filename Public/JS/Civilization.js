@@ -240,7 +240,7 @@ app.run(function($rootScope, DB){
                     $rootScope.researched.forEach(searched =>{
                         let Ni = 0;
                         for(i = Ni; i < res.data.length; i++){
-                            if(res.data[i].ResearchID != searched.ResearchID){
+                            if(res.data.filter(x => x.ResearchID === searched.ResearchID).length < 1){
                                 Ni++;
                                 let data ={
                                     UserID: $rootScope.User.ID,
@@ -266,12 +266,14 @@ app.run(function($rootScope, DB){
             DB.select("resources_by_user", "UserID", $rootScope.User.ID).then(function(res){
                 res.data.forEach(savedres =>{
                     $rootScope.resources.forEach(resource =>{
-                        let data ={
-                            ResourceID: resource.ID,
-                            UserID: $rootScope.User.ID,
-                            Quantity: resource.Quantity
+                        console.log(savedres, resource)
+                        if(savedres.ID == resource.ID){
+                            let data ={
+                                UserID: $rootScope.User.ID,
+                                Quantity: resource.Quantity
+                            }
+                            DB.update("resources_by_user",savedres.ID, data)
                         }
-                        DB.update("resources_by_user",savedres.ID, data)
                     })
                 })
             })

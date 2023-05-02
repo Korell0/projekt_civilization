@@ -126,6 +126,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 result.data.forEach(element =>{
                     if(i > 1){
                         let data = {
+                            ID: i + 1,
                             Name: results.data[i].Name,
                             Description: results.data[i].Description,
                             Quantity: element.Quantity,
@@ -146,7 +147,12 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         else return false;
     }
     QuantityChange = function(idx){
-        return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
+        if($rootScope.resources[idx].Name == "Knowledge"){
+            return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change/2
+        }
+        else{
+            return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
+        }
     }
     ChangesZero = function(){
         $rootScope.resources.forEach(resource =>{
@@ -288,7 +294,6 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     }
     Quantity = function(resource,idx,job,route){
         if(route == 1){
-            resource.Quantity += parseFloat(job.Product.split(' ')[idx] * job.Quantity);
             resource.Change += parseFloat(job.Product.split(' ')[idx] * job.Quantity)
         }
         else{

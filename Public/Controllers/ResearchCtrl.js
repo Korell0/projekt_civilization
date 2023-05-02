@@ -1,4 +1,5 @@
-app.controller('ResearchCtrl',function($scope, $rootScope, DB){
+app.controller('ResearchCtrl',function($scope, $rootScope){
+  console.log($rootScope.researched.length)
   $scope.Research = function(idx){
     if(EnoughResource(idx)){
       let data = $rootScope.researchs[idx]
