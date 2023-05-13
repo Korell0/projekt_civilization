@@ -1,6 +1,7 @@
 app.controller('ResearchCtrl',function($scope, $rootScope){
   $scope.Research = function(idx){
     if(EnoughResource(idx)){
+      ResourceDecrease(idx);
       let data = $rootScope.researchs[idx]
       data.ResearchID = data.ID;
       $rootScope.researched.push(data);
@@ -17,9 +18,8 @@ app.controller('ResearchCtrl',function($scope, $rootScope){
   $scope.ResearchShow = function(){
     if($rootScope.researched.length !=0){
       $rootScope.researchs.forEach(element => {
-        $rootScope.researched.forEach(item =>{        
-          console.log(TechReq(element.tech_req,item.Name))
-          if(!element.tech_req.includes('/') && element.tech_req == item.Name && !element.researched){
+        $rootScope.researched.forEach(item =>{
+          if(!element.tech_req.includes('/') && element.tech_req == item.Name && !element.researched || element.tech_req == "" && !element.researched){
             element.hidden = false;
           }
           else{
@@ -34,11 +34,17 @@ app.controller('ResearchCtrl',function($scope, $rootScope){
       });
     }
     else{
-      $rootScope.researchs[0].hidden = false;
+      for(i = 0; i < 3; i++){
+        $rootScope.researchs[i].hidden = false;
+      }
     }
   }
   $scope.ResearchShow()
-
+  ResourceDecrease = function(idx){
+    if($rootScope.researchs[idx].First_Resources != null){
+      $scope.resource = $rootScope.resources.filter(x => x.Name === $rootScope.researchs[idx].First_Resources.split(' ')[1].charAt(0).toUpperCase() + $rootScope.researchs[idx].First_Resources.split(' ')[1].slice(1))
+  }
+}
   EnoughResource = function(idx){
     if($rootScope.researchs[idx].First_Resources != null){
       $scope.FirstResource = ExamResource($rootScope.researchs[idx].First_Resources);

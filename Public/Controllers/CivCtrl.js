@@ -136,6 +136,9 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
             case "Stone":
                 Gathering(3)
                 break;
+            case "Bone":
+                Gathering(1)
+                break;
         }
     }
 

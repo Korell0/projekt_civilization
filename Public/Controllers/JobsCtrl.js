@@ -1,5 +1,5 @@
 app.controller('JobsCtrl',function($scope,$rootScope, DB){
-    $scope.Init = function(){
+    $scope.Init = function(){    
         ShowJobs()
     }
     $scope.Raising = function(idx){

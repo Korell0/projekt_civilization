@@ -266,18 +266,41 @@ app.run(function($rootScope, DB){
             DB.select("resources_by_user", "UserID", $rootScope.User.ID).then(function(res){
                 res.data.forEach(savedres =>{
                     $rootScope.resources.forEach(resource =>{
-                        console.log(savedres, resource)
                         if(savedres.ResourceID == resource.ID && savedres.UserID == $rootScope.User.ID){
                             let data ={
-                                UserID: $rootScope.User.ID,
+                                ResourceID: savedres.ResourceID,
                                 Quantity: resource.Quantity
                             }
-                            DB.update("resources_by_user",savedres.ResourceID, data)
+                            DB.update("resources_by_user",savedres.ID, data)
                         }
                     })
                 })
             })
-            $rootScope.resources.pop();
+            DB.select("jobs_by_user", "UserID", $rootScope.User.ID).then(function(res){
+                if(res.data.length > 0){
+                    res.data.forEach(jobres =>{
+                        $rootScope.jobs.forEach(job =>{
+                            if(jobres.JobsID == job.ID && jobres.UserID == $rootScope.User.ID){
+                                let data ={
+                                    JobsID: jobres.JobsID,
+                                    Quantity: job.Quantity
+                                }
+                                DB.update("jobs_by_user",jobres.ID, data)
+                            }
+                        })
+                    })
+                }
+                else{
+                    $rootScope.jobs.forEach(job=>{
+                        let data = {
+                            JobsID: job.ID,
+                            UserID: $rootScope.User.ID,
+                            Quantity: job.Quantity
+                        }
+                        DB.insert("jobs_by_user", data)
+                    })
+                }
+            })
         }
     }
 });

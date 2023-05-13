@@ -1,5 +1,4 @@
 app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
-    
     $interval(function(){   
         if($rootScope.User.Specie == "Cell"){
             if($rootScope.evolved.length != 0){
@@ -96,9 +95,8 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                         Storage: 100,
                         Change: parseFloat(0)
                     }
-                    $scope.resources.push(data)
+                    $rootScope.resources.push(data)
                 }
-                $rootScope.resources = $scope.resources
             })
         }
         else if(result.data.length == 0){
@@ -132,7 +130,7 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                             Storage: parseFloat(100),
                             Change: parseFloat(0)
                         }
-                        $scope.resources.push(data);
+                        $rootScope.resources.push(data);
                     }
                     i++;
                 })
@@ -147,19 +145,23 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     }
     QuantityChange = function(idx){
         if($rootScope.resources[idx].Name == "Knowledge"){
-            return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change/2
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change >= $rootScope.resources[idx].Storage){
+                return $rootScope.resources[idx].Quantity = $rootScope.resources[idx].Storage;
+            }
+            $rootScope.resources[idx].Change = $rootScope.resources[idx].Change
+            return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
         }
         else if($rootScope.resources[idx].Name == "Food"){
-            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change - $rootScope.people/2 < 0){
-                $rootScope.resources[idx].Change = $rootScope.resources[idx].Change - $rootScope.people/2;
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change - $rootScope.people/2 + 2.5 < 0){
+                $rootScope.resources[idx].Change = $rootScope.resources[idx].Change - $rootScope.people/2 + 2.5;
                 peopleChange(0);
                 return 0;
             }
             if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change - $rootScope.people/2 >= $rootScope.resources[idx].Storage){
                 peopleChange(1)
-                return $rootScope.resources[idx].Quantity = $rootScope.resources[idx].Storage;
+                return $rootScope.resources[idx].Storage;
             }
-            $rootScope.resources[idx].Change = $rootScope.resources[idx].Change - $rootScope.people/2;
+            $rootScope.resources[idx].Change = $rootScope.resources[idx].Change - $rootScope.people/2  + 2.5;
             peopleChange(1)
             return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
         }
@@ -253,24 +255,26 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     }
     ResearchResources = function(){
         $rootScope.researched.forEach(researched =>{
-            if(researched.passive_bonus.includes(" ")){
-                switch(researched.passive_bonus.split(' ')[1]){
-                    case "knowledge":
-                        let resource = $rootScope.resources.find(x=> x.Name == FirstCharUp(researched.passive_bonus.split(' ')[1]))
-                        resource.Change += parseFloat(researched.passive_bonus.split(' ')[0])
-                        $rootScope.resources[resource.ID-1] = resource;
-                        break;
-                    case "all":
-                        ResourceBonus(1, parseFloat(researched.passive_bonus.split(' ')[0]))
-                        break;
-                    case "gathering":
-                        ResourceBonus(2, parseFloat(researched.passive_bonus.split(' ')[0]))
-                        break;
-                    case "mining":
-                        ResourceBonus(3, parseFloat(researched.passive_bonus.split(' ')[0]))
-                        break;
-                    default:
-                        break;
+            if(researched.passive == 1){
+                if(researched.passive_bonus.includes(" ")){
+                    switch(researched.passive_bonus.split(' ')[1]){
+                        case "knowledge":
+                            let resource = $rootScope.resources.find(x=> x.Name == FirstCharUp(researched.passive_bonus.split(' ')[1]))
+                            resource.Change += parseFloat(researched.passive_bonus.split(' ')[0])
+                            $rootScope.resources[resource.ID-1] = resource;
+                            break;
+                        case "all":
+                            ResourceBonus(1, parseFloat(researched.passive_bonus.split(' ')[0]))
+                            break;
+                        case "gathering":
+                            ResourceBonus(2, parseFloat(researched.passive_bonus.split(' ')[0]))
+                            break;
+                        case "mining":
+                            ResourceBonus(3, parseFloat(researched.passive_bonus.split(' ')[0]))
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         })
