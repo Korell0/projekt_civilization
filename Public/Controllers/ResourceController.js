@@ -1,5 +1,5 @@
 app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
-    $scope.resources = $rootScope.resources;
+    
     $interval(function(){   
         if($rootScope.User.Specie == "Cell"){
             if($rootScope.evolved.length != 0){
@@ -79,7 +79,6 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 })
             })
             ResearchResources();
-            peopleChange()
             $rootScope.resources.forEach(resource =>{
                 let idx = $rootScope.resources.indexOf(resource)
                 resource.Quantity = QuantityChange(idx)
@@ -150,7 +149,30 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         if($rootScope.resources[idx].Name == "Knowledge"){
             return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change/2
         }
+        else if($rootScope.resources[idx].Name == "Food"){
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change - $rootScope.people/2 < 0){
+                $rootScope.resources[idx].Change = $rootScope.resources[idx].Change - $rootScope.people/2;
+                peopleChange(0);
+                return 0;
+            }
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change - $rootScope.people/2 >= $rootScope.resources[idx].Storage){
+                peopleChange(1)
+                return $rootScope.resources[idx].Quantity = $rootScope.resources[idx].Storage;
+            }
+            $rootScope.resources[idx].Change = $rootScope.resources[idx].Change - $rootScope.people/2;
+            peopleChange(1)
+            return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
+        }
         else{
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change >= $rootScope.resources[idx].Storage){
+                return $rootScope.resources[idx].Quantity = $rootScope.resources[idx].Storage;
+            }
+            if($rootScope.resources[idx].Change < 0){
+                if($rootScope.resources[idx].Quantity - $rootScope.resources[idx].Change < 0){
+                    return 0
+                }
+                return $rootScope.resources[idx].Quantity - $rootScope.resources[idx].Change
+            }
             return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
         }
     }
@@ -276,11 +298,21 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
             })
         }
     }
-    peopleChange = function(){
-        if($rootScope.peopleMax > $rootScope.people){
-            let RNumber = Math.random()
-            if(RNumber > 0.5){
-                $rootScope.people++
+    peopleChange = function(route){
+        if(route == 1){
+            if($rootScope.peopleMax > $rootScope.people){
+                let RNumber = Math.random()
+                if(RNumber > 0.5){
+                    $rootScope.people++;
+                }
+            }
+        }
+        else{
+            if($rootScope.peopleMax >= $rootScope.people){
+                let RNumber = Math.random()
+                if(RNumber > 0.6){
+                    $rootScope.people--;
+                }
             }
         }
     }

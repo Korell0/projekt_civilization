@@ -10,10 +10,10 @@
 </head>
 <body>
   <div class="topnav icon" id="myTopnav">
-    <a class="nav-link" href="#!/Civilization">Civilization</a>
-    <a class="nav-link" href="#!/Society">Society</a>
-    <a class="nav-link" href="#!/Military">Military</a>
-    <a class="nav-link" href="#!/Research">Research</a>
+    <a class="nav-link" href="#!/Civilization" ng-if="User.Specie != 'Cell'">Civilization</a>
+    <a class="nav-link" href="#!/Society" ng-if="User.Specie != 'Cell'">Society</a>
+    <a class="nav-link" href="#!/Military" ng-if="User.Specie != 'Cell' && researched.include(Barracks)">Military</a>
+    <a class="nav-link" href="#!/Research" ng-if="User.Specie != 'Cell'">Research</a>
     <button class="btn btn-warning" ng-click="Save()">Save</button>
     <button class="btn btn-secondary" ng-click="Logout()">Logout</button>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
@@ -22,7 +22,7 @@
   </div>
 
       <section ng-include="'Gameview/Resources.html'"></section>
-      <section ng-view>
+      <section ng-view class="mt-3">
       </section>
 </body>
 

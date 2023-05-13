@@ -14,7 +14,7 @@
         </tr>
     </table>
     <h3 class="card mt-0">Resources</h3>
-    <div class="card resource p-2" ng-repeat="resource in resources track by resource.ID">
+    <div class="card resource p-2" ng-repeat="resource in resources">
         <div>
             {{resource.Name}} : {{resource.Quantity}}/{{resource.Storage}} <span>{{resource.Change}}</span>/s
         </div>

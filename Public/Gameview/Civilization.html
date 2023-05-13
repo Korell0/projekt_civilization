@@ -3,7 +3,7 @@
       <li class="col-lg-2 ms-5" ng-repeat="button in buttons" ng-if="!button.hidden && !button.evolved">
       <button type="button"class="toolTip btn btn-dark" id="{{button.Name}}" ng-click="Click(id, $index)" >
           <span class="text-justify">{{button.Name}}</span>
-          <span class="float-right card">{{button.quantity}}</span>
+          <span class="float-right quantitycard" ng-if="button.storage || button.producer">{{button.quantity}}</span>
           <span class="toolTiptext flex-container">
             <span>{{button.Description}}</span>
             <div class="mb-0 ms-2 me-2 card" ng-if="button.RNA_Increament != 0 || button.DNA_Increament != 0 || button.RNA_Decreament != 0">

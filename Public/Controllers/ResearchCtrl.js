@@ -1,5 +1,4 @@
 app.controller('ResearchCtrl',function($scope, $rootScope){
-  console.log($rootScope.researched.length)
   $scope.Research = function(idx){
     if(EnoughResource(idx)){
       let data = $rootScope.researchs[idx]
@@ -19,6 +18,7 @@ app.controller('ResearchCtrl',function($scope, $rootScope){
     if($rootScope.researched.length !=0){
       $rootScope.researchs.forEach(element => {
         $rootScope.researched.forEach(item =>{        
+          console.log(TechReq(element.tech_req,item.Name))
           if(!element.tech_req.includes('/') && element.tech_req == item.Name && !element.researched){
             element.hidden = false;
           }
@@ -91,7 +91,7 @@ app.controller('ResearchCtrl',function($scope, $rootScope){
     }
     return bool;
   }
-  TechReq = function(tech,researched){
+   function TechReq(tech,researched){
     if(tech.split('/').length == 2){
       if(TechObtained(tech, researched, 2)){
         return true;
@@ -118,7 +118,7 @@ app.controller('ResearchCtrl',function($scope, $rootScope){
     }
   }
 
-  TechObtained = function(tech,researched, route){
+  function TechObtained(tech,researched, route){
     if(route == 2){
       if(typeof tech.firsttech == undefined){
         tech.firsttech = false;

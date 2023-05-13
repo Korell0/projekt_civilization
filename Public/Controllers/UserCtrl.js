@@ -16,7 +16,8 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                         Username: $scope.user.name,
                         Password: CryptoJS.SHA1($scope.user.password).toString(),
                         Email: $scope.user.email,
-                        Specie: "Cell"
+                        Specie: "Cell",
+                        Day:0
                     }
                     DB.insert('users', data).then(function(res) {
                         if (res.data.affectedRows != 0) {
@@ -66,4 +67,8 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
         sessionStorage.removeItem('Civilization');
         $location.path('/');
     }
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
 });

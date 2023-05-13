@@ -26,6 +26,29 @@ margin-left: 3%;
 background-color: #4B4B5C;
 border-radius: 25px;
 }
+.passcard{
+  width: 20%;
+  background-color: #252525;
+  margin-top: 1%;
+  margin-bottom: 1%;
+  margin-left: 0.1%;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  box-shadow: inset 3px 3px 3px grey;
+  color: orange;
+  }
+  .quantitycard{
+    width: auto;
+    padding: 4px;
+    background-color: #252525;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    margin-left: 0.1%;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    box-shadow: inset 3px 3px 3px grey;
+    color: #ffffff;
+    }
 .card{
 background-color: #252525;
 margin-top: 1%;

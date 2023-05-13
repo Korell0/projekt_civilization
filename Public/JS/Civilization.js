@@ -267,16 +267,17 @@ app.run(function($rootScope, DB){
                 res.data.forEach(savedres =>{
                     $rootScope.resources.forEach(resource =>{
                         console.log(savedres, resource)
-                        if(savedres.ID == resource.ID){
+                        if(savedres.ResourceID == resource.ID && savedres.UserID == $rootScope.User.ID){
                             let data ={
                                 UserID: $rootScope.User.ID,
                                 Quantity: resource.Quantity
                             }
-                            DB.update("resources_by_user",savedres.ID, data)
+                            DB.update("resources_by_user",savedres.ResourceID, data)
                         }
                     })
                 })
             })
+            $rootScope.resources.pop();
         }
     }
 });
