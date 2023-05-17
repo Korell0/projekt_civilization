@@ -10,7 +10,7 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
             } else {
                 var pwd_pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
                 if (!$scope.user.password.match(pwd_pattern)) {
-                    alert('A megadott jelszó nem felel meg a minimális biztonsági követelményeknek!');
+                    alert('A megadott jelszó nem felel meg a minimális biztonsági követelményeknek!\n A jelszónak tartalmaznia kell 1 számot, 1 nagy betűt és minimum 8 karakter hosszúnak kell lennie!');
                 } else {
                     let data = {
                         Username: $scope.user.name,
@@ -21,7 +21,7 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                     }
                     DB.insert('users', data).then(function(res) {
                         if (res.data.affectedRows != 0) {
-                            alert('A regisztráció sikeres! Beléphetsz az oldalra!');
+                            alert('A regisztráció sikeres! Beléphetsz az oldalra a login menü pont használatával!');
                             $scope.user = {};
                         } else {
                             alert('Váratlan hiba történt az adatbázis művelet során!');
@@ -55,7 +55,8 @@ app.controller('UserCtrl', function($scope, DB, $rootScope, $location) {
                     else{
                         $rootScope.loggedUser = res.data[0];
                         sessionStorage.setItem('civilization', angular.toJson($rootScope.loggedUser));
-                        window.location.href = 'Game.html';
+                        window.location.href = 'Game.html'
+                        window.location.href = '#!/Civilization'
                     }
                 }
             });

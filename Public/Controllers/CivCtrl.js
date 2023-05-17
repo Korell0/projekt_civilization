@@ -80,6 +80,9 @@ app.controller('CivCtrl',function($scope, $rootScope, DB,){
                                 }
                             }
                         }
+                        if($rootScope.buttons[idx].Evolution_req == "0"){
+                            $rootScope.buttons[idx].hidden == true;
+                        }
                         $scope.evolved.push($rootScope.buttons[idx]);
                         if($rootScope.buttons[idx].Specie.length > 1 && $rootScope.Specie == "Cell") $rootScope.Specie = $rootScope.buttons[idx].Specie; 
                         $rootScope.resources[1].Quantity -= $rootScope.buttons[idx].DNA;

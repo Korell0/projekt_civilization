@@ -306,6 +306,7 @@ app.run(function($rootScope, DB){
 });
 
 app.config(function($routeProvider){
+    console.log($routeProvider)
     $routeProvider
     .when('/Civilization',{
         templateUrl: 'Gameview/Civilization.html',
