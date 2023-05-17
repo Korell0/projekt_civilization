@@ -1,4 +1,4 @@
-<div class="modal fade modal-xl" id="modalWindow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade modal-xl" id="modalWindow" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" ng-init="governmentsShow()">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-card">
             <div class="modal-header">
@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                        <button type="button" class="toolTip m-3 btn col-lg-3 p-2 card" ng-repeat="item in govs">{{item.Name}}
+                        <button type="button" ng-if="!item.hidden" ng-click="FoundGov($index)" class="toolTip m-3 btn col-lg-3 p-2 card" ng-repeat="item in govs">{{item.Name}}
                             <span class="toolTiptext">
                                 <span class="text-justify">{{item.Description}}</span> 
                                 <hr class="m-0">

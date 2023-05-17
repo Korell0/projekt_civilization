@@ -1,6 +1,7 @@
 <div class="container">
     <div class="text-center">
-        <button class="card btn p-2" ng-click="openModal()">
+        <h5>{{User.Gov}}</h5>
+        <button class="card btn p-2" ng-if="researched.include('Bonfire')" ng-click="openModal()">
             Governments
         </button>
     </div>

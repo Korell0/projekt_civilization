@@ -1,5 +1,4 @@
 app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
-    $scope.resources = $rootScope.resources;
     $interval(function(){   
         if($rootScope.User.Specie == "Cell"){
             if($rootScope.evolved.length != 0){
@@ -79,7 +78,6 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 })
             })
             ResearchResources();
-            peopleChange()
             $rootScope.resources.forEach(resource =>{
                 let idx = $rootScope.resources.indexOf(resource)
                 resource.Quantity = QuantityChange(idx)
@@ -97,9 +95,8 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                         Storage: 100,
                         Change: parseFloat(0)
                     }
-                    $scope.resources.push(data)
+                    $rootScope.resources.push(data)
                 }
-                $rootScope.resources = $scope.resources
             })
         }
         else if(result.data.length == 0){
@@ -126,13 +123,14 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
                 result.data.forEach(element =>{
                     if(i > 1){
                         let data = {
+                            ID: i + 1,
                             Name: results.data[i].Name,
                             Description: results.data[i].Description,
                             Quantity: element.Quantity,
                             Storage: parseFloat(100),
                             Change: parseFloat(0)
                         }
-                        $scope.resources.push(data);
+                        $rootScope.resources.push(data);
                     }
                     i++;
                 })
@@ -146,7 +144,39 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         else return false;
     }
     QuantityChange = function(idx){
-        return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
+        if($rootScope.resources[idx].Name == "Knowledge"){
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change >= $rootScope.resources[idx].Storage){
+                return $rootScope.resources[idx].Quantity = $rootScope.resources[idx].Storage;
+            }
+            $rootScope.resources[idx].Change = $rootScope.resources[idx].Change
+            return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
+        }
+        else if($rootScope.resources[idx].Name == "Food"){
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change - $rootScope.people/2 + 2.5 < 0){
+                $rootScope.resources[idx].Change = $rootScope.resources[idx].Change - $rootScope.people/2 + 2.5;
+                peopleChange(0);
+                return 0;
+            }
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change - $rootScope.people/2 >= $rootScope.resources[idx].Storage){
+                peopleChange(1)
+                return $rootScope.resources[idx].Storage;
+            }
+            $rootScope.resources[idx].Change = $rootScope.resources[idx].Change - $rootScope.people/2  + 2.5;
+            peopleChange(1)
+            return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
+        }
+        else{
+            if($rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change >= $rootScope.resources[idx].Storage){
+                return $rootScope.resources[idx].Quantity = $rootScope.resources[idx].Storage;
+            }
+            if($rootScope.resources[idx].Change < 0){
+                if($rootScope.resources[idx].Quantity - $rootScope.resources[idx].Change < 0){
+                    return 0
+                }
+                return $rootScope.resources[idx].Quantity - $rootScope.resources[idx].Change
+            }
+            return $rootScope.resources[idx].Quantity + $rootScope.resources[idx].Change
+        }
     }
     ChangesZero = function(){
         $rootScope.resources.forEach(resource =>{
@@ -185,10 +215,10 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
         else if(route == 2){
             if(resource.Name == FirstCharUp(job.Product.split(' ')[7])){
                 if(StorageMax(resource,job)){
-                    Quantity(resource,7,job,1)
+                    Quantity(resource,6,job,1)
                 }
                 else{
-                    Quantity(resource,7,job,2)
+                    Quantity(resource,6,job,2)
                 }
             }
             if(resource.Name == FirstCharUp(job.Product.split(' ')[4])){
@@ -225,24 +255,26 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     }
     ResearchResources = function(){
         $rootScope.researched.forEach(researched =>{
-            if(researched.passive_bonus.includes(" ")){
-                switch(researched.passive_bonus.split(' ')[1]){
-                    case "knowledge":
-                        let resource = $rootScope.resources.find(x=> x.Name == FirstCharUp(researched.passive_bonus.split(' ')[1]))
-                        resource.Change += parseFloat(researched.passive_bonus.split(' ')[0])
-                        $rootScope.resources[resource.ID-1] = resource;
-                        break;
-                    case "all":
-                        ResourceBonus(1, parseFloat(researched.passive_bonus.split(' ')[0]))
-                        break;
-                    case "gathering":
-                        ResourceBonus(2, parseFloat(researched.passive_bonus.split(' ')[0]))
-                        break;
-                    case "mining":
-                        ResourceBonus(3, parseFloat(researched.passive_bonus.split(' ')[0]))
-                        break;
-                    default:
-                        break;
+            if(researched.passive == 1){
+                if(researched.passive_bonus.includes(" ")){
+                    switch(researched.passive_bonus.split(' ')[1]){
+                        case "knowledge":
+                            let resource = $rootScope.resources.find(x=> x.Name == FirstCharUp(researched.passive_bonus.split(' ')[1]))
+                            resource.Change += parseFloat(researched.passive_bonus.split(' ')[0])
+                            $rootScope.resources[resource.ID-1] = resource;
+                            break;
+                        case "all":
+                            ResourceBonus(1, parseFloat(researched.passive_bonus.split(' ')[0]))
+                            break;
+                        case "gathering":
+                            ResourceBonus(2, parseFloat(researched.passive_bonus.split(' ')[0]))
+                            break;
+                        case "mining":
+                            ResourceBonus(3, parseFloat(researched.passive_bonus.split(' ')[0]))
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         })
@@ -270,11 +302,21 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
             })
         }
     }
-    peopleChange = function(){
-        if($rootScope.peopleMax > $rootScope.people){
-            let RNumber = Math.random()
-            if(RNumber > 0.5){
-                $rootScope.people++
+    peopleChange = function(route){
+        if(route == 1){
+            if($rootScope.peopleMax > $rootScope.people){
+                let RNumber = Math.random()
+                if(RNumber > 0.5){
+                    $rootScope.people++;
+                }
+            }
+        }
+        else{
+            if($rootScope.peopleMax >= $rootScope.people){
+                let RNumber = Math.random()
+                if(RNumber > 0.6){
+                    $rootScope.people--;
+                }
             }
         }
     }
@@ -288,7 +330,6 @@ app.controller('ResourceCtrl',function($scope,$rootScope, DB, $interval){
     }
     Quantity = function(resource,idx,job,route){
         if(route == 1){
-            resource.Quantity += parseFloat(job.Product.split(' ')[idx] * job.Quantity);
             resource.Change += parseFloat(job.Product.split(' ')[idx] * job.Quantity)
         }
         else{

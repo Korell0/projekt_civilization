@@ -1,5 +1,5 @@
 <div class="row">
-    <button class="col-lg-3 btn card ms-5 toolTip text-center pt-1 pb-1" ng-if="tech.hidden == false" ng-repeat="tech in researchs" ng-click="Research($index)">
+    <button class="col-lg-3 btn card ms-5 toolTip text-center pt-1 pb-1" ng-init="ResearchShow()" ng-if="tech.hidden == false" ng-repeat="tech in researchs" ng-click="Research($index)">
         {{tech.Name}}
         <span class="toolTiptext text-justify flex-container pr-1 pl-1">{{tech.Description}} <br>
           <hr class="m-0">

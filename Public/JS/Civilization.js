@@ -25,6 +25,8 @@ app.run(function($rootScope, DB){
             
             DB.selectAll("Cell_evolution").then(function(res){
                 res.data.forEach(element => {
+                    element.DNA = parseInt(element.DNA)
+                    element.RNA = parseInt(element.RNA)
                     element.clicked = false;
                     if(element.Evolution != 0 || element.storage != 0 || element.producer != 0){
                         element.hidden = true;
@@ -47,27 +49,27 @@ app.run(function($rootScope, DB){
             });
             DB.selectAll("researchs").then(function(res){
                 res.data.forEach(tech =>{
-                    tech.Searched = false;
+                    DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
+                        if(res.data.length != 0){
+                            res.data.forEach(Searched =>{
+                                if(tech.ID == Searched.ResearchID){
+                                    tech.researched = true;
+                                    Searched.Name = tech.Name;
+                                    Searched.passive_bonus = tech.passive_bonus
+                                    $rootScope.researched.push(Searched)
+                                }
+                            })
+                        }
+                    })
                     $rootScope.researchs.push(tech);
                 });
             });
-            DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
-                if(res.data.length != 0){
-                    $rootScope.researchs.forEach(tech =>{
-                        res.data.forEach(Searched =>{
-                            if(tech.ID == Searched.ID){
-                                tech.Searched = true;
-                                tech.hidden = true;
-                                $rootScope.researched.push(Searched)
-                            }
-                        })
-                    })
-                }
-            })
             DB.selectAll("buildings").then(function(res){
                 res.data.forEach(building =>{
-                    MinimalCostSet(building)
                     building.Quantity = 0;
+                    building.FirstMinimalCost = building.First_Resources.split(' ')[0]
+                    building.SecondMinimalCost = building.Second_Resources.split(' ')[0]
+                    building.ThirdMinimalCost = building.Third_Resources.split(' ')[0]
                     building.Bonus = building.Bonus.replaceAll("_"," ")
                     $rootScope.buildings.push(building);
                 });
@@ -82,6 +84,9 @@ app.run(function($rootScope, DB){
                     let i = 0;
                     $rootScope.buildings.forEach(building =>{
                         building.Quantity = res.data[i].Quantity;
+                        building.MinimalCost = building.Cost
+                        CostSet(building);
+
                         i++;
                     })
                     res.data.forEach(building =>{
@@ -106,6 +111,7 @@ app.run(function($rootScope, DB){
                 res.data.forEach(troop =>{
                     $rootScope.military.push(troop);
                 });
+                MilitaryShow();
             });
             DB.selectAll("jobs").then(function(res){
                 res.data.forEach(job => {
@@ -200,13 +206,107 @@ app.run(function($rootScope, DB){
                 return false;
             }
         }
-        MinimalCostSet = function(building){
-            
+        CostSet = function(building){
+            if(building.Quantity != 0){
+                if(building.First_Resources != null){
+                    building.First_Resources[0] = building.building.FirstMinimalCost*(building.Quantity*0.20 + 1)
+                }
+                if(building.Second_Resources != null){
+                    building.Second_Resources[0] = building.building.SecondMinimalCost*(Quantity*1.20)
+                }
+                if(building.Third_Resources != null){
+                    building.Third_Resources[0] = building.building.ThirdMinimalCost*(Quantity*1.20)
+                }
+            }
+        }
+        MilitaryShow = function(){
+            $rootScope.military.forEach(Troop => {
+                Troop.hidden = true;
+                if(Troop.Required_Tech == null){
+                    Troop.hidden = false;
+                }
+                else{
+                    $rootScope.researched.forEach(tech =>{
+                        if(Troop.hidden == true && tech.Name == Troop.Required_Tech){
+                            Troop.hidden = false;
+                        }
+                    })
+                }
+            });
+        }
+        $rootScope.Save = function(){
+            DB.select("researched_techs","UserID",$rootScope.User.ID).then(function(res){
+                if(res.data.length > 0){
+                    $rootScope.researched.forEach(searched =>{
+                        let Ni = 0;
+                        for(i = Ni; i < res.data.length; i++){
+                            if(res.data.filter(x => x.ResearchID === searched.ResearchID).length < 1){
+                                Ni++;
+                                let data ={
+                                    UserID: $rootScope.User.ID,
+                                    ResearchID: searched.ResearchID
+                                }
+                                DB.insert("researched_techs", data);
+                                break;
+                            }
+                        }
+
+                    })
+                }
+                else{
+                    $rootScope.researched.forEach(tech =>{
+                        let data ={
+                            UserID: $rootScope.User.ID,
+                            ResearchID: tech.ID
+                        }
+                        DB.insert("researched_techs", data);
+                    })
+                }
+            })
+            DB.select("resources_by_user", "UserID", $rootScope.User.ID).then(function(res){
+                res.data.forEach(savedres =>{
+                    $rootScope.resources.forEach(resource =>{
+                        if(savedres.ResourceID == resource.ID && savedres.UserID == $rootScope.User.ID){
+                            let data ={
+                                ResourceID: savedres.ResourceID,
+                                Quantity: resource.Quantity
+                            }
+                            DB.update("resources_by_user",savedres.ID, data)
+                        }
+                    })
+                })
+            })
+            DB.select("jobs_by_user", "UserID", $rootScope.User.ID).then(function(res){
+                if(res.data.length > 0){
+                    res.data.forEach(jobres =>{
+                        $rootScope.jobs.forEach(job =>{
+                            if(jobres.JobsID == job.ID && jobres.UserID == $rootScope.User.ID){
+                                let data ={
+                                    JobsID: jobres.JobsID,
+                                    Quantity: job.Quantity
+                                }
+                                DB.update("jobs_by_user",jobres.ID, data)
+                            }
+                        })
+                    })
+                }
+                else{
+                    $rootScope.jobs.forEach(job=>{
+                        let data = {
+                            JobsID: job.ID,
+                            UserID: $rootScope.User.ID,
+                            Quantity: job.Quantity
+                        }
+                        DB.insert("jobs_by_user", data)
+                    })
+                }
+            })
         }
     }
 });
 
 app.config(function($routeProvider){
+    console.log($routeProvider)
     $routeProvider
     .when('/Civilization',{
         templateUrl: 'Gameview/Civilization.html',
@@ -215,10 +315,6 @@ app.config(function($routeProvider){
     .when('/Military',{
         templateUrl: 'Gameview/Military.html',
         controller: 'MilitaryCtrl'
-    })
-    .when('/Projects',{
-        templateUrl: 'Gameview/Projects.html',
-        controller: 'ProjectsCtrl'
     })
     .when('/Jobs',{
         templateUrl: 'Gameview/Jobs.html',
@@ -231,10 +327,6 @@ app.config(function($routeProvider){
     .when('/Society',{
         templateUrl: 'Gameview/Society.html',
         controller: 'SocietyCtrl'
-    })
-    .when('/Settings',{
-        templateUrl: 'Gameview/Settings.html',
-        controller: 'SettingsCtrl'
     })
     .when('/Resources',{
         templateUrl: 'Gameview/Resources.html',
